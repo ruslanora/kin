@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "files": [],
+  "include": ["src"]
+}

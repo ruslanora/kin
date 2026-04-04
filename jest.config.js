@@ -1,5 +1,5 @@
 import { globSync } from 'node:fs';
-import path from 'path';
+import path from 'node:path';
 
 const __dirname = import.meta.dirname;
 

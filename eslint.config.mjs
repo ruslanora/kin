@@ -14,6 +14,28 @@ export default [
     files: ['**/*.{ts,tsx}'],
   })),
   {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['*.config.{js,ts,mjs,cjs}'],
+        },
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports' },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
+  {
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
@@ -37,6 +59,7 @@ export default [
       ...pluginReact.configs.recommended.rules,
       ...pluginReactHooks.configs.recommended.rules,
       ...pluginJsxA11y.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
     },
     settings: {
       react: {
@@ -62,10 +85,11 @@ export default [
   },
   {
     files: [
-      '**/*.config.{js,ts,mjs,cjs}',
-      '**/jest.preset.js',
+      '*.config.{js,ts,mjs,cjs}',
+      'jest.preset.js',
+      '**/jest.config.{js,ts}',
     ],
-    extends: [tseslint.configs.disableTypeChecked],
+    ...tseslint.configs.disableTypeChecked,
   },
   {
     ignores: [
