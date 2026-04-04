@@ -1,0 +1,12 @@
+# Builds
+.next
+build
+dist
+out
+*.min.js
+
+# Tests
+coverage
+
+# Dependencies
+node_modules
