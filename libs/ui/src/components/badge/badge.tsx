@@ -15,7 +15,7 @@ export const Badge: FunctionComponent<PropsType> = ({
 }) => (
   <div
     className={classNames(
-      'text-sm font-medium px-1.5 py-0.5 rounded-full',
+      'text-sm font-medium px-1.5 py-0.5 rounded',
       variant === 'brand' && 'text-blue-800 bg-blue-200',
       variant === 'gray' &&
         'text-stone-800 bg-stone-200 dark:text-stone-200 dark:bg-stone-800',

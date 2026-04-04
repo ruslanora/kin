@@ -9,10 +9,6 @@ import tseslint from 'typescript-eslint';
 /** @type {import('@typescript-eslint/utils').TSESLint.FlatConfig.ConfigFile} */
 export default [
   ...tseslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
-    ...config,
-    files: ['**/*.{ts,tsx}'],
-  })),
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

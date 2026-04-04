@@ -5,6 +5,9 @@ import log from 'electron-log';
 import started from 'electron-squirrel-startup';
 import { updateElectronApp } from 'update-electron-app';
 
+import { runMigrations, seedDefaults } from './database';
+import { setupIpc } from './ipc';
+
 log.errorHandler.startCatching();
 
 if (started) {
@@ -41,6 +44,9 @@ const createWindow = () => {
 };
 
 app.on('ready', () => {
+  runMigrations();
+  seedDefaults();
+  setupIpc();
   createWindow();
 
   if (app.isPackaged) {
