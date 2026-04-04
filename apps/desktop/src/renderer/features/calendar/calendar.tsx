@@ -1,3 +1,4 @@
+import type { InterviewWithJobType } from '@kin/desktop/main/database';
 import {
   type FunctionComponent,
   useCallback,
@@ -11,7 +12,6 @@ import { CalendarContext } from './context';
 import { Grid } from './grid';
 import { Sidebar } from './sidebar';
 import { Toolbar } from './toolbar';
-import type { CalendarInterviewType } from './types';
 import {
   getCellKey,
   getCellsForMonth,
@@ -23,14 +23,14 @@ import {
 
 export const Calendar: FunctionComponent = () => {
   const [month, setMonth] = useState<Date>(getCurrentMonth);
-  const [day, setDay] = useState<Date | null>(month);
+  const [day, setDay] = useState<Date | null>(null);
   const [monthInterviews, setMonthInterviews] = useState<
-    CalendarInterviewType[]
+    InterviewWithJobType[]
   >([]);
-  const [dayInterviews, setDayInterviews] = useState<CalendarInterviewType[]>(
+  const [dayInterviews, setDayInterviews] = useState<InterviewWithJobType[]>(
     [],
   );
-  const cache = useRef<Map<string, CalendarInterviewType[]>>(new Map());
+  const cache = useRef<Map<string, InterviewWithJobType[]>>(new Map());
 
   useEffect(() => {
     const key = getMonthKey(month);
@@ -42,7 +42,7 @@ export const Calendar: FunctionComponent = () => {
 
     window.api.interview
       .getByMonth(month.getFullYear(), month.getMonth() + 1)
-      .then((data) => {
+      .then((data: InterviewWithJobType[]) => {
         cache.current.set(key, data);
         setMonthInterviews(data);
       });
@@ -51,7 +51,7 @@ export const Calendar: FunctionComponent = () => {
   const cells = useMemo(() => getCellsForMonth(month), [month]);
 
   const interviewsByDate = useMemo(() => {
-    const map = new Map<string, CalendarInterviewType[]>();
+    const map = new Map<string, InterviewWithJobType[]>();
 
     for (const interview of monthInterviews) {
       const key = getInterviewKey(interview.scheduledAt);

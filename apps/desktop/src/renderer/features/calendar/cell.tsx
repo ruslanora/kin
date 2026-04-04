@@ -1,12 +1,13 @@
+import type { InterviewWithJobType } from '@kin/desktop/main/database';
 import { classNames } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 
-import type { CalendarCellType, CalendarInterviewType } from './types';
+import type { CalendarCellType } from './types';
 import { getCellKey, getTodayKey } from './utils';
 
 type PropsType = {
   cell: CalendarCellType;
-  interviews: CalendarInterviewType[];
+  interviews: InterviewWithJobType[];
   onClick: (date: Date) => void;
 };
 

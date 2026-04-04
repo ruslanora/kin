@@ -79,9 +79,7 @@
       "indexes": {
         "idx_columns_board_id": {
           "name": "idx_columns_board_id",
-          "columns": [
-            "board_id"
-          ],
+          "columns": ["board_id"],
           "isUnique": false
         }
       },
@@ -90,12 +88,8 @@
           "name": "columns_board_id_boards_id_fk",
           "tableFrom": "columns",
           "tableTo": "boards",
-          "columnsFrom": [
-            "board_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["board_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -168,9 +162,7 @@
       "indexes": {
         "unq_company_name": {
           "name": "unq_company_name",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -256,9 +248,7 @@
       "indexes": {
         "idx_contacts_company_id": {
           "name": "idx_contacts_company_id",
-          "columns": [
-            "company_id"
-          ],
+          "columns": ["company_id"],
           "isUnique": false
         }
       },
@@ -267,12 +257,8 @@
           "name": "contacts_company_id_companies_id_fk",
           "tableFrom": "contacts",
           "tableTo": "companies",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -323,9 +309,7 @@
       "indexes": {
         "idx_files_job_id": {
           "name": "idx_files_job_id",
-          "columns": [
-            "job_id"
-          ],
+          "columns": ["job_id"],
           "isUnique": false
         }
       },
@@ -334,12 +318,8 @@
           "name": "files_job_id_jobs_id_fk",
           "tableFrom": "files",
           "tableTo": "jobs",
-          "columnsFrom": [
-            "job_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["job_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -398,9 +378,7 @@
       "indexes": {
         "idx_interviews_job_id": {
           "name": "idx_interviews_job_id",
-          "columns": [
-            "job_id"
-          ],
+          "columns": ["job_id"],
           "isUnique": false
         }
       },
@@ -409,12 +387,8 @@
           "name": "interviews_job_id_jobs_id_fk",
           "tableFrom": "interviews",
           "tableTo": "jobs",
-          "columnsFrom": [
-            "job_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["job_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -451,10 +425,7 @@
       "indexes": {
         "unq_job_contact": {
           "name": "unq_job_contact",
-          "columns": [
-            "job_id",
-            "contact_id"
-          ],
+          "columns": ["job_id", "contact_id"],
           "isUnique": true
         }
       },
@@ -463,12 +434,8 @@
           "name": "job_contacts_job_id_jobs_id_fk",
           "tableFrom": "job_contacts",
           "tableTo": "jobs",
-          "columnsFrom": [
-            "job_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["job_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -476,12 +443,8 @@
           "name": "job_contacts_contact_id_contacts_id_fk",
           "tableFrom": "job_contacts",
           "tableTo": "contacts",
-          "columnsFrom": [
-            "contact_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["contact_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -618,16 +581,12 @@
       "indexes": {
         "idx_jobs_column_id": {
           "name": "idx_jobs_column_id",
-          "columns": [
-            "column_id"
-          ],
+          "columns": ["column_id"],
           "isUnique": false
         },
         "idx_jobs_company_id": {
           "name": "idx_jobs_company_id",
-          "columns": [
-            "company_id"
-          ],
+          "columns": ["company_id"],
           "isUnique": false
         }
       },
@@ -636,12 +595,8 @@
           "name": "jobs_column_id_columns_id_fk",
           "tableFrom": "jobs",
           "tableTo": "columns",
-          "columnsFrom": [
-            "column_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["column_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -649,12 +604,8 @@
           "name": "jobs_company_id_companies_id_fk",
           "tableFrom": "jobs",
           "tableTo": "companies",
-          "columnsFrom": [
-            "company_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["company_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }

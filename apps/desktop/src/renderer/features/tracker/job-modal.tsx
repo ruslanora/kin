@@ -1,0 +1,121 @@
+import { Button, Modal, TextInput } from '@kin/ui';
+import { Textarea } from '@kin/ui/components';
+import { classNames } from '@kin/ui/utils';
+import { type FunctionComponent, useMemo, useState } from 'react';
+
+import { useTracker } from './context';
+
+type PropsType = {
+  modalControl: {
+    state: boolean;
+    open: () => void;
+    close: () => void;
+  };
+};
+
+export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
+  const { jobs, addJob } = useTracker();
+
+  const [companyName, setCompanyName] = useState<string>('');
+  const [position, setPosition] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const trimmedCompany = companyName.trim();
+  const trimmedPosition = position.trim();
+
+  const existingJob = useMemo(() => {
+    if (!trimmedCompany) return null;
+    const normalized = trimmedCompany.toLowerCase();
+    return (
+      jobs.find((job) => job.companyName.toLowerCase() === normalized) ?? null
+    );
+  }, [trimmedCompany, jobs]);
+
+  const reset = () => {
+    setCompanyName('');
+    setPosition('');
+    setDescription('');
+    setUrl('');
+  };
+
+  const close = () => {
+    reset();
+    modalControl.close();
+  };
+
+  const submit = async () => {
+    if (!trimmedCompany || !trimmedPosition) return;
+
+    setLoading(true);
+    try {
+      await addJob({
+        companyName: trimmedCompany,
+        title: trimmedPosition,
+        description: description.trim() || undefined,
+        url: url.trim() || undefined,
+      });
+      close();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal state={modalControl.state} open={modalControl.open} close={close}>
+      <Modal.Header>Add Job</Modal.Header>
+      <Modal.Body>
+        <div className="flex flex-col gap-4">
+          <TextInput
+            placeholder="Company *"
+            value={companyName}
+            setValue={setCompanyName}
+          />
+          {existingJob && (
+            <div
+              className={classNames(
+                'flex flex-row items-center gap-1 text-sm',
+                'text-amber-600 dark:text-amber-400',
+              )}
+            >
+              <span>You&apos;ve already applied to this company.</span>
+              <button
+                type="button"
+                className="underline underline-offset-2 whitespace-nowrap cursor-pointer"
+                onClick={close}
+              >
+                See job &rarr;
+              </button>
+            </div>
+          )}
+          <TextInput
+            placeholder="Position *"
+            value={position}
+            setValue={setPosition}
+          />
+          <Textarea
+            placeholder="Description"
+            value={description}
+            setValue={setDescription}
+          />
+          <TextInput placeholder="http://" value={url} setValue={setUrl} />
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button type="button" style="secondary" onClick={close}>
+          Cancel
+        </Button>
+        <Button
+          type="button"
+          style="primary"
+          onClick={submit}
+          loading={loading}
+          disabled={!trimmedCompany || !trimmedPosition}
+        >
+          Create
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};

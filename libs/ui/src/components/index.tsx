@@ -2,8 +2,24 @@
 
 export { Badge } from './badge';
 export { Button } from './button';
+export { Checkbox } from './checkbox';
+export { DatePicker } from './datepicker';
+export { createDrawer, Drawer, useDrawer } from './drawer';
+export { Dropzone } from './dropzone';
+export { File } from './file';
 export { Icon } from './icon';
 export { IconButton } from './icon-button';
+export { createModal, Modal, useModal } from './modal';
+export { Radio } from './radio';
+export { Rating } from './rating';
+export { RichTextEditor } from './richtext-editor';
+export { SearchInput } from './search-input';
+export { Select } from './select';
 export { Shell, useShell } from './shell';
 export { Spinner } from './spinner';
+export { Tab } from './tab';
+export { TextInput } from './text-input';
+export { Textarea } from './textarea';
+export { TimePicker } from './timepicker';
+export { Toggle } from './toggle';
 export { Typography } from './typography';

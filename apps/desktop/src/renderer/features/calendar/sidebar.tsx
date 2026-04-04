@@ -50,7 +50,7 @@ export const Sidebar: FunctionComponent = () => {
                 <div className="flex flex-col items-stretch justify-start">
                   {dayInterviews.map((interview) => (
                     <button
-                      key={`${interview.id}-${interview.isFollowUp}`}
+                      key={`${interview.id}-${interview.followUp}`}
                       type="button"
                       onClick={() => handleEntryOnClick(interview.jobId)}
                       className={classNames(
@@ -65,7 +65,7 @@ export const Sidebar: FunctionComponent = () => {
                             {formatTime(interview.scheduledAt)}
                             {interview.round ? ` · ${interview.round}` : ''}
                           </span>
-                          {interview.isFollowUp && (
+                          {interview.followUp && (
                             <Badge variant="warning">Follow Up</Badge>
                           )}
                         </div>

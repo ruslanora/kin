@@ -151,3 +151,8 @@ export type ContactWithCompanyType = ContactType & {
 };
 export type JobContactType = typeof jobContacts.$inferSelect;
 export type InterviewType = typeof interviews.$inferSelect;
+
+export type InterviewWithJobType = InterviewType & {
+  jobTitle: string | null;
+  companyName: string;
+};

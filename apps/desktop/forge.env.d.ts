@@ -1,6 +1,6 @@
 /// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 
-import type { CalendarInterviewType } from './src/renderer/features/calendar/types';
+import type { Api } from '../preload';
 
 declare module '*.css' {
   const content: string;
@@ -9,13 +9,6 @@ declare module '*.css' {
 
 declare global {
   interface Window {
-    api: {
-      interview: {
-        getByMonth: (
-          year: number,
-          month: number,
-        ) => Promise<CalendarInterviewType[]>;
-      };
-    };
+    api: Api;
   }
 }

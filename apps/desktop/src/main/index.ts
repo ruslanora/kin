@@ -41,13 +41,16 @@ const createWindow = () => {
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools();
   }
+
+  return mainWindow;
 };
 
 app.on('ready', () => {
   runMigrations();
   seedDefaults();
-  setupIpc();
-  createWindow();
+
+  const window = createWindow();
+  setupIpc(window);
 
   if (app.isPackaged) {
     updateElectronApp();

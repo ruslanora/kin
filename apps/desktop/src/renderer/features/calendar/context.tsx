@@ -1,13 +1,14 @@
+import type { InterviewWithJobType } from '@kin/desktop/main/database';
 import { createContext, useContext } from 'react';
 
-import type { CalendarCellType, CalendarInterviewType } from './types';
+import type { CalendarCellType } from './types';
 
 type ContextType = {
   month: Date;
   day: Date | null;
   cells: CalendarCellType[];
-  dayInterviews: CalendarInterviewType[];
-  interviewsByDate: Map<string, CalendarInterviewType[]>;
+  dayInterviews: InterviewWithJobType[];
+  interviewsByDate: Map<string, InterviewWithJobType[]>;
   goToPreviousMonth: () => void;
   goToNextMonth: () => void;
   goToCurrentMonth: () => void;
