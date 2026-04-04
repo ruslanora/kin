@@ -115,9 +115,10 @@ contextBridge.exposeInMainWorld('api', {
       )) as Array<InterviewWithJobType>,
 
     getByMonth: async (year: number, month: number) =>
-      (await ipcRenderer.invoke('interview:getByMonth', year, month)) as Array<
-        InterviewWithJobType[]
-      >,
+      (await ipcRenderer.invoke('interview:getByMonth', {
+        year,
+        month,
+      })) as Array<InterviewWithJobType>,
 
     getByJob: async (args: { jobId: number }) =>
       (await ipcRenderer.invoke(

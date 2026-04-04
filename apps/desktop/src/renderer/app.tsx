@@ -3,7 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { ApplicationShell, Tracker } from './features';
 import { useTheme } from './hooks';
-import { CalendarPage, SettingsPage } from './pages';
+import { CalendarPage, JobPage, SettingsPage } from './pages';
 
 export const App: FunctionComponent = () => {
   useTheme();
@@ -13,7 +13,7 @@ export const App: FunctionComponent = () => {
       <Routes>
         <Route element={<ApplicationShell />}>
           <Route path="/" element={<Tracker />} />
-          <Route path="/job/:id" element={<></>} />
+          <Route path="/job/:id" element={<JobPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/database" element={<></>} />
           <Route path="/settings" element={<SettingsPage />} />
