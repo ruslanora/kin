@@ -1,0 +1,9 @@
+import './globals.css';
+
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import { App } from './app';
+
+const root = document.getElementById('root') as HTMLDivElement;
+createRoot(root).render(createElement(App));

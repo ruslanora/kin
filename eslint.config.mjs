@@ -93,6 +93,7 @@ export default [
   },
   {
     ignores: [
+      '**/.vite/**',
       '**/.next/**',
       '**/build/**',
       '**/coverage/**',

@@ -1,11 +1,12 @@
 import path from 'node:path';
 
 import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
-  plugins: [tailwindcss(), dts()],
+  plugins: [react(), tailwindcss(), dts()],
   build: {
     lib: {
       name: '@kin/ui',
@@ -14,7 +15,15 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@tiptap/extension-placeholder',
+        '@tiptap/react',
+        '@tiptap/starter-kit',
+        'react-icons',
+      ],
       output: {
         globals: {
           react: 'React',

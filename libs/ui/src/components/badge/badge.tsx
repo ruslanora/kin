@@ -9,7 +9,10 @@ type PropsType = {
   children?: ReactNode;
 };
 
-export const Badge: FunctionComponent<PropsType> = ({ variant, children }) => (
+export const Badge: FunctionComponent<PropsType> = ({
+  variant = 'brand',
+  children,
+}) => (
   <div
     className={classNames(
       'text-sm font-medium px-1.5 py-0.5 rounded-full',

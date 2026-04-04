@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+@source '../../../../libs/ui/src';
+
+@layer base {
+  html,
+  body,
+  #root {
+    @apply h-full w-full p-0 m-0 border-0 box-border;
+  }
+}
