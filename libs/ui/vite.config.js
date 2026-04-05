@@ -7,6 +7,11 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), dts()],
+  resolve: {
+    alias: {
+      '@kin/ui/utils': path.resolve(import.meta.dirname, 'src/utils/index.ts'),
+    },
+  },
   build: {
     lib: {
       name: '@kin/ui',

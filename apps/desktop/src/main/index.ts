@@ -7,6 +7,7 @@ import { updateElectronApp } from 'update-electron-app';
 
 import { runMigrations, seedDefaults } from './database';
 import { setupIpc } from './ipc';
+import { startServer, stopServer } from './server';
 
 log.errorHandler.startCatching();
 
@@ -51,10 +52,19 @@ app.on('ready', () => {
 
   const window = createWindow();
   setupIpc(window);
+  startServer();
 
   if (app.isPackaged) {
-    updateElectronApp();
+    try {
+      updateElectronApp();
+    } catch {
+      // Skip
+    }
   }
+});
+
+app.on('will-quit', () => {
+  stopServer();
 });
 
 app.on('window-all-closed', () => {

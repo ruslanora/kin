@@ -26,7 +26,9 @@
     "app:migrate": "pnpm --filter ./apps/desktop run migrate",
     "app:studio": "pnpm --filter ./apps/desktop run studio",
     "ui:build": "pnpm --filter ./libs/ui run build",
-    "ui:test": "pnpm --filter ./libs/ui run test"
+    "ui:test": "pnpm --filter ./libs/ui run test",
+    "ext:build": "pnpm --filter ./apps/extension run build",
+    "ext:dev": "pnpm --filter ./apps/extension run dev"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

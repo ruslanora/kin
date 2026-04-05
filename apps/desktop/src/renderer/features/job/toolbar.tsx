@@ -33,7 +33,7 @@ export const Toolbar: FunctionComponent = () => {
 
   const handleDelete = async () => {
     await deleteJob();
-    deleteModal.close();
+    navigate('/');
   };
 
   return (

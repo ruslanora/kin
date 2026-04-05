@@ -1,13 +1,33 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import type { ForgeConfig } from '@electron-forge/shared-types';
 
+const rootNodeModules = path.resolve(__dirname, '../../node_modules');
+
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    asar: {
+      unpack: '**/node_modules/better-sqlite3/**',
+    },
+    extraResource: ['src/main/database/migrations'],
+    icon: 'assets/icons/icon',
   },
   rebuildConfig: {},
+  hooks: {
+    packageAfterCopy: async (_config, buildPath) => {
+      for (const pkg of ['better-sqlite3', 'bindings', 'file-uri-to-path']) {
+        const src = path.join(rootNodeModules, pkg);
+        const dest = path.join(buildPath, 'node_modules', pkg);
+        if (fs.existsSync(src) && !fs.existsSync(dest)) {
+          fs.cpSync(src, dest, { recursive: true });
+        }
+      }
+    },
+  },
   makers: [
     {
       name: '@electron-forge/maker-squirrel',

@@ -3,10 +3,17 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 
+const desktopRoot = import.meta.dirname;
+
 // https://vitejs.dev/config
-export default defineConfig({
-  root: path.resolve(import.meta.dirname, 'src/renderer'),
+export default defineConfig(({ command }) => ({
+  root: command === 'serve' ? desktopRoot : undefined,
   plugins: [react(), tailwindcss()],
+  build: {
+    rollupOptions: {
+      input: path.resolve(desktopRoot, 'index.html'),
+    },
+  },
   resolve: {
     dedupe: [
       'react',
@@ -19,4 +26,4 @@ export default defineConfig({
       '@kin/ui': path.resolve(import.meta.dirname, '../../libs/ui/src'),
     },
   },
-});
+}));
