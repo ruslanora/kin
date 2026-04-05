@@ -1,4 +1,4 @@
-import { classNames, SearchInput } from '@kin/ui';
+import { Badge, classNames, SearchInput } from '@kin/ui';
 import { type FunctionComponent, useMemo, useState } from 'react';
 
 import { useDatabase } from './context';
@@ -47,9 +47,12 @@ export const Companies: FunctionComponent = () => {
                     : 'hover:bg-stone-100 dark:hover:bg-stone-800',
                 )}
               >
-                <span className="text-sm text-stone-800 dark:text-stone-200 truncate block">
-                  {company.name}
-                </span>
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <span className="text-sm text-stone-800 dark:text-stone-200 truncate block">
+                    {company.name}
+                  </span>
+                  {company.isToAvoid && <Badge variant="danger">Avoid</Badge>}
+                </div>
                 {company.industry && (
                   <span className="text-xs text-stone-400 dark:text-stone-500 truncate block">
                     {company.industry}

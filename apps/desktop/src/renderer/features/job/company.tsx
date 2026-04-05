@@ -1,6 +1,5 @@
 import type { CompanyType } from '@kin/desktop/main/database';
-import { TextInput, Typography } from '@kin/ui';
-import { Checkbox, RichTextEditor } from '@kin/ui/components';
+import { RichTextEditor, TextInput, Toggle, Typography } from '@kin/ui';
 import { type FunctionComponent, useEffect, useState } from 'react';
 
 import { useJob } from './context';
@@ -75,7 +74,7 @@ export const Company: FunctionComponent = () => {
           />
         </div>
         <div className="col-span-2">
-          <Checkbox
+          <Toggle
             label="Mark as avoid"
             checked={company.isToAvoid}
             onChange={(isToAvoid) => {

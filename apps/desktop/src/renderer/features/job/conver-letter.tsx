@@ -9,17 +9,21 @@ export const CoverLetter: FunctionComponent = () => {
 
   const [files, setFiles] = useState<Array<FileType>>([]);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
-      const all = await window.api.file.getByJob({ jobId: job.id });
-      setFiles(
-        all.filter((file: FileType) => file.fileType === 'cover_letter'),
-      );
+      const all = await window.api.file.getByJob({
+        jobId: job.id,
+        fileType: 'cover_letter',
+      });
+
+      setFiles(all);
     })();
   }, [job.id]);
 
   const handleFile = async (file: globalThis.File) => {
+    setError(null);
     setUploading(true);
     try {
       const buffer = Array.from(new Uint8Array(await file.arrayBuffer()));
@@ -53,12 +57,20 @@ export const CoverLetter: FunctionComponent = () => {
             <File
               key={file.id}
               name={file.fileName}
+              onOpen={() => window.api.file.open({ id: file.id })}
               onRemove={() => handleRemove(file.id)}
             />
           ))}
         </div>
       ) : (
-        <Dropzone onFile={handleFile} disabled={uploading} />
+        <div className="flex flex-col gap-2">
+          <Dropzone
+            onFile={handleFile}
+            onError={setError}
+            disabled={uploading}
+          />
+          {error && <p className="text-xs text-red-500">{error}</p>}
+        </div>
       )}
     </div>
   );

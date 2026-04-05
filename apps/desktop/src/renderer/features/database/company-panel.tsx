@@ -1,7 +1,7 @@
 import {
   classNames,
   Icon,
-  Textarea,
+  RichTextEditor,
   TextInput,
   Toggle,
   Typography,
@@ -88,16 +88,14 @@ export const CompanyPanel: FunctionComponent = () => {
           updateCompany({ id: company.id, isToAvoid });
         }}
       />
-      <Textarea
+      <RichTextEditor
         placeholder="Notes"
-        rows={4}
         value={fields.note}
-        setValue={(note) => {
+        onChange={(note) => {
           setFields((f) => ({ ...f, note }));
           updateCompany({ id: company.id, note: note || null });
         }}
       />
-
       {interviews.length > 0 && (
         <div className="mt-2 flex flex-col gap-1">
           <Typography.Heading level="h3" as="h3">

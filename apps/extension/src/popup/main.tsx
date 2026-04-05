@@ -1,9 +1,9 @@
-import './styles.css';
+import './globals.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { App } from './App';
+import { App } from './app';
 
 const root = document.getElementById('root');
 

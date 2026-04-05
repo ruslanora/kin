@@ -1,5 +1,11 @@
 import type { JobWithCompanyType } from '@kin/desktop/main/database';
-import { classNames, Icon, Textarea, TextInput, Typography } from '@kin/ui';
+import {
+  classNames,
+  Icon,
+  RichTextEditor,
+  TextInput,
+  Typography,
+} from '@kin/ui';
 import { type FunctionComponent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -96,11 +102,10 @@ export const PersonPanel: FunctionComponent = () => {
         setValue={(website) => setFields((f) => ({ ...f, website }))}
         onBlur={() => blur('website', fields.website)}
       />
-      <Textarea
+      <RichTextEditor
         placeholder="Notes"
-        rows={4}
         value={fields.note}
-        setValue={(note) => {
+        onChange={(note) => {
           setFields((f) => ({ ...f, note }));
           updateContact({ id: contact.id, note: note || null });
         }}

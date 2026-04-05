@@ -39,8 +39,7 @@ export const Board: FunctionComponent = () => {
 
   useLayoutEffect(() => {
     localColumnsRef.current = localColumns;
-    // eslint-disable-next-line
-  }, []);
+  }, [localColumns]);
 
   useEffect(() => {
     if (localColumns.length > prevColumnCount.current && scrollRef.current) {

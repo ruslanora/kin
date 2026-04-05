@@ -52,7 +52,7 @@ app.on('ready', () => {
 
   const window = createWindow();
   setupIpc(window);
-  startServer();
+  startServer(window);
 
   if (app.isPackaged) {
     try {

@@ -1,50 +1,28 @@
+import { classNames } from '@kin/ui';
 import { type FunctionComponent, useEffect, useState } from 'react';
 
+import icon from './assets/icon.png';
+import {
+  FormScreen,
+  FoundScreen,
+  LoadingScreen,
+  OfflineScreen,
+  SavedScreen,
+} from './screens';
 import type {
   ColumnInfoType,
+  CompanyResultType,
   CreateJobPayloadType,
   JobResultType,
   PopupStateType,
-} from '../types';
-import { Found } from './messages/found';
-import { Loading } from './messages/loading';
-import { NotFound } from './messages/not-found';
-import { Offline } from './messages/offline';
-import { Saved } from './messages/saved';
+} from './types';
+import { clearForm, loadSavedForm, persistForm } from './utils';
 
 const API = 'http://127.0.0.1:6767';
-const STORAGE_KEY = 'kin_form';
-
-type SavedForm = {
-  url: string;
-  title: string;
-  companyName: string;
-  columnId: number | null;
-  description: string;
-};
-
-const loadSavedForm = async (currentUrl: string): Promise<SavedForm | null> => {
-  const result = await chrome.storage.local.get(STORAGE_KEY);
-  const saved = result[STORAGE_KEY] as SavedForm | undefined;
-
-  if (saved && saved.url === currentUrl) {
-    return saved;
-  }
-
-  return null;
-};
-
-const persistForm = (form: SavedForm) => {
-  void chrome.storage.local.set({ [STORAGE_KEY]: form });
-};
-
-const clearForm = () => {
-  void chrome.storage.local.remove(STORAGE_KEY);
-};
 
 export const App: FunctionComponent = () => {
   const [state, setState] = useState<PopupStateType>({ status: 'loading' });
-  const [columns, setColumns] = useState<ColumnInfoType[]>([]);
+  const [columns, setColumns] = useState<Array<ColumnInfoType>>([]);
 
   const [title, setTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -52,7 +30,8 @@ export const App: FunctionComponent = () => {
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
   const [saving, setSaving] = useState(false);
-  const [companyJobs, setCompanyJobs] = useState<JobResultType[]>([]);
+  const [companyJobs, setCompanyJobs] = useState<Array<JobResultType>>([]);
+  const [companyIsToAvoid, setCompanyIsToAvoid] = useState(false);
 
   useEffect(() => {
     void init();
@@ -67,6 +46,7 @@ export const App: FunctionComponent = () => {
   useEffect(() => {
     if (!companyName.trim()) {
       setCompanyJobs([]);
+      setCompanyIsToAvoid(false);
       return;
     }
 
@@ -75,14 +55,18 @@ export const App: FunctionComponent = () => {
         `${API}/company?name=${encodeURIComponent(companyName.trim())}`,
       )
         .then((r) => r.json())
-        .then((d) => setCompanyJobs((d as { jobs: JobResultType[] }).jobs))
+        .then((d) => {
+          const result = d as CompanyResultType;
+          setCompanyJobs(result.jobs);
+          setCompanyIsToAvoid(result.isToAvoid);
+        })
         .catch(() => {});
     }, 400);
 
     return () => clearTimeout(timer);
   }, [companyName]);
 
-  const init = async () => {
+  async function init(): Promise<void> {
     const [tab] = await chrome.tabs.query({
       active: true,
       currentWindow: true,
@@ -120,7 +104,7 @@ export const App: FunctionComponent = () => {
     setColumnId(saved?.columnId ?? colData.columns[0]?.id ?? null);
 
     setState({ status: 'not_found', url: currentUrl });
-  };
+  }
 
   const handleSubmit = async () => {
     if (state.status !== 'not_found' || !companyName.trim()) return;
@@ -129,8 +113,8 @@ export const App: FunctionComponent = () => {
 
     try {
       const payload: CreateJobPayloadType = {
-        title,
         companyName,
+        title,
         columnId: columnId ?? columns[0]?.id,
         url,
         description,
@@ -151,30 +135,56 @@ export const App: FunctionComponent = () => {
     }
   };
 
-  if (state.status === 'loading') return <Loading />;
-
-  if (state.status === 'offline') return <Offline />;
-
-  if (state.status === 'found') return <Found job={state.job} />;
-
-  if (state.status === 'saved') return <Saved job={state.job} />;
-
   return (
-    <NotFound
-      columns={columns}
-      title={title}
-      setTitle={setTitle}
-      companyName={companyName}
-      setCompanyName={setCompanyName}
-      companyJobs={companyJobs}
-      columnId={columnId}
-      setColumnId={setColumnId}
-      url={url}
-      setUrl={setUrl}
-      description={description}
-      setDescription={setDescription}
-      saving={saving}
-      onSubmit={() => void handleSubmit()}
-    />
+    <div className={classNames('')}>
+      <div
+        className={classNames(
+          'w-full flex flex-col items-center justify-center p-4',
+        )}
+      >
+        <img
+          alt="Kin"
+          height={32}
+          width={32}
+          src={icon}
+          className="flex shrink-0"
+        />
+      </div>
+      <div className="w-full flex flex-1 flex-col items-stretch justify-start p-4">
+        {(() => {
+          switch (state.status) {
+            case 'loading':
+              return <LoadingScreen />;
+            case 'offline':
+              return <OfflineScreen />;
+            case 'found':
+              return <FoundScreen data={state.job} />;
+            case 'saved':
+              return <SavedScreen data={state.job} />;
+            case 'not_found':
+            default:
+              return (
+                <FormScreen
+                  columns={columns}
+                  title={title}
+                  setTitle={setTitle}
+                  companyName={companyName}
+                  setCompanyName={setCompanyName}
+                  companyJobs={companyJobs}
+                  companyIsToAvoid={companyIsToAvoid}
+                  columnId={columnId}
+                  setColumnId={setColumnId}
+                  url={url}
+                  setUrl={setUrl}
+                  description={description}
+                  setDescription={setDescription}
+                  saving={saving}
+                  onSubmit={() => void handleSubmit()}
+                />
+              );
+          }
+        })()}
+      </div>
+    </div>
   );
 };

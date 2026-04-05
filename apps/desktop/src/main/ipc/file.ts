@@ -1,5 +1,5 @@
-import { eq } from 'drizzle-orm';
-import { app } from 'electron';
+import { and, eq } from 'drizzle-orm';
+import { app, shell } from 'electron';
 import { mkdir, unlink, writeFile } from 'fs/promises';
 import path from 'path';
 
@@ -8,10 +8,23 @@ import { files } from '../database/schema';
 import { handle } from './handle';
 
 export const registerFileHandlers = (): void => {
-  handle('file:getByJob', (_event, { jobId }: { jobId: number }) => {
-    const db = getDb();
-    return db.select().from(files).where(eq(files.jobId, jobId)).all();
-  });
+  handle(
+    'file:getByJob',
+    (
+      _event,
+      {
+        jobId,
+        fileType,
+      }: { jobId: number; fileType: 'resume' | 'cover_letter' },
+    ) => {
+      const db = getDb();
+      return db
+        .select()
+        .from(files)
+        .where(and(eq(files.jobId, jobId), eq(files.fileType, fileType)))
+        .all();
+    },
+  );
 
   handle(
     'file:upload',
@@ -46,6 +59,14 @@ export const registerFileHandlers = (): void => {
         .get();
     },
   );
+
+  handle('file:open', async (_event, { id }: { id: number }) => {
+    const db = getDb();
+    const file = db.select().from(files).where(eq(files.id, id)).get();
+    if (file) {
+      await shell.openPath(file.filePath);
+    }
+  });
 
   handle('file:delete', async (_event, { id }: { id: number }) => {
     const db = getDb();

@@ -1,7 +1,8 @@
+import type { CompanyType } from '@kin/desktop/main/database';
 import { Button, Modal, TextInput } from '@kin/ui';
 import { Textarea } from '@kin/ui/components';
 import { classNames } from '@kin/ui/utils';
-import { type FunctionComponent, useMemo, useState } from 'react';
+import { type FunctionComponent, useEffect, useMemo, useState } from 'react';
 
 import { useTracker } from './context';
 
@@ -21,6 +22,11 @@ export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
   const [description, setDescription] = useState<string>('');
   const [url, setUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [companies, setCompanies] = useState<CompanyType[]>([]);
+
+  useEffect(() => {
+    window.api.company.getAll().then(setCompanies);
+  }, []);
 
   const trimmedCompany = companyName.trim();
   const trimmedPosition = position.trim();
@@ -32,6 +38,18 @@ export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
       jobs.find((job) => job.companyName.toLowerCase() === normalized) ?? null
     );
   }, [trimmedCompany, jobs]);
+
+  const avoidedCompany = useMemo(() => {
+    if (!trimmedCompany) return null;
+
+    const normalized = trimmedCompany.toLowerCase();
+
+    return (
+      companies.find(
+        (c) => c.isToAvoid && c.name.toLowerCase() === normalized,
+      ) ?? null
+    );
+  }, [trimmedCompany, companies]);
 
   const reset = () => {
     setCompanyName('');
@@ -72,7 +90,17 @@ export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
             value={companyName}
             setValue={setCompanyName}
           />
-          {existingJob && (
+          {avoidedCompany && (
+            <p
+              className={classNames(
+                'text-sm',
+                'text-red-600 dark:text-red-400',
+              )}
+            >
+              This company is marked as one to avoid.
+            </p>
+          )}
+          {!avoidedCompany && existingJob && (
             <div
               className={classNames(
                 'flex flex-row items-center gap-1 text-sm',
@@ -111,7 +139,7 @@ export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
           style="primary"
           onClick={submit}
           loading={loading}
-          disabled={!trimmedCompany || !trimmedPosition}
+          disabled={!trimmedCompany || !trimmedPosition || !!avoidedCompany}
         >
           Create
         </Button>

@@ -148,8 +148,10 @@ contextBridge.exposeInMainWorld('api', {
   },
 
   file: {
-    getByJob: async (args: { jobId: number }) =>
-      (await ipcRenderer.invoke('file:getByJob', args)) as Array<FileType>,
+    getByJob: async (args: {
+      jobId: number;
+      fileType: 'resume' | 'cover_letter';
+    }) => (await ipcRenderer.invoke('file:getByJob', args)) as Array<FileType>,
 
     upload: async (args: {
       jobId: number;
@@ -157,6 +159,10 @@ contextBridge.exposeInMainWorld('api', {
       fileName: string;
       buffer: number[];
     }) => (await ipcRenderer.invoke('file:upload', args)) as FileType,
+
+    open: async (args: { id: number }) => {
+      await ipcRenderer.invoke('file:open', args);
+    },
 
     delete: async (args: { id: number }) => {
       await ipcRenderer.invoke('file:delete', args);
@@ -206,10 +212,21 @@ contextBridge.exposeInMainWorld('api', {
     reorder: async (args: {
       sourceColumnId: number;
       sourceOrderedIds: Array<number>;
+
       targetColumnId: number;
       targetOrderedIds: Array<number>;
     }) => {
       await ipcRenderer.invoke('job:reorder', args);
+    },
+
+    onCreatedByExtension: (callback: () => void): (() => void) => {
+      const listener = () => callback();
+
+      ipcRenderer.on('job:created-by-extension', listener);
+
+      return () => {
+        ipcRenderer.removeListener('job:created-by-extension', listener);
+      };
     },
   },
 });

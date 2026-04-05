@@ -20,9 +20,22 @@ export type CreateJobPayloadType = {
   description?: string;
 };
 
+export type CompanyResultType = {
+  jobs: JobResultType[];
+  isToAvoid: boolean;
+};
+
 export type PopupStateType =
   | { status: 'loading' }
   | { status: 'offline' }
   | { status: 'found'; job: JobResultType }
   | { status: 'not_found'; url: string }
   | { status: 'saved'; job: JobResultType };
+
+export type SavedFormType = {
+  url: string;
+  title: string;
+  companyName: string;
+  columnId: number | null;
+  description: string;
+};

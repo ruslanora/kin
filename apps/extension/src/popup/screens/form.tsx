@@ -1,7 +1,7 @@
 import { Button, RichTextEditor, Select, TextInput, Typography } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 
-import type { ColumnInfoType, JobResultType } from '../../types';
+import type { ColumnInfoType, JobResultType } from '../types';
 
 type PropsType = {
   columns: ColumnInfoType[];
@@ -10,6 +10,7 @@ type PropsType = {
   companyName: string;
   setCompanyName: (v: string) => void;
   companyJobs: JobResultType[];
+  companyIsToAvoid: boolean;
   columnId: number | null;
   setColumnId: (v: number | null) => void;
   url: string;
@@ -20,13 +21,14 @@ type PropsType = {
   onSubmit: () => void;
 };
 
-export const NotFound: FunctionComponent<PropsType> = ({
+export const FormScreen: FunctionComponent<PropsType> = ({
   columns,
   title,
   setTitle,
   companyName,
   setCompanyName,
   companyJobs,
+  companyIsToAvoid,
   columnId,
   setColumnId,
   url,
@@ -36,7 +38,7 @@ export const NotFound: FunctionComponent<PropsType> = ({
   saving,
   onSubmit,
 }) => (
-  <div className="flex flex-col gap-3 p-4">
+  <div className="flex flex-col gap-8">
     <Typography.Heading level="h2">Add to Kin</Typography.Heading>
     <div className="flex flex-col gap-2">
       <TextInput
@@ -44,7 +46,12 @@ export const NotFound: FunctionComponent<PropsType> = ({
         value={companyName}
         setValue={setCompanyName}
       />
-      {companyJobs.length > 0 && (
+      {companyIsToAvoid && (
+        <p className="text-xs text-red-600">
+          This company is marked as one to avoid.
+        </p>
+      )}
+      {!companyIsToAvoid && companyJobs.length > 0 && (
         <p className="text-xs text-amber-600">
           You have already applied to this company.
         </p>
@@ -66,10 +73,10 @@ export const NotFound: FunctionComponent<PropsType> = ({
     <Button
       width="full"
       loading={saving}
-      disabled={!companyName.trim()}
+      disabled={!companyName.trim() || companyIsToAvoid}
       onClick={onSubmit}
     >
-      Add to Kin
+      <span className="w-full text-center">Add to Kin</span>
     </Button>
   </div>
 );

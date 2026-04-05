@@ -1,5 +1,5 @@
 import type { JobWithCompanyType } from '@kin/desktop/main/database/schema';
-import { Icon } from '@kin/ui';
+import { Icon, Rating } from '@kin/ui';
 import { classNames } from '@kin/ui/utils';
 import { motion, type PanInfo, useDragControls } from 'framer-motion';
 import { type FunctionComponent, useRef } from 'react';
@@ -119,6 +119,11 @@ export const Card: FunctionComponent<PropsType> = ({
             >
               {employmentInfo}
             </span>
+          )}
+          {job.excitement > 0 && (
+            <div className="mt-1.5">
+              <Rating value={job.excitement} size={12} />
+            </div>
           )}
         </div>
         <div

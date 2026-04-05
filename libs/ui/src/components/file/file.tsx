@@ -8,19 +8,23 @@ import { IconButton } from '../icon-button';
 
 const formatSize = (bytes: number): string => {
   if (bytes < 1024) return `${bytes} B`;
+
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
 type PropsType = {
   name: string;
   size?: number;
+  onOpen?: () => void;
   onRemove?: () => void;
 };
 
 export const File: FunctionComponent<PropsType> = ({
   name,
   size,
+  onOpen,
   onRemove,
 }) => {
   return (
@@ -44,11 +48,10 @@ export const File: FunctionComponent<PropsType> = ({
           </p>
         )}
       </div>
-      {onRemove && (
-        <div className="shrink-0">
-          <IconButton icon="x" onClick={onRemove} />
-        </div>
-      )}
+      <div className="shrink-0 flex flex-row items-center gap-1">
+        {onOpen && <IconButton icon="external-link" onClick={onOpen} />}
+        {onRemove && <IconButton icon="x" onClick={onRemove} />}
+      </div>
     </div>
   );
 };

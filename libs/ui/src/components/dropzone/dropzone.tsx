@@ -18,13 +18,17 @@ const ACCEPTED_TYPES = [
 
 const ACCEPTED_EXTENSIONS = '.pdf,.docx,.txt';
 
+const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
+
 type PropsType = {
   onFile: (file: File) => void;
+  onError?: (message: string) => void;
   disabled?: boolean;
 };
 
 export const Dropzone: FunctionComponent<PropsType> = ({
   onFile,
+  onError,
   disabled,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -32,11 +36,18 @@ export const Dropzone: FunctionComponent<PropsType> = ({
 
   const handleFile = (file: File) => {
     if (
-      ACCEPTED_TYPES.includes(file.type) ||
-      file.name.match(/\.(pdf|docx|txt)$/i)
+      !(
+        ACCEPTED_TYPES.includes(file.type) ||
+        file.name.match(/\.(pdf|docx|txt)$/i)
+      )
     ) {
-      onFile(file);
+      return;
     }
+    if (file.size > MAX_FILE_SIZE) {
+      onError?.('File size must be 1 MB or less.');
+      return;
+    }
+    onFile(file);
   };
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {

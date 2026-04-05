@@ -143,6 +143,16 @@ export const Tracker: FunctionComponent = () => {
   };
 
   useEffect(() => {
+    if (!activeBoard.id) return;
+
+    return window.api.job.onCreatedByExtension(async () => {
+      if (board.id !== activeBoard.id) return;
+      const updated = await fetchJobs(activeBoard.id);
+      setJobs(updated);
+    });
+  }, [board.id, activeBoard.id]);
+
+  useEffect(() => {
     setLoading(true);
 
     (async () => {

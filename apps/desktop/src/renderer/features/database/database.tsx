@@ -58,6 +58,36 @@ export const Database: FunctionComponent = () => {
     setSelectedContact(null);
   }, []);
 
+  const updateCompany = useCallback(
+    async (args: { id: number; [key: string]: unknown }) => {
+      const updated = await window.api.company.update(args);
+
+      setCompanies((prev) =>
+        prev.map((company) => (company.id === updated.id ? updated : company)),
+      );
+
+      setSelectedCompany((prev) => (prev?.id === updated.id ? updated : prev));
+    },
+    [],
+  );
+
+  const updateContact = useCallback(
+    async (args: { id: number; [key: string]: unknown }) => {
+      const updated = await window.api.contact.update(args);
+
+      setContacts((prev) =>
+        prev.map((contact) =>
+          contact.id === updated.id ? { ...contact, ...updated } : contact,
+        ),
+      );
+
+      setSelectedContact((prev) =>
+        prev?.id === updated.id ? { ...prev, ...updated } : prev,
+      );
+    },
+    [],
+  );
+
   const context = useMemo(
     () => ({
       tab,
@@ -70,10 +100,10 @@ export const Database: FunctionComponent = () => {
       selectCompany,
       selectContact,
       closeSidebar,
-      updateCompany: window.api.company.update,
-      updateContact: window.api.contact.update,
+      updateCompany,
+      updateContact,
     }),
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       tab,
       companies,
@@ -84,6 +114,8 @@ export const Database: FunctionComponent = () => {
       selectCompany,
       selectContact,
       closeSidebar,
+      updateCompany,
+      updateContact,
     ],
   );
 

@@ -7,15 +7,19 @@ import { useState } from 'react';
 type PropsType = {
   value: number;
   max?: number;
+  size?: number;
   onChange?: (value: number) => void;
 };
 
-const StarIcon: FunctionComponent<{ className?: string }> = ({ className }) => (
+const StarIcon: FunctionComponent<{ size?: number; className?: string }> = ({
+  size = 20,
+  className,
+}) => (
   <svg
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
+    width={size}
+    height={size}
     fill="currentColor"
     viewBox="0 0 24 24"
     className={className}
@@ -26,6 +30,7 @@ const StarIcon: FunctionComponent<{ className?: string }> = ({ className }) => (
 
 export const Rating: FunctionComponent<PropsType> = ({
   value,
+  size = 20,
   max = 5,
   onChange,
 }) => {
@@ -63,7 +68,7 @@ export const Rating: FunctionComponent<PropsType> = ({
               !interactive && 'cursor-default',
             )}
           >
-            <StarIcon />
+            <StarIcon size={size} />
           </button>
         );
       })}

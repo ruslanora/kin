@@ -1,6 +1,7 @@
 import http from 'node:http';
 
 import { asc, eq, getTableColumns, isNull, max, sql } from 'drizzle-orm';
+import type { BrowserWindow } from 'electron';
 
 import { getDb } from './database/client';
 import { boards, columns, companies, jobs } from './database/schema';
@@ -9,6 +10,7 @@ const PORT = 6767;
 const HOST = '127.0.0.1';
 
 let server: http.Server | null = null;
+let win: BrowserWindow | null = null;
 
 const ALLOWED_ORIGINS = ['http://localhost'];
 
@@ -104,25 +106,38 @@ const handleRequest = (
   if (req.method === 'GET' && pathname === '/company') {
     const name = parsedUrl.searchParams.get('name');
     if (!name || !name.trim()) {
-      sendJson(res, 200, { jobs: [] });
+      sendJson(res, 200, { jobs: [], isToAvoid: false });
       return;
     }
 
     try {
       const db = getDb();
-      const results = db
-        .select({
-          ...getTableColumns(jobs),
-          companyName: companies.name,
-          columnName: columns.name,
-        })
-        .from(jobs)
-        .innerJoin(companies, eq(jobs.companyId, companies.id))
-        .innerJoin(columns, eq(jobs.columnId, columns.id))
-        .where(sql`lower(${companies.name}) = lower(${name.trim()})`)
-        .all();
 
-      sendJson(res, 200, { jobs: results });
+      const company = db
+        .select()
+        .from(companies)
+        .where(sql`lower(${companies.name}) = lower(${name.trim()})`)
+        .limit(1)
+        .get();
+
+      const results = company
+        ? db
+            .select({
+              ...getTableColumns(jobs),
+              companyName: companies.name,
+              columnName: columns.name,
+            })
+            .from(jobs)
+            .innerJoin(companies, eq(jobs.companyId, companies.id))
+            .innerJoin(columns, eq(jobs.columnId, columns.id))
+            .where(eq(jobs.companyId, company.id))
+            .all()
+        : [];
+
+      sendJson(res, 200, {
+        jobs: results,
+        isToAvoid: company?.isToAvoid ?? false,
+      });
     } catch (err) {
       sendJson(res, 500, { error: String(err) });
     }
@@ -238,6 +253,7 @@ const handleRequest = (
         });
 
         sendJson(res, 201, result);
+        win?.webContents.send('job:created-by-extension');
       })
       .catch((err) => {
         sendJson(res, 500, { error: String(err) });
@@ -248,7 +264,8 @@ const handleRequest = (
   sendJson(res, 404, { error: 'Not found' });
 };
 
-export const startServer = (): void => {
+export const startServer = (window: BrowserWindow): void => {
+  win = window;
   server = http.createServer(handleRequest);
   server.listen(PORT, HOST, () => {
     console.log(`[server] listening on http://${HOST}:${PORT}`);
