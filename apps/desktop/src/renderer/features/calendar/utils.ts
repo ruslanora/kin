@@ -59,18 +59,3 @@ export const getCellsForMonth = (month: Date): CalendarCellType[] => {
 
   return cells;
 };
-
-export const formatDate = (date: Date): string =>
-  date.toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
-
-export const formatTime = (date: Date): string =>
-  new Date(date).toLocaleString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  });

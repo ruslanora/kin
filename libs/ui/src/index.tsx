@@ -21,6 +21,7 @@ export {
   Shell,
   Spinner,
   Tab,
+  Textarea,
   TextInput,
   TimePicker,
   Toggle,

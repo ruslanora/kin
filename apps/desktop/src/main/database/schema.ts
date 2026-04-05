@@ -155,4 +155,5 @@ export type InterviewType = typeof interviews.$inferSelect;
 export type InterviewWithJobType = InterviewType & {
   jobTitle: string | null;
   companyName: string;
+  isFollowUp: boolean;
 };

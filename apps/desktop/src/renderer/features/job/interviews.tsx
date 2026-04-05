@@ -12,8 +12,8 @@ import {
 } from '@kin/ui';
 import { type FunctionComponent, useEffect, useState } from 'react';
 
+import { formatScheduledAt, toDateString, toTimeString } from '../../utils';
 import { useJob } from './context';
-import { formatScheduledAt, toDateString, toTimeString } from './utils';
 
 type FormType = {
   date: string;

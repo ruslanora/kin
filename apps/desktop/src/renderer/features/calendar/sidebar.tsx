@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { formatLongDate, formatTime } from '../../utils';
 import { useCalendar } from './context';
-import { formatDate, formatTime } from './utils';
 
 export const Sidebar: FunctionComponent = () => {
   const { day, dayInterviews, handleDayOnClose } = useCalendar();
@@ -40,7 +40,7 @@ export const Sidebar: FunctionComponent = () => {
               >
                 <div className="p-2">
                   <Typography.Heading level="h2" as="h3">
-                    {formatDate(day)}
+                    {formatLongDate(day)}
                   </Typography.Heading>
                 </div>
                 <IconButton icon="x" onClick={handleDayOnClose} />
@@ -61,11 +61,11 @@ export const Sidebar: FunctionComponent = () => {
                     >
                       <div className="flex flex-col gap-0.5 min-w-0">
                         <div className="flex flex-row items-center gap-1.5">
-                          <span className="text-xs text-stone-500 dark:text-stone-400 font-medium">
+                          <span className="text-xs text-stone-500 dark:text-stone-400 font-medium leading-5">
                             {formatTime(interview.scheduledAt)}
                             {interview.round ? ` · ${interview.round}` : ''}
                           </span>
-                          {interview.followUp && (
+                          {interview.isFollowUp && (
                             <Badge variant="warning">Follow Up</Badge>
                           )}
                         </div>
@@ -73,7 +73,7 @@ export const Sidebar: FunctionComponent = () => {
                           {interview.companyName}
                         </span>
                         {interview.jobTitle && (
-                          <span className="text-xs text-stone-500 dark:text-stone-400 truncate">
+                          <span className="text-xs leading-5 text-stone-500 dark:text-stone-400 truncate">
                             {interview.jobTitle}
                           </span>
                         )}
