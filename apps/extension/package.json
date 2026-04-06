@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "@kin/ui": "workspace:*",
-    "@tiptap/extension-placeholder": "^3.22.2",
-    "@tiptap/react": "^3.22.2",
-    "@tiptap/starter-kit": "^3.22.2",
+    "@tiptap/extension-placeholder": "^3.22.1",
+    "@tiptap/react": "^3.22.1",
+    "@tiptap/starter-kit": "^3.22.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.6.0"

@@ -5,6 +5,10 @@
   "main": "index.js",
   "license": "AGPL-3.0",
   "author": "Ruslan Ora",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruslanora/kin.git"
+  },
   "engines": {
     "node": ">=23.11.1 <=25.9.0"
   },
@@ -16,7 +20,7 @@
     "format:check": "prettier --check .",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --passWithNoTests",
-    "typecheck": "pnpm --filter ./apps/desktop run typecheck && pnpm --filter ./libs/ui run typecheck",
+    "typecheck": "pnpm --filter ./apps/desktop run typecheck && pnpm --filter ./libs/ui run typecheck && pnpm --filter ./apps/extension run typecheck",
     "prepare": "husky",
     "app:start": "pnpm --filter ./apps/desktop run start",
     "app:package": "pnpm --filter ./apps/desktop run package",
@@ -30,6 +34,14 @@
     "ui:test": "pnpm --filter ./libs/ui run test",
     "ext:build": "pnpm --filter ./apps/extension run build",
     "ext:dev": "pnpm --filter ./apps/extension run dev"
+  },
+  "pnpm": {
+    "overrides": {
+      "@tiptap/core": "3.22.1",
+      "@tiptap/react": "3.22.1",
+      "@tiptap/starter-kit": "3.22.1",
+      "@tiptap/extension-placeholder": "3.22.1"
+    }
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

@@ -1,11 +1,6 @@
 /// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 
-import type { Api } from '../preload';
-
-declare module '*.css' {
-  const content: string;
-  export default content;
-}
+import type { Api } from './src/preload';
 
 declare global {
   interface Window {

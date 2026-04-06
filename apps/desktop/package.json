@@ -5,6 +5,10 @@
   "description": "Free, offline, and open-source job search companion",
   "main": ".vite/build/index.js",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruslanora/kin.git"
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -44,7 +48,6 @@
     "@types/electron-squirrel-startup": "^1.0.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^6.0.1",
     "drizzle-kit": "^0.31.10",
     "electron": "^41.1.1",

@@ -2,6 +2,7 @@ import http from 'node:http';
 
 import { asc, eq, getTableColumns, isNull, max, sql } from 'drizzle-orm';
 import type { BrowserWindow } from 'electron';
+import log from 'electron-log';
 
 import { getDb } from './database/client';
 import { boards, columns, companies, jobs } from './database/schema';
@@ -268,7 +269,7 @@ export const startServer = (window: BrowserWindow): void => {
   win = window;
   server = http.createServer(handleRequest);
   server.listen(PORT, HOST, () => {
-    console.log(`[server] listening on http://${HOST}:${PORT}`);
+    log.info(`[server] listening on http://${HOST}:${PORT}`);
   });
 };
 

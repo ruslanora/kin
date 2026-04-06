@@ -1,17 +1,8 @@
 import { asc, desc, eq, isNotNull, isNull, max } from 'drizzle-orm';
 
 import { boards, columns, getDb } from '../database';
+import { DEFAULT_COLUMNS } from '../database/utils';
 import { handle } from './handle';
-
-const DEFAULT_COLUMNS = [
-  'Bookmarked',
-  'Applied',
-  'Screening Call',
-  'Interviewing',
-  'Offer Accepted',
-  'Ghosted',
-  'Rejected',
-];
 
 export const registerBoardHandlers = (): void => {
   handle('board:getActive', () => {
