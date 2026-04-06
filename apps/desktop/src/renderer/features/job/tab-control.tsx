@@ -3,7 +3,7 @@ import { type ComponentType, type FunctionComponent, useState } from 'react';
 
 import { Company } from './company';
 import { Contacts } from './contacts';
-import { CoverLetter } from './conver-letter';
+import { CoverLetter } from './cover-letter';
 import { Interviews } from './interviews';
 import { JobInfo } from './job-info';
 import { Notes } from './notes';

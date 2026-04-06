@@ -103,9 +103,9 @@ export const Database: FunctionComponent = () => {
       updateCompany,
       updateContact,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       tab,
+      handleSetTab,
       companies,
       contacts,
       allInterviews,

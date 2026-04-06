@@ -1,0 +1,74 @@
+name: 'Bug Report'
+description: 'Submit a detailed bug report to help us identify and resolve issues efficiently.'
+title: 'Bug Report:'
+labels: ['type: bug']
+body:
+  - type: markdown
+    attributes:
+      value: Your input is essential for improving the stability and reliability of our application. Please provide accurate and thorough information.
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: 'Description'
+      description: 'Provide a clear and concise description of the bug.'
+      placeholder: 'The bug is...'
+  - type: textarea
+    id: steps-to-reproduce
+    validations:
+      required: true
+    attributes:
+      label: 'Steps to Reproduce'
+      description: 'Describe the exact steps required to reproduce this bug. This helps us replicate and fix the issue quickly.'
+      placeholder: "1. Go to '...'\n2. Click on '...'\n3. Observe the issue"
+  - type: textarea
+    id: expected-behavior
+    validations:
+      required: true
+    attributes:
+      label: 'Expected Behavior'
+      description: 'What outcome did you expect?'
+      placeholder: 'The expected behavior should be...'
+  - type: textarea
+    id: actual-behavior
+    validations:
+      required: true
+    attributes:
+      label: 'Actual Behavior (Include Screenshots if Applicable)'
+      description: 'Describe what actually happened. Attach screenshots or logs to illustrate the problem.'
+      placeholder: 'The observed behavior is...'
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: 'Operating System'
+      description: 'Specify the OS where the bug occurs.'
+      options:
+        - MacOS
+        - Windows
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    validations:
+      required: true
+    attributes:
+      label: 'App Version'
+      description: 'Which version of the app are you running? Find it in the app menu under Help → About.'
+      placeholder: 'e.g. 1.2.0'
+  - type: textarea
+    id: additional-context
+    validations:
+      required: false
+    attributes:
+      label: 'Additional Context'
+      description: 'Provide any other relevant information that might help us diagnose the issue.'
+      placeholder: 'Additional notes...'
+  - type: checkboxes
+    id: no-duplicate-issues
+    attributes:
+      label: 'Duplicate Check'
+      options:
+        - label: 'I have verified that this issue has not been reported previously.'
+          required: true

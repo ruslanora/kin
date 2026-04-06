@@ -4,5 +4,6 @@
     "outDir": "dist",
     "resolveJsonModule": true,
     "jsx": "react-jsx"
-  }
+  },
+  "include": ["src", "forge.env.d.ts"]
 }
