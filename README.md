@@ -33,7 +33,7 @@
 - Track your job applications on a Kanban board
 - Keep everything in one place: resumes and cover letters you applied with, notes, contacts, and interviews
 - Avoid applying to the same company twice. The app will warn you if you do
-- Blacklist companies you never want to work for, and keep track of all companies and people you've interacted with
+- Blocklist companies you never want to work for, and keep track of all companies and people you've interacted with
 - Streamline your job search with a Google Chrome extension
 - When you’re done, simply delete your data. You stay in full control so it never ends up on the market
 
