@@ -2,6 +2,7 @@
   "name": "@kin/ui",
   "version": "1.0.0",
   "type": "module",
+  "license": "AGPL-3.0",
   "private": true,
   "scripts": {
     "build": "vite build",

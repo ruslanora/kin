@@ -1,0 +1,47 @@
+name: 'Feature Request'
+description: 'Submit a detailed proposal for a new feature to help improve the application.'
+title: 'Feature Request:'
+labels: ['type: feature-request']
+body:
+  - type: markdown
+    attributes:
+      value: Your contribution is valuable. Please provide complete and precise information to help us evaluate your feature request effectively.
+  - type: textarea
+    id: feature-description
+    validations:
+      required: true
+    attributes:
+      label: 'Feature Description'
+      description: 'Provide a clear and concise description of the proposed feature.'
+      placeholder: 'I, as a user, want...'
+  - type: textarea
+    id: pitch
+    validations:
+      required: true
+    attributes:
+      label: 'Justification / Use Case'
+      description: 'Explain why this feature is needed, its intended use, and any specific scenarios where it would add value.'
+      placeholder: 'In my use case, this feature would...'
+  - type: textarea
+    id: solution
+    validations:
+      required: true
+    attributes:
+      label: 'Proposed Implementation'
+      description: 'Describe how you envision this feature working or being implemented.'
+      placeholder: 'I propose this feature should...'
+  - type: textarea
+    id: alternative
+    validations:
+      required: false
+    attributes:
+      label: 'Alternative Approaches / Additional Context'
+      description: "Provide any alternative solutions you've considered or additional relevant information."
+      placeholder: 'I have considered...'
+  - type: checkboxes
+    id: no-duplicate-issues
+    attributes:
+      label: 'Duplicate Check'
+      options:
+        - label: 'I have verified that this feature request has not been submitted previously.'
+          required: true

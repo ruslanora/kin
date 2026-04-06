@@ -5,6 +5,10 @@
   "main": "index.js",
   "license": "AGPL-3.0",
   "author": "Ruslan Ora",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruslanora/kin.git"
+  },
   "engines": {
     "node": ">=23.11.1 <=25.9.0"
   },
@@ -16,7 +20,7 @@
     "format:check": "prettier --check .",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --passWithNoTests",
-    "typecheck": "pnpm --filter ./apps/desktop run typecheck && pnpm --filter ./libs/ui run typecheck",
+    "typecheck": "pnpm --filter ./apps/desktop run typecheck && pnpm --filter ./libs/ui run typecheck && pnpm --filter ./apps/extension run typecheck",
     "prepare": "husky",
     "app:start": "pnpm --filter ./apps/desktop run start",
     "app:package": "pnpm --filter ./apps/desktop run package",

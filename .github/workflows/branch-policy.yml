@@ -1,0 +1,56 @@
+name: Branch Merge Policy
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  check-branch-policy:
+    name: Enforce branch merge rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch naming policy
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          echo "Target branch : $BASE"
+          echo "Source branch : $HEAD"
+
+          case "$BASE" in
+            main)
+              if [[ "$HEAD" =~ ^(develop|hotfix/.+|release/.+)$ ]]; then
+                echo "OK: '$HEAD' is allowed to merge into 'main'."
+              else
+                echo ""
+                echo "ERROR: Branch '$HEAD' cannot be merged into 'main'."
+                echo ""
+                echo "Allowed sources for 'main':"
+                echo "  - develop"
+                echo "  - hotfix/<name>"
+                echo "  - release/<name>"
+                exit 1
+              fi
+              ;;
+            develop)
+              if [[ "$HEAD" =~ ^(feature/.+|feat/.+|bugfix/.+|fix/.+|chore/.+)$ ]]; then
+                echo "OK: '$HEAD' is allowed to merge into 'develop'."
+              else
+                echo ""
+                echo "ERROR: Branch '$HEAD' cannot be merged into 'develop'."
+                echo ""
+                echo "Allowed sources for 'develop':"
+                echo "  - feature/<name>"
+                echo "  - feat/<name>"
+                echo "  - bugfix/<name>"
+                echo "  - fix/<name>"
+                echo "  - chore/<name>"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "SKIP: No policy for target '$BASE'. Passing."
+              ;;
+          esac
