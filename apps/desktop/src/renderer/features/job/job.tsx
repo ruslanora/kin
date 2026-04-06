@@ -72,7 +72,7 @@ export const Job: FunctionComponent = () => {
         setLoading(false);
       }
     })();
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) {

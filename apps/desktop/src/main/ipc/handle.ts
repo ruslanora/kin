@@ -1,4 +1,5 @@
 import { ipcMain, type IpcMainInvokeEvent } from 'electron';
+import log from 'electron-log';
 
 /**
  * Wraps ipcMain.handle with error logging. Errors are re-thrown so the
@@ -12,7 +13,7 @@ export function handle<TArgs extends unknown[] = unknown[]>(
     try {
       return await handler(event, ...(args as TArgs));
     } catch (err) {
-      console.error(`[IPC] ${channel} failed:`, err);
+      log.error(`[IPC] ${channel} failed:`, err);
       throw err;
     }
   });

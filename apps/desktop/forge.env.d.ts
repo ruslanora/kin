@@ -1,6 +1,6 @@
 /// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 
-import type { Api } from '../preload';
+import type { Api } from './src/preload';
 
 declare module '*.css' {
   const content: string;

@@ -11,7 +11,7 @@ import type {
   JobWithCompanyType,
 } from '../main/database';
 
-contextBridge.exposeInMainWorld('api', {
+const api = {
   theme: {
     set: async (theme: 'light' | 'dark' | 'system'): Promise<void> => {
       await ipcRenderer.invoke('theme:set', theme);
@@ -158,7 +158,15 @@ contextBridge.exposeInMainWorld('api', {
       fileType: 'resume' | 'cover_letter';
       fileName: string;
       buffer: number[];
-    }) => (await ipcRenderer.invoke('file:upload', args)) as FileType,
+    }) => {
+      const MAX_FILE_SIZE = 1024 * 1024;
+
+      if (args.buffer.length > MAX_FILE_SIZE) {
+        throw new Error('File exceeds the 50 MB size limit');
+      }
+
+      return (await ipcRenderer.invoke('file:upload', args)) as FileType;
+    },
 
     open: async (args: { id: number }) => {
       await ipcRenderer.invoke('file:open', args);
@@ -229,4 +237,8 @@ contextBridge.exposeInMainWorld('api', {
       };
     },
   },
-});
+};
+
+export type Api = typeof api;
+
+contextBridge.exposeInMainWorld('api', api);

@@ -16,7 +16,7 @@ export const runMigrations = (): void => {
   migrate(db, { migrationsFolder });
 };
 
-const DEFAULT_COLUMNS = [
+export const DEFAULT_COLUMNS = [
   'Bookmarked',
   'Applied',
   'Screening Call',
@@ -43,6 +43,7 @@ export const seedDefaults = (): void => {
         .values({ name: 'New Job Hunt', createdAt: new Date() })
         .returning()
         .get();
+
       DEFAULT_COLUMNS.forEach((name, order) => {
         tx.insert(columns).values({ boardId: board.id, name, order }).run();
       });
