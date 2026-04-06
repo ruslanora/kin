@@ -35,6 +35,14 @@
     "ext:build": "pnpm --filter ./apps/extension run build",
     "ext:dev": "pnpm --filter ./apps/extension run dev"
   },
+  "pnpm": {
+    "overrides": {
+      "@tiptap/core": "3.22.1",
+      "@tiptap/react": "3.22.1",
+      "@tiptap/starter-kit": "3.22.1",
+      "@tiptap/extension-placeholder": "3.22.1"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.5.2",

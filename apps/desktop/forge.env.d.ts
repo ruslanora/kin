@@ -2,11 +2,6 @@
 
 import type { Api } from './src/preload';
 
-declare module '*.css' {
-  const content: string;
-  export default content;
-}
-
 declare global {
   interface Window {
     api: Api;
