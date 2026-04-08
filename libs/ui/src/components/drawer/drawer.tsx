@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { FunctionComponent, ReactNode } from 'react';
 
@@ -41,7 +41,7 @@ const DrawerComponent: FunctionComponent<PropsType> = ({
             className={classNames(
               'w-full max-w-md h-full',
               'flex flex-col',
-              'bg-stone-50 dark:bg-stone-900',
+              'bg-stone-50 dark:bg-stone-950',
               'border-l border-stone-200 dark:border-stone-800',
               'shadow-2xl',
             )}

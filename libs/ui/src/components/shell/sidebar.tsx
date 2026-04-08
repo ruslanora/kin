@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import { type FunctionComponent, type ReactNode, useState } from 'react';
 
 import { Icon } from '../icon';
@@ -27,7 +27,7 @@ const ShellSidebarComponent: FunctionComponent<PropsType> = ({ children }) => {
         'bg-stone-100 border-r border-r-stone-200 dark:bg-stone-900 dark:border-r-stone-800',
         'transition-all duration-300 ease-in-out',
         'overflow-hidden',
-        collapsed ? 'w-13 cursor-pointer' : 'w-64',
+        collapsed ? 'w-14 cursor-pointer' : 'w-64',
       )}
     >
       <div className="w-full flex flex-row items-center justify-between shrink-0 p-2 pt-4">
@@ -35,8 +35,9 @@ const ShellSidebarComponent: FunctionComponent<PropsType> = ({ children }) => {
           <button
             type="button"
             className={classNames(
-              'relative h-9 w-9 rounded-lg',
+              'relative h-10 w-10 rounded-md',
               'text-stone-400 bg-transparent hover:text-stone-500 hover:bg-stone-200 dark:text-stone-500 dark:hover:text-stone-400 dark:hover:bg-stone-800',
+              'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
               'flex items-center justify-center shrink-0',
               'transition-all duration-300 ease-in-out',
               'cursor-pointer',
@@ -51,7 +52,7 @@ const ShellSidebarComponent: FunctionComponent<PropsType> = ({ children }) => {
           >
             <span
               className={classNames(
-                'h-9 w-9',
+                'h-10 w-10',
                 'flex items-center justify-center shrink-0',
                 logoHovered ? 'opacity-0' : 'opacity-100',
               )}
@@ -60,7 +61,7 @@ const ShellSidebarComponent: FunctionComponent<PropsType> = ({ children }) => {
             </span>
             <span
               className={classNames(
-                'z-10 absolute h-9 w-9 inset-0',
+                'z-10 absolute h-10 w-10 inset-0',
                 'flex items-center justify-center shrink-0',
                 logoHovered ? 'opacity-100' : 'opacity-0',
               )}
@@ -72,7 +73,7 @@ const ShellSidebarComponent: FunctionComponent<PropsType> = ({ children }) => {
           <>
             <div
               className={classNames(
-                'h-9 w-9',
+                'h-10 w-10',
                 'flex items-center justify-center shrink-0',
               )}
             >

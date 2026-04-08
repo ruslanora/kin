@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import Placeholder from '@tiptap/extension-placeholder';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -57,15 +57,15 @@ export const RichTextEditor: FunctionComponent<PropsType> = ({
   return (
     <div
       className={classNames(
-        'w-full p-2 border rounded-lg shadow-xs',
+        'w-full p-2 border rounded-md shadow-xs',
         'transition-all duration-300 ease-in-out',
-        'bg-transparent border-stone-200',
-        'dark:bg-transparent dark:border-stone-800',
+        'bg-stone-50 border-stone-200',
+        'dark:bg-stone-950 dark:border-stone-800',
         'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
       )}
     >
       <EditorContent editor={editor} />
-      <div className="flex flex-row items-center px-1 pb-1">
+      <div className="flex flex-row items-center px-1 pb-1 pt-2">
         <IconButton
           icon="bold"
           active={editor.isActive('bold')}

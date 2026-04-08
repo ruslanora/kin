@@ -2,7 +2,7 @@
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import { type FunctionComponent, useId } from 'react';
 
 type PropsType = {

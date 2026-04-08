@@ -15,7 +15,8 @@
       "@kin/desktop/*": ["./apps/desktop/src/*"],
       "@kin/extension/*": ["./apps/extension/src/*"],
       "@kin/ui": ["./libs/ui/src"],
-      "@kin/ui/*": ["./libs/ui/src/*"]
+      "@kin/ui/*": ["./libs/ui/src/*"],
+      "@kin/server/*": ["./apps/server/src/*"]
     }
   },
   "exclude": ["node_modules"]

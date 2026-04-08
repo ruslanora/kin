@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import { type FunctionComponent, useId } from 'react';
 
 type PropsType = {
@@ -30,7 +30,7 @@ export const Checkbox: FunctionComponent<PropsType> = ({
           disabled={disabled}
           onChange={(e) => onChange(e.target.checked)}
           className={classNames(
-            'w-4 h-4 rounded-sm appearance-none cursor-pointer',
+            'w-4 h-4 rounded-md appearance-none cursor-pointer',
             'box-border border-2 border-stone-300 dark:border-stone-400 checked:border-blue-500 dark:checked:border-blue-600',
             'checked:bg-blue-500 dark:checked:bg-blue-600',
             'focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-700',
