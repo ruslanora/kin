@@ -19,7 +19,7 @@ export const SectionItem: FunctionComponent<LinkType> = ({
         className={({ isActive }) =>
           classNames(
             'w-full flex flex-row flex-nowrap items-center justify-start shrink-0',
-            'rounded-md overflow-hidden',
+            'rounded-sm overflow-hidden',
             'transition-all duration-300 ease-in-out',
             'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
             isActive
