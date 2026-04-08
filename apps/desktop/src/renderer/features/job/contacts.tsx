@@ -140,31 +140,31 @@ export const Contacts: FunctionComponent = () => {
         <Modal.Body>
           <div className="grid grid-cols-2 gap-4">
             <TextInput
-              placeholder="First Name *"
+              label="First Name *"
               value={form.firstName}
-              setValue={(firstName) => setForm({ ...form, firstName })}
+              onChange={(firstName) => setForm({ ...form, firstName })}
             />
             <TextInput
-              placeholder="Last Name *"
+              label="Last Name *"
               value={form.lastName}
-              setValue={(lastName) => setForm({ ...form, lastName })}
+              onChange={(lastName) => setForm({ ...form, lastName })}
             />
             <div className="col-span-2">
               <TextInput
-                placeholder="Title"
+                label="Title"
                 value={form.title}
-                setValue={(title) => setForm({ ...form, title })}
+                onChange={(title) => setForm({ ...form, title })}
               />
             </div>
             <TextInput
-              placeholder="Email"
+              label="Email"
               value={form.email}
-              setValue={(email) => setForm({ ...form, email })}
+              onChange={(email) => setForm({ ...form, email })}
             />
             <TextInput
-              placeholder="LinkedIn"
+              label="LinkedIn"
               value={form.linkedin}
-              setValue={(linkedin) => setForm({ ...form, linkedin })}
+              onChange={(linkedin) => setForm({ ...form, linkedin })}
             />
             <div className="col-span-2">
               <RichTextEditor

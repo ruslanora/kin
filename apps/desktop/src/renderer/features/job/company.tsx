@@ -32,37 +32,37 @@ export const Company: FunctionComponent = () => {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <TextInput
-          placeholder="Company Name *"
+          label="Company Name *"
           value={company.name}
-          setValue={(name) => setCompany({ ...company, name })}
+          onChange={(name) => setCompany({ ...company, name })}
           onBlur={() => {
             if (company.name.trim()) save({ name: company.name.trim() });
           }}
         />
         <TextInput
-          placeholder="Industry"
+          label="Industry"
           value={company.industry ?? ''}
-          setValue={(industry) => setCompany({ ...company, industry })}
+          onChange={(industry) => setCompany({ ...company, industry })}
           onBlur={() => save({ industry: company.industry || null })}
         />
         <div className="col-span-2">
           <TextInput
-            placeholder="Address, Location"
+            label="Address, Location"
             value={company.address ?? ''}
-            setValue={(address) => setCompany({ ...company, address })}
+            onChange={(address) => setCompany({ ...company, address })}
             onBlur={() => save({ address: company.address || null })}
           />
         </div>
         <TextInput
-          placeholder="LinkedIn"
+          label="LinkedIn"
           value={company.linkedin ?? ''}
-          setValue={(linkedin) => setCompany({ ...company, linkedin })}
+          onChange={(linkedin) => setCompany({ ...company, linkedin })}
           onBlur={() => save({ linkedin: company.linkedin || null })}
         />
         <TextInput
-          placeholder="Website"
+          label="Website"
           value={company.website ?? ''}
-          setValue={(website) => setCompany({ ...company, website })}
+          onChange={(website) => setCompany({ ...company, website })}
           onBlur={() => save({ website: company.website || null })}
         />
         <div className="col-span-2">

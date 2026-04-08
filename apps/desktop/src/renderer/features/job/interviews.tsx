@@ -156,9 +156,9 @@ export const Interviews: FunctionComponent = () => {
             />
             <div className="col-span-2">
               <TextInput
-                placeholder="Round"
+                label="Round"
                 value={form.round}
-                setValue={(round) => setForm({ ...form, round })}
+                onChange={(round) => setForm({ ...form, round })}
               />
             </div>
             <div className="col-span-2">

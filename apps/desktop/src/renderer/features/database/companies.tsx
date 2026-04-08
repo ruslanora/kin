@@ -31,7 +31,7 @@ export const Companies: FunctionComponent = () => {
       <div className="flex flex-col">
         {groups.map(({ letter, items }) => (
           <div key={`companies-${letter}`}>
-            <div className="px-2 py-1 text-xs font-semibold text-stone-400 dark:text-stone-500 uppercase tracking-wider">
+            <div className="px-2 py-2 text-xs font-semibold text-stone-400 dark:text-stone-500 uppercase tracking-wider">
               {letter}
             </div>
             {items.map((company) => (
@@ -41,6 +41,7 @@ export const Companies: FunctionComponent = () => {
                 onClick={() => selectCompany(company)}
                 className={classNames(
                   'w-full text-left px-2 py-2 rounded-md transition-colors',
+                  'flex flex-col items-stretch justify-start gap-2',
                   'cursor-pointer',
                   selectedCompany?.id === company.id
                     ? 'bg-stone-200 dark:bg-stone-700'

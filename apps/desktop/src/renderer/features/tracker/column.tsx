@@ -1,6 +1,5 @@
 import type { ColumnType } from '@kin/desktop/main/database/schema';
-import { Button, createModal, IconButton, Modal } from '@kin/ui';
-import { classNames } from '@kin/ui/utils';
+import { Button, classNames, createModal, IconButton, Modal } from '@kin/ui';
 import { Reorder, useDragControls } from 'framer-motion';
 import { type FunctionComponent, useMemo, useState } from 'react';
 
@@ -53,7 +52,7 @@ export const Column: FunctionComponent<PropsType> = ({ column }) => {
         isCardDragging ? 'z-20' : '',
       )}
     >
-      <div className="flex flex-col h-full rounded-xl bg-stone-100 dark:bg-stone-900">
+      <div className="flex flex-col h-full rounded-md bg-stone-100 dark:bg-stone-900">
         <div className="flex flex-row items-center justify-between p-2 gap-2">
           {editing ? (
             <input

@@ -56,50 +56,50 @@ export const PersonPanel: FunctionComponent = () => {
         </span>
       )}
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-1">
         <TextInput
-          placeholder="First Name"
+          label="First Name"
           value={fields.firstName}
-          setValue={(firstName) => setFields((f) => ({ ...f, firstName }))}
+          onChange={(firstName) => setFields((f) => ({ ...f, firstName }))}
           onBlur={() => blur('firstName', fields.firstName)}
         />
         <TextInput
-          placeholder="Last Name"
+          label="Last Name"
           value={fields.lastName}
-          setValue={(lastName) => setFields((f) => ({ ...f, lastName }))}
+          onChange={(lastName) => setFields((f) => ({ ...f, lastName }))}
           onBlur={() => blur('lastName', fields.lastName)}
         />
       </div>
       <TextInput
-        placeholder="Title"
+        label="Title"
         value={fields.title}
-        setValue={(title) => setFields((f) => ({ ...f, title }))}
+        onChange={(title) => setFields((f) => ({ ...f, title }))}
         onBlur={() => blur('title', fields.title)}
       />
       <div className="grid grid-cols-2 gap-3">
         <TextInput
-          placeholder="Phone"
+          label="Phone"
           value={fields.phone}
-          setValue={(phone) => setFields((f) => ({ ...f, phone }))}
+          onChange={(phone) => setFields((f) => ({ ...f, phone }))}
           onBlur={() => blur('phone', fields.phone)}
         />
         <TextInput
-          placeholder="Email"
+          label="Email"
           value={fields.email}
-          setValue={(email) => setFields((f) => ({ ...f, email }))}
+          onChange={(email) => setFields((f) => ({ ...f, email }))}
           onBlur={() => blur('email', fields.email)}
         />
       </div>
       <TextInput
-        placeholder="LinkedIn"
+        label="LinkedIn"
         value={fields.linkedin}
-        setValue={(linkedin) => setFields((f) => ({ ...f, linkedin }))}
+        onChange={(linkedin) => setFields((f) => ({ ...f, linkedin }))}
         onBlur={() => blur('linkedin', fields.linkedin)}
       />
       <TextInput
-        placeholder="Website"
+        label="Website"
         value={fields.website}
-        setValue={(website) => setFields((f) => ({ ...f, website }))}
+        onChange={(website) => setFields((f) => ({ ...f, website }))}
         onBlur={() => blur('website', fields.website)}
       />
       <RichTextEditor
@@ -125,8 +125,8 @@ export const PersonPanel: FunctionComponent = () => {
                 navigate(`/job/${job.id}`);
               }}
               className={classNames(
-                'w-full flex flex-row items-center justify-between gap-3',
-                'p-2 text-left rounded-md',
+                'w-full flex flex-row items-center justify-between gap-2',
+                'py-4 text-left rounded-md',
                 'hover:opacity-70 transition-opacity cursor-pointer',
               )}
             >
