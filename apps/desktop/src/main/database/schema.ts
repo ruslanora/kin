@@ -7,6 +7,82 @@ import {
   uniqueIndex,
 } from 'drizzle-orm/sqlite-core';
 
+export const resumes = sqliteTable('resumes', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  firstName: text('first_name'),
+  lastName: text('last_name'),
+  title: text('title'),
+  summary: text('summary'),
+  linkedin: text('linkedin'),
+  website: text('website'),
+  address: text('address'),
+  phone: text('phone'),
+  email: text('email'),
+  isMaster: integer('is_master', { mode: 'boolean' }).notNull().default(false),
+  design: text('design').notNull().default('classic'),
+  pdfPath: text('pdf_path'),
+  settings: text('settings'),
+});
+
+export const resumeSections = sqliteTable(
+  'resume_sections',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    resumeId: integer('resume_id')
+      .notNull()
+      .references(() => resumes.id, { onDelete: 'cascade' }),
+    name: text('name'),
+    order: integer('order').notNull().default(0),
+    contentType: text('content_type', { enum: ['period', 'category', 'list'] })
+      .notNull()
+      .default('period'),
+    preset: text('preset'),
+    isVisible: integer('is_visible', { mode: 'boolean' })
+      .notNull()
+      .default(true),
+  },
+  (table) => [index('idx_resume_sections_resume_id').on(table.resumeId)],
+);
+
+export const resumeContents = sqliteTable(
+  'resume_contents',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    sectionId: integer('section_id')
+      .notNull()
+      .references(() => resumeSections.id, { onDelete: 'cascade' }),
+    order: integer('order').notNull().default(0),
+    isVisible: integer('is_visible', { mode: 'boolean' })
+      .notNull()
+      .default(true),
+    title: text('title'),
+    subtitle: text('subtitle'),
+    website: text('website'),
+    startMonth: integer('start_month'),
+    startYear: integer('start_year'),
+    endMonth: integer('end_month'),
+    endYear: integer('end_year'),
+    isCurrent: integer('is_current', { mode: 'boolean' })
+      .notNull()
+      .default(false),
+    content: text('content'),
+  },
+  (table) => [index('idx_resume_contents_section_id').on(table.sectionId)],
+);
+
+export const coverLetters = sqliteTable(
+  'cover_letters',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    resumeId: integer('resume_id').references(() => resumes.id, {
+      onDelete: 'cascade',
+    }),
+    content: text('content'),
+    pdfPath: text('pdf_path'),
+  },
+  (table) => [uniqueIndex('unq_resume_cover_letter').on(table.resumeId)],
+);
+
 export const boards = sqliteTable('boards', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').default('New Job Hunt'),
@@ -68,6 +144,13 @@ export const jobs = sqliteTable(
     appliedAt: integer('applied_at', { mode: 'timestamp' }),
     followedUpAt: integer('followed_up_at', { mode: 'timestamp' }),
     createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
+    resumeId: integer('resume_id').references(() => resumes.id, {
+      onDelete: 'set null',
+    }),
+    coverLetterId: integer('cover_letter_id').references(
+      () => coverLetters.id,
+      { onDelete: 'set null' },
+    ),
   },
   (table) => [
     index('idx_jobs_column_id').on(table.columnId),
@@ -138,6 +221,13 @@ export const interviews = sqliteTable(
   },
   (table) => [index('idx_interviews_job_id').on(table.jobId)],
 );
+
+export type ResumeType = typeof resumes.$inferSelect;
+export type ResumeSectionType = typeof resumeSections.$inferSelect;
+export type ResumeContentType = typeof resumeContents.$inferSelect;
+export type ResumeWithSectionsType = ResumeType & {
+  sections: Array<ResumeSectionType & { contents: ResumeContentType[] }>;
+};
 
 export type BoardType = typeof boards.$inferSelect;
 export type ColumnType = typeof columns.$inferSelect;

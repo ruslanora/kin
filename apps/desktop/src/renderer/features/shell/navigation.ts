@@ -17,12 +17,12 @@ export const navigation: Array<SectionType> = [
       { icon: 'paperclip', name: 'Cover Letter', href: '/master-cover-letter' },
     ],
   },
-  {
-    name: 'Features',
-    hidden: true,
-    links: [
-      { icon: 'mail', name: 'Email Templates', href: '/email-templates' },
-      { icon: 'globe', name: 'Browser Extension', href: '/extension' },
-    ],
-  },
+  // {
+  //   name: 'Features',
+  //   hidden: true,
+  //   links: [
+  //     { icon: 'mail', name: 'Email Templates', href: '/email-templates' },
+  //     { icon: 'globe', name: 'Browser Extension', href: '/extension' },
+  //   ],
+  // },
 ];

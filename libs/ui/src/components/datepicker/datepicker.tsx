@@ -8,6 +8,7 @@ type PropsType = {
   value: string;
   setValue: (value: string) => void;
   onBlur?: () => void;
+  type?: 'date' | 'month';
 };
 
 export const DatePicker: FunctionComponent<PropsType> = ({
@@ -15,10 +16,11 @@ export const DatePicker: FunctionComponent<PropsType> = ({
   value,
   setValue,
   onBlur,
+  type = 'date',
 }) => {
   return (
     <input
-      type="date"
+      type={type}
       className={classNames(
         'block w-full h-10 px-3',
         'text-sm font-medium text-stone-950 dark:text-stone-50',

@@ -7,6 +7,7 @@ import { registerDataHandlers } from './data';
 import { registerFileHandlers } from './file';
 import { registerInterviewHandlers } from './interview';
 import { registerJobHandlers } from './job';
+import { registerResumeHandlers } from './resume';
 import { registerThemeHandlers } from './theme';
 
 export const setupIpc = (window: BrowserWindow): void => {
@@ -18,4 +19,5 @@ export const setupIpc = (window: BrowserWindow): void => {
   registerFileHandlers();
   registerJobHandlers();
   registerInterviewHandlers();
+  registerResumeHandlers();
 };

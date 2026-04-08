@@ -9,6 +9,10 @@ import type {
   InterviewType,
   InterviewWithJobType,
   JobWithCompanyType,
+  ResumeContentType,
+  ResumeSectionType,
+  ResumeType,
+  ResumeWithSectionsType,
 } from '../main/database';
 
 const api = {
@@ -174,6 +178,49 @@ const api = {
 
     delete: async (args: { id: number }) => {
       await ipcRenderer.invoke('file:delete', args);
+    },
+  },
+
+  resume: {
+    getMaster: async () =>
+      (await ipcRenderer.invoke('resume:getMaster')) as ResumeWithSectionsType,
+
+    update: async (args: { id: number } & Partial<ResumeType>) =>
+      (await ipcRenderer.invoke('resume:update', args)) as ResumeType,
+
+    upsertSection: async (
+      args: Partial<ResumeSectionType> & {
+        resumeId: number;
+        contentType: 'period' | 'category' | 'list';
+      },
+    ) =>
+      (await ipcRenderer.invoke(
+        'resume:upsertSection',
+        args,
+      )) as ResumeSectionType,
+
+    deleteSection: async (args: { id: number }) => {
+      await ipcRenderer.invoke('resume:deleteSection', args);
+    },
+
+    reorderSections: async (args: { orderedIds: number[] }) => {
+      await ipcRenderer.invoke('resume:reorderSections', args);
+    },
+
+    upsertContent: async (
+      args: Partial<ResumeContentType> & { sectionId: number },
+    ) =>
+      (await ipcRenderer.invoke(
+        'resume:upsertContent',
+        args,
+      )) as ResumeContentType,
+
+    deleteContent: async (args: { id: number }) => {
+      await ipcRenderer.invoke('resume:deleteContent', args);
+    },
+
+    reorderContents: async (args: { orderedIds: number[] }) => {
+      await ipcRenderer.invoke('resume:reorderContents', args);
     },
   },
 

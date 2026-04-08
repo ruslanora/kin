@@ -9,6 +9,7 @@ type PropsType = {
   rows?: number;
   value: string;
   setValue: (value: string) => void;
+  onBlur?: () => void;
 };
 
 export const Textarea: FunctionComponent<PropsType> = ({
@@ -17,6 +18,7 @@ export const Textarea: FunctionComponent<PropsType> = ({
   rows = 5,
   value,
   setValue,
+  onBlur,
 }) => {
   return (
     <textarea
@@ -34,6 +36,7 @@ export const Textarea: FunctionComponent<PropsType> = ({
       placeholder={placeholder}
       value={value}
       onChange={(event) => setValue(event.target.value)}
+      onBlur={onBlur}
     />
   );
 };
