@@ -37,6 +37,29 @@ export const registerCoverLetterHandlers = (): void => {
   });
 
   handle(
+    'coverLetter:getOrCreateForResume',
+    (_event, { resumeId }: { resumeId: number }): CoverLetterType => {
+      const db = getDb();
+
+      let coverLetter = db
+        .select()
+        .from(coverLetters)
+        .where(eq(coverLetters.resumeId, resumeId))
+        .get();
+
+      if (!coverLetter) {
+        coverLetter = db
+          .insert(coverLetters)
+          .values({ resumeId, content: '' })
+          .returning()
+          .get();
+      }
+
+      return coverLetter;
+    },
+  );
+
+  handle(
     'coverLetter:update',
     (
       _event,

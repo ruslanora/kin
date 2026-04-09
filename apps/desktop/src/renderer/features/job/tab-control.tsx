@@ -18,6 +18,8 @@ type TabValue =
   | 'interviews'
   | 'contacts';
 
+const FULL_WIDTH_TABS = new Set<TabValue>(['resume', 'cover-letter']);
+
 const TAB_VALUES: Array<{ key: string; name: string }> = [
   {
     key: 'job-info',
@@ -64,9 +66,11 @@ export const TabControl: FunctionComponent = () => {
 
   const Content = TAB_CONTENT[selected];
 
+  const isFullWidth = FULL_WIDTH_TABS.has(selected);
+
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      <div className="mx-auto">
+      <div className="w-full max-w-2xl mx-auto px-4">
         <Tab>
           {TAB_VALUES.map((record) => (
             <Tab.Item
@@ -80,8 +84,16 @@ export const TabControl: FunctionComponent = () => {
           ))}
         </Tab>
       </div>
-      <div className="flex-1 min-h-0 overflow-y-auto p-4">
-        <Content />
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        {isFullWidth ? (
+          <div className="h-full p-4">
+            <Content />
+          </div>
+        ) : (
+          <div className="w-full max-w-2xl mx-auto p-4">
+            <Content />
+          </div>
+        )}
       </div>
     </div>
   );

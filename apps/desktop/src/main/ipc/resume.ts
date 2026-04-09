@@ -12,6 +12,51 @@ import type {
 import { resumeContents, resumes, resumeSections } from '../database/schema';
 import { handle } from './handle';
 
+const getResumeWithSections = (
+  db: ReturnType<typeof getDb>,
+  resumeId: number,
+): ResumeWithSectionsType => {
+  const resume = db
+    .select()
+    .from(resumes)
+    .where(eq(resumes.id, resumeId))
+    .get();
+
+  if (!resume) {
+    throw new Error(`Resume ${resumeId} not found`);
+  }
+
+  const sections = db
+    .select()
+    .from(resumeSections)
+    .where(eq(resumeSections.resumeId, resume.id))
+    .orderBy(asc(resumeSections.order))
+    .all();
+
+  const allContents =
+    sections.length > 0
+      ? db
+          .select()
+          .from(resumeContents)
+          .where(
+            inArray(
+              resumeContents.sectionId,
+              sections.map((s) => s.id),
+            ),
+          )
+          .orderBy(asc(resumeContents.order))
+          .all()
+      : [];
+
+  return {
+    ...resume,
+    sections: sections.map((section) => ({
+      ...section,
+      contents: allContents.filter((c) => c.sectionId === section.id),
+    })),
+  };
+};
+
 export const registerResumeHandlers = (): void => {
   handle('resume:getMaster', (): ResumeWithSectionsType => {
     const db = getDb();
@@ -49,35 +94,116 @@ export const registerResumeHandlers = (): void => {
         .run();
     }
 
-    const sections = db
+    return getResumeWithSections(db, resume.id);
+  });
+
+  handle(
+    'resume:getById',
+    (_event, { id }: { id: number }): ResumeWithSectionsType => {
+      const db = getDb();
+      return getResumeWithSections(db, id);
+    },
+  );
+
+  handle('resume:fork', (): ResumeWithSectionsType => {
+    const db = getDb();
+
+    const master = db
+      .select()
+      .from(resumes)
+      .where(eq(resumes.isMaster, true))
+      .get();
+
+    if (!master) {
+      throw new Error('Master resume not found');
+    }
+
+    const forked = db
+      .insert(resumes)
+      .values({
+        firstName: master.firstName,
+        lastName: master.lastName,
+        title: master.title,
+        summary: master.summary,
+        linkedin: master.linkedin,
+        website: master.website,
+        address: master.address,
+        phone: master.phone,
+        email: master.email,
+        isMaster: false,
+        design: master.design,
+        settings: master.settings,
+      })
+      .returning()
+      .get();
+
+    const masterSections = db
       .select()
       .from(resumeSections)
-      .where(eq(resumeSections.resumeId, resume.id))
+      .where(eq(resumeSections.resumeId, master.id))
       .orderBy(asc(resumeSections.order))
       .all();
 
-    const allContents =
-      sections.length > 0
+    const masterContents =
+      masterSections.length > 0
         ? db
             .select()
             .from(resumeContents)
             .where(
               inArray(
                 resumeContents.sectionId,
-                sections.map((s) => s.id),
+                masterSections.map((s) => s.id),
               ),
             )
             .orderBy(asc(resumeContents.order))
             .all()
         : [];
 
-    return {
-      ...resume,
-      sections: sections.map((section) => ({
-        ...section,
-        contents: allContents.filter((c) => c.sectionId === section.id),
-      })),
-    };
+    for (const section of masterSections) {
+      const newSection = db
+        .insert(resumeSections)
+        .values({
+          resumeId: forked.id,
+          name: section.name,
+          order: section.order,
+          contentType: section.contentType,
+          preset: section.preset,
+          isVisible: section.isVisible,
+        })
+        .returning()
+        .get();
+
+      const sectionContents = masterContents.filter(
+        (c) => c.sectionId === section.id,
+      );
+
+      for (const content of sectionContents) {
+        db.insert(resumeContents)
+          .values({
+            sectionId: newSection.id,
+            order: content.order,
+            isVisible: content.isVisible,
+            title: content.title,
+            subtitle: content.subtitle,
+            location: content.location,
+            website: content.website,
+            startMonth: content.startMonth,
+            startYear: content.startYear,
+            endMonth: content.endMonth,
+            endYear: content.endYear,
+            isCurrent: content.isCurrent,
+            content: content.content,
+          })
+          .run();
+      }
+    }
+
+    return getResumeWithSections(db, forked.id);
+  });
+
+  handle('resume:deleteById', (_event, { id }: { id: number }): void => {
+    const db = getDb();
+    db.delete(resumes).where(eq(resumes.id, id)).run();
   });
 
   handle(

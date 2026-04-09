@@ -22,7 +22,7 @@ export const CoverLetterBuilder: FunctionComponent = () => {
       <div className="w-120 shrink-0 flex flex-col overflow-y-auto">
         <AboutSection />
         <div className="p-4 flex flex-col gap-2">
-          <Typography.Heading level="h2" as="h2">
+          <Typography.Heading level="h2" as="h1">
             Cover Letter
           </Typography.Heading>
           <RichTextEditor

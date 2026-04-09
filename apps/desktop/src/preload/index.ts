@@ -186,6 +186,19 @@ const api = {
     getMaster: async () =>
       (await ipcRenderer.invoke('resume:getMaster')) as ResumeWithSectionsType,
 
+    getById: async (args: { id: number }) =>
+      (await ipcRenderer.invoke(
+        'resume:getById',
+        args,
+      )) as ResumeWithSectionsType,
+
+    fork: async () =>
+      (await ipcRenderer.invoke('resume:fork')) as ResumeWithSectionsType,
+
+    deleteById: async (args: { id: number }) => {
+      await ipcRenderer.invoke('resume:deleteById', args);
+    },
+
     update: async (args: { id: number } & Partial<ResumeType>) =>
       (await ipcRenderer.invoke('resume:update', args)) as ResumeType,
 
@@ -236,6 +249,12 @@ const api = {
   coverLetter: {
     getMaster: async () =>
       (await ipcRenderer.invoke('coverLetter:getMaster')) as CoverLetterType,
+
+    getOrCreateForResume: async (args: { resumeId: number }) =>
+      (await ipcRenderer.invoke(
+        'coverLetter:getOrCreateForResume',
+        args,
+      )) as CoverLetterType,
 
     update: async (args: { id: number; content: string }) =>
       (await ipcRenderer.invoke('coverLetter:update', args)) as CoverLetterType,
