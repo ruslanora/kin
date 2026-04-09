@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 
 type PropsType = {
@@ -8,6 +8,7 @@ type PropsType = {
   value: string;
   setValue: (value: string) => void;
   onBlur?: () => void;
+  type?: 'date' | 'month';
 };
 
 export const DatePicker: FunctionComponent<PropsType> = ({
@@ -15,17 +16,18 @@ export const DatePicker: FunctionComponent<PropsType> = ({
   value,
   setValue,
   onBlur,
+  type = 'date',
 }) => {
   return (
     <input
-      type="date"
+      type={type}
       className={classNames(
-        'w-full h-9 px-3',
-        'text-sm font-medium',
-        'inline-block border rounded-lg shadow-xs',
+        'block w-full h-10 px-3',
+        'text-sm font-medium text-stone-950 dark:text-stone-50',
+        'border rounded-md shadow-xs',
         'transition-all duration-300 ease-in-out',
-        'bg-transparent border-stone-200',
-        'dark:bg-transparent dark:border-stone-800',
+        'bg-stone-50 dark:bg-stone-950',
+        'border-stone-200 dark:border-stone-800',
         'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
         'scheme-light dark:scheme-dark',
       )}

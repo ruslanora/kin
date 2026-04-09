@@ -47,37 +47,37 @@ export const CompanyPanel: FunctionComponent = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4">
       <TextInput
-        placeholder="Company Name"
+        label="Company Name"
         value={fields.name}
-        setValue={(name) => setFields((f) => ({ ...f, name }))}
+        onChange={(name) => setFields((f) => ({ ...f, name }))}
         onBlur={() =>
           updateCompany({ id: company.id, name: fields.name || null })
         }
       />
       <TextInput
-        placeholder="Industry"
+        label="Industry"
         value={fields.industry}
-        setValue={(industry) => setFields((f) => ({ ...f, industry }))}
+        onChange={(industry) => setFields((f) => ({ ...f, industry }))}
         onBlur={() => blur('industry', fields.industry)}
       />
       <TextInput
-        placeholder="Website"
+        label="Website"
         value={fields.website}
-        setValue={(website) => setFields((f) => ({ ...f, website }))}
+        onChange={(website) => setFields((f) => ({ ...f, website }))}
         onBlur={() => blur('website', fields.website)}
       />
       <TextInput
-        placeholder="LinkedIn"
+        label="LinkedIn"
         value={fields.linkedin}
-        setValue={(linkedin) => setFields((f) => ({ ...f, linkedin }))}
+        onChange={(linkedin) => setFields((f) => ({ ...f, linkedin }))}
         onBlur={() => blur('linkedin', fields.linkedin)}
       />
       <TextInput
-        placeholder="Address"
+        label="Address"
         value={fields.address}
-        setValue={(address) => setFields((f) => ({ ...f, address }))}
+        onChange={(address) => setFields((f) => ({ ...f, address }))}
         onBlur={() => blur('address', fields.address)}
       />
       <Toggle
@@ -97,7 +97,7 @@ export const CompanyPanel: FunctionComponent = () => {
         }}
       />
       {interviews.length > 0 && (
-        <div className="mt-2 flex flex-col gap-1">
+        <div className="mt-2 flex flex-col gap-4">
           <Typography.Heading level="h3" as="h3">
             Interviews
           </Typography.Heading>
@@ -110,8 +110,8 @@ export const CompanyPanel: FunctionComponent = () => {
                 navigate(`/job/${interview.jobId}`);
               }}
               className={classNames(
-                'w-full flex flex-row items-center justify-between gap-3',
-                'p-2 text-left rounded-md',
+                'w-full flex flex-row items-center justify-between gap-2',
+                'y-4 text-left rounded-md',
                 'hover:opacity-70 transition-opacity cursor-pointer',
               )}
             >

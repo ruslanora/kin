@@ -42,9 +42,9 @@ export const FormScreen: FunctionComponent<PropsType> = ({
     <Typography.Heading level="h2">Add to Kin</Typography.Heading>
     <div className="flex flex-col gap-2">
       <TextInput
-        placeholder="Company name"
+        label="Company name"
         value={companyName}
-        setValue={setCompanyName}
+        onChange={setCompanyName}
       />
       {companyIsToAvoid && (
         <p className="text-xs text-red-600">
@@ -56,8 +56,8 @@ export const FormScreen: FunctionComponent<PropsType> = ({
           You have already applied to this company.
         </p>
       )}
-      <TextInput placeholder="Job title" value={title} setValue={setTitle} />
-      <TextInput placeholder="URL" value={url} setValue={setUrl} />
+      <TextInput label="Job title" value={title} onChange={setTitle} />
+      <TextInput label="URL" value={url} onChange={setUrl} />
       <Select
         placeholder="Select column"
         selected={columnId}

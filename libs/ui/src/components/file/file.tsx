@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 
 import { Icon } from '../icon';
@@ -31,8 +31,8 @@ export const File: FunctionComponent<PropsType> = ({
     <div
       className={classNames(
         'flex flex-row items-center gap-3 px-3 py-2.5',
-        'rounded-lg border border-stone-200 dark:border-stone-800',
-        'bg-stone-50 dark:bg-stone-900',
+        'rounded-md border border-stone-200 dark:border-stone-800',
+        'bg-stone-100 dark:bg-stone-900',
       )}
     >
       <span className="shrink-0 text-stone-400 dark:text-stone-500">

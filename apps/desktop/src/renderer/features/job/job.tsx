@@ -98,7 +98,7 @@ export const Job: FunctionComponent = () => {
     <JobContext.Provider value={{ job, columns, updateJob, deleteJob }}>
       <div className="w-full h-full flex flex-col items-stretch justify-start">
         <Toolbar />
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full flex-1 min-h-0 flex flex-col">
           <TabControl />
         </div>
       </div>

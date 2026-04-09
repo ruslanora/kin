@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent, ReactNode } from 'react';
 
 import { useShell } from './context';
@@ -33,7 +33,7 @@ export const ShellSidebarSection: FunctionComponent<PropsType> = ({
             'text-stone-400 dark:text-stone-600',
             'text-[9px] font-bold uppercase whitespace-nowrap tracking-wider',
             'transition-all duration-300 ease-in-out',
-            collapsed ? 'opacity-0' : 'opacity-100',
+            collapsed ? 'w-0 opacity-0' : 'opacity-100',
           )}
         >
           {name}

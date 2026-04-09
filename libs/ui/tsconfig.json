@@ -6,5 +6,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "files": [],
-  "include": ["src"]
+  "include": ["src", ".storybook"]
 }

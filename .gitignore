@@ -94,3 +94,6 @@ out/
 # Other builds
 build/
 dist/
+
+# temp
+server/

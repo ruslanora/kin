@@ -14,6 +14,7 @@ export {
   IconButton,
   Modal,
   Radio,
+  Range,
   Rating,
   RichTextEditor,
   SearchInput,

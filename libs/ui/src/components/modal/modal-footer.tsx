@@ -7,7 +7,7 @@ type PropsType = {
 };
 
 export const ModalFooter: FunctionComponent<PropsType> = ({ children }) => (
-  <div className="w-full flex flex-row items-center justify-end gap-4 p-4">
+  <div className="w-full flex flex-row items-center justify-end gap-4 pb-6 pt-4 px-6">
     {children}
   </div>
 );
