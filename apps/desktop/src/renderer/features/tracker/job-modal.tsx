@@ -1,7 +1,5 @@
 import type { CompanyType } from '@kin/desktop/main/database';
-import { Button, Modal, TextInput } from '@kin/ui';
-import { Textarea } from '@kin/ui/components';
-import { classNames } from '@kin/ui/utils';
+import { Button, classNames, Modal, RichTextEditor, TextInput } from '@kin/ui';
 import { type FunctionComponent, useEffect, useMemo, useState } from 'react';
 
 import { useTracker } from './context';
@@ -86,9 +84,9 @@ export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
       <Modal.Body>
         <div className="flex flex-col gap-4">
           <TextInput
-            placeholder="Company *"
+            label="Company *"
             value={companyName}
-            setValue={setCompanyName}
+            onChange={setCompanyName}
           />
           {avoidedCompany && (
             <p
@@ -118,16 +116,16 @@ export const JobModal: FunctionComponent<PropsType> = ({ modalControl }) => {
             </div>
           )}
           <TextInput
-            placeholder="Position *"
+            label="Position *"
             value={position}
-            setValue={setPosition}
+            onChange={setPosition}
           />
-          <Textarea
+          <RichTextEditor
             placeholder="Description"
             value={description}
-            setValue={setDescription}
+            onChange={setDescription}
           />
-          <TextInput placeholder="http://" value={url} setValue={setUrl} />
+          <TextInput label="http://" value={url} onChange={setUrl} />
         </div>
       </Modal.Body>
       <Modal.Footer>

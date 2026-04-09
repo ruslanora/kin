@@ -5,10 +5,15 @@ import type {
   ColumnType,
   CompanyType,
   ContactType,
+  CoverLetterType,
   FileType,
   InterviewType,
   InterviewWithJobType,
   JobWithCompanyType,
+  ResumeContentType,
+  ResumeSectionType,
+  ResumeType,
+  ResumeWithSectionsType,
 } from '../main/database';
 
 const api = {
@@ -162,7 +167,7 @@ const api = {
       const MAX_FILE_SIZE = 1024 * 1024;
 
       if (args.buffer.length > MAX_FILE_SIZE) {
-        throw new Error('File exceeds the 50 MB size limit');
+        throw new Error('File exceeds the 1 MB size limit');
       }
 
       return (await ipcRenderer.invoke('file:upload', args)) as FileType;
@@ -175,6 +180,84 @@ const api = {
     delete: async (args: { id: number }) => {
       await ipcRenderer.invoke('file:delete', args);
     },
+  },
+
+  resume: {
+    getMaster: async () =>
+      (await ipcRenderer.invoke('resume:getMaster')) as ResumeWithSectionsType,
+
+    getById: async (args: { id: number }) =>
+      (await ipcRenderer.invoke(
+        'resume:getById',
+        args,
+      )) as ResumeWithSectionsType,
+
+    fork: async () =>
+      (await ipcRenderer.invoke('resume:fork')) as ResumeWithSectionsType,
+
+    deleteById: async (args: { id: number }) => {
+      await ipcRenderer.invoke('resume:deleteById', args);
+    },
+
+    update: async (args: { id: number } & Partial<ResumeType>) =>
+      (await ipcRenderer.invoke('resume:update', args)) as ResumeType,
+
+    upsertSection: async (
+      args: Partial<ResumeSectionType> & {
+        resumeId: number;
+        contentType: 'period' | 'category' | 'list';
+      },
+    ) =>
+      (await ipcRenderer.invoke(
+        'resume:upsertSection',
+        args,
+      )) as ResumeSectionType,
+
+    deleteSection: async (args: { id: number }) => {
+      await ipcRenderer.invoke('resume:deleteSection', args);
+    },
+
+    reorderSections: async (args: { orderedIds: number[] }) => {
+      await ipcRenderer.invoke('resume:reorderSections', args);
+    },
+
+    upsertContent: async (
+      args: Partial<ResumeContentType> & { sectionId: number },
+    ) =>
+      (await ipcRenderer.invoke(
+        'resume:upsertContent',
+        args,
+      )) as ResumeContentType,
+
+    deleteContent: async (args: { id: number }) => {
+      await ipcRenderer.invoke('resume:deleteContent', args);
+    },
+
+    reorderContents: async (args: { orderedIds: number[] }) => {
+      await ipcRenderer.invoke('resume:reorderContents', args);
+    },
+
+    exportTxt: async (args: { text: string; filename: string }) => {
+      await ipcRenderer.invoke('resume:exportTxt', args);
+    },
+
+    generatePdf: async (args: { html: string; filename: string }) => {
+      await ipcRenderer.invoke('resume:generatePdf', args);
+    },
+  },
+
+  coverLetter: {
+    getMaster: async () =>
+      (await ipcRenderer.invoke('coverLetter:getMaster')) as CoverLetterType,
+
+    getOrCreateForResume: async (args: { resumeId: number }) =>
+      (await ipcRenderer.invoke(
+        'coverLetter:getOrCreateForResume',
+        args,
+      )) as CoverLetterType,
+
+    update: async (args: { id: number; content: string }) =>
+      (await ipcRenderer.invoke('coverLetter:update', args)) as CoverLetterType,
   },
 
   job: {

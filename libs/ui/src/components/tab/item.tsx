@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent, ReactNode } from 'react';
 
 type PropsType = {
@@ -24,6 +24,7 @@ export const TabItem: FunctionComponent<PropsType> = ({
         className={classNames(
           'px-3 cursor-pointer',
           'flex flex-col items-center justify-start shrink-0',
+          'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700 focus:z-10',
           'transition-300 duration-300 ease-in-out',
           value === selected
             ? 'text-stone-950 dark:text-stone-50 border-b-blue-500 dark:border-b-blue-6000'

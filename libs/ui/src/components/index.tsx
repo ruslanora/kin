@@ -11,6 +11,7 @@ export { Icon } from './icon';
 export { IconButton } from './icon-button';
 export { createModal, Modal, useModal } from './modal';
 export { Radio } from './radio';
+export { Range } from './range';
 export { Rating } from './rating';
 export { RichTextEditor } from './richtext-editor';
 export { SearchInput } from './search-input';

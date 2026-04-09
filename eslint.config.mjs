@@ -14,7 +14,10 @@ export default [
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['*.config.{js,ts,mjs,cjs}'],
+          allowDefaultProject: [
+            '*.config.{js,ts,mjs,cjs}',
+            'libs/ui/.storybook/*.{ts,js}',
+          ],
         },
         tsconfigRootDir: import.meta.dirname,
       },

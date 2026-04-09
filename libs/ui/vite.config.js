@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), dts()],
   resolve: {
     alias: {
-      '@kin/ui/utils': path.resolve(import.meta.dirname, 'src/utils/index.ts'),
+      '@kin/ui': path.resolve(import.meta.dirname, 'src/index.ts'),
     },
   },
   build: {

@@ -32,6 +32,7 @@ export const Cell: FunctionComponent<PropsType> = ({
       className={classNames(
         'flex flex-col items-start p-2 gap-1 text-left',
         'bg-stone-50 dark:bg-stone-900',
+        'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700 focus:z-10',
         'transition-colors',
         hasInterviews &&
           'hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer',

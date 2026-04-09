@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
 
@@ -60,6 +60,7 @@ export const Rating: FunctionComponent<PropsType> = ({
             onMouseEnter={() => interactive && setHovered(starValue)}
             className={classNames(
               'transition-colors duration-150',
+              'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
               filled
                 ? 'text-yellow-400 dark:text-yellow-300'
                 : 'text-stone-300 dark:text-stone-600',

@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent, ReactNode } from 'react';
 
 import { IconButton } from '../icon-button';
@@ -17,7 +17,7 @@ export const ModalHeader: FunctionComponent<PropsType> = ({ children }) => {
     <div
       className={classNames(
         'w-full flex flex-row items-center justify-between',
-        'pl-4 py-2 pr-2',
+        'pl-6 py-4 pr-2',
       )}
     >
       <span className="text-sm font-medium truncate">{children}</span>

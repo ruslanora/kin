@@ -1,4 +1,4 @@
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import type { FunctionComponent, ReactNode } from 'react';
 
 type HeadingType = 'h1' | 'h2' | 'h3';

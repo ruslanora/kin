@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { FunctionComponent, ReactNode } from 'react';
 
@@ -40,9 +40,9 @@ const ModalComponent: FunctionComponent<PropsType> = ({
           <motion.div
             className={classNames(
               'w-full max-w-lg h-fit max-h-125',
-              'bg-stone-50 dark:bg-stone-900',
+              'bg-stone-50 dark:bg-stone-950',
               'border border-stone-200 dark:border-stone-800',
-              'rounded-2xl shadow-2xl',
+              'rounded-lg shadow-2xl',
             )}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

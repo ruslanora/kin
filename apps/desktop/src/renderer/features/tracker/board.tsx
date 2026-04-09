@@ -70,7 +70,7 @@ export const Board: FunctionComponent = () => {
       axis="x"
       values={localColumns}
       onReorder={handleReorder}
-      className="h-full flex flex-1 items-start overflow-x-auto gap-2 px-4"
+      className="h-full flex flex-1 items-start overflow-x-auto gap-2 px-4 focus:outline-none focus:ring-0"
     >
       {localColumns.map((column) => (
         <Column key={column.id} column={column} />

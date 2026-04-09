@@ -44,10 +44,9 @@ export const JobInfo: FunctionComponent = () => {
           options={WORK_MODEL_OPTIONS}
         />
         <TextInput
-          type="number"
-          placeholder="Salary Range From"
+          label="Salary Range From"
           value={fields.salaryRangeFrom?.toString() ?? ''}
-          setValue={(v) =>
+          onChange={(v) =>
             setFields({ ...fields, salaryRangeFrom: v ? Number(v) : undefined })
           }
           onBlur={() =>
@@ -55,10 +54,9 @@ export const JobInfo: FunctionComponent = () => {
           }
         />
         <TextInput
-          type="number"
-          placeholder="Salary Range To"
+          label="Salary Range To"
           value={fields.salaryRangeTo?.toString() ?? ''}
-          setValue={(v) =>
+          onChange={(v) =>
             setFields({ ...fields, salaryRangeTo: v ? Number(v) : undefined })
           }
           onBlur={() =>
@@ -67,9 +65,9 @@ export const JobInfo: FunctionComponent = () => {
         />
         <div className="col-span-2">
           <TextInput
-            placeholder="Job Post URL"
+            label="Job Post URL"
             value={fields.url ?? ''}
-            setValue={(url) => setFields({ ...fields, url })}
+            onChange={(url) => setFields({ ...fields, url })}
             onBlur={() => updateJob({ url: fields.url || null })}
           />
         </div>

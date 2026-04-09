@@ -20,7 +20,7 @@
     "format:check": "prettier --check .",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --passWithNoTests",
-    "typecheck": "pnpm --filter ./apps/desktop run typecheck && pnpm --filter ./libs/ui run typecheck && pnpm --filter ./apps/extension run typecheck",
+    "typecheck": "pnpm --filter ./apps/desktop run typecheck && pnpm --filter ./libs/ui run typecheck && pnpm --filter ./apps/extension run typecheck && pnpm --filter ./apps/server run typecheck",
     "prepare": "husky",
     "app:start": "pnpm --filter ./apps/desktop run start",
     "app:package": "pnpm --filter ./apps/desktop run package",
@@ -32,8 +32,15 @@
     "app:studio": "pnpm --filter ./apps/desktop run studio",
     "ui:build": "pnpm --filter ./libs/ui run build",
     "ui:test": "pnpm --filter ./libs/ui run test",
+    "ui:stories": "pnpm --filter ./libs/ui run storybook",
     "ext:build": "pnpm --filter ./apps/extension run build",
-    "ext:dev": "pnpm --filter ./apps/extension run dev"
+    "ext:dev": "pnpm --filter ./apps/extension run dev",
+    "server:dev": "pnpm --filter ./apps/server run dev",
+    "server:build": "pnpm --filter ./apps/server run build",
+    "server:start": "pnpm --filter ./apps/server run start",
+    "server:generate": "pnpm --filter ./apps/server run generate",
+    "server:migrate": "pnpm --filter ./apps/server run migrate",
+    "server:studio": "pnpm --filter ./apps/server run studio"
   },
   "pnpm": {
     "overrides": {

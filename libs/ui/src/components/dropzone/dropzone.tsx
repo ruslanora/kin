@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
+import { classNames } from '@kin/ui';
 import {
   type DragEvent,
   type FunctionComponent,
@@ -88,7 +88,7 @@ export const Dropzone: FunctionComponent<PropsType> = ({
       onDrop={handleDrop}
       className={classNames(
         'flex flex-col items-center justify-center gap-3',
-        'w-full min-h-32 px-6 py-8 rounded-xl border-2 border-dashed',
+        'w-full min-h-32 px-6 py-8 rounded-md border-2 border-dashed',
         'transition-all duration-200 ease-in-out',
         'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
         !disabled && 'cursor-pointer',

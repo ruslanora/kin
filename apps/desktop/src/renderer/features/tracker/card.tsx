@@ -1,6 +1,5 @@
 import type { JobWithCompanyType } from '@kin/desktop/main/database/schema';
-import { Icon, Rating } from '@kin/ui';
-import { classNames } from '@kin/ui/utils';
+import { classNames, Icon, Rating } from '@kin/ui';
 import { motion, type PanInfo, useDragControls } from 'framer-motion';
 import { type FunctionComponent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -86,7 +85,7 @@ export const Card: FunctionComponent<PropsType> = ({
       }}
       whileDrag={{ opacity: 0.85, scale: 1.02 }}
       className={classNames(
-        'rounded-lg pt-3 pr-2 pl-3 pb-4',
+        'rounded-md pt-3 pr-2 pl-3 pb-4',
         'bg-white dark:bg-stone-800',
         'border border-stone-200 dark:border-stone-700',
         'cursor-pointer select-none',

@@ -46,7 +46,7 @@ export const Sidebar: FunctionComponent = () => {
                 <IconButton icon="x" onClick={handleDayOnClose} />
               </div>
 
-              <div className="flex-1 overflow-y-auto px-2">
+              <div className="flex-1 overflow-y-auto px-2 py-4">
                 <div className="flex flex-col items-stretch justify-start">
                   {dayInterviews.map((interview) => (
                     <button
@@ -57,6 +57,7 @@ export const Sidebar: FunctionComponent = () => {
                         'w-full flex flex-row items-center justify-between gap-3',
                         'p-2 text-left',
                         'hover:opacity-70 transition-opacity cursor-pointer',
+                        'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700 focus:z-10',
                       )}
                     >
                       <div className="flex flex-col gap-0.5 min-w-0">

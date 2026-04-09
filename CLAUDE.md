@@ -74,3 +74,14 @@ Shared component library consumed by both desktop and extension. Components are 
 - Prettier: 80 char line width, single quotes, trailing commas
 - ESLint flat config (`eslint.config.mjs`) with React, hooks, jsx-a11y, simple-import-sort
 - Path alias `@/` resolves to `src/` in each app
+
+## Naming Conventions
+
+- **No single-letter variable or parameter names.** Use descriptive full words in all contexts — including arrow function callbacks, loop variables, and state updaters.
+  - Yes: `sections.map((section) => section.id)`
+  - No: `sections.map((s) => s.id)`
+  - Yes: `setFields((previousFields) => ({ ...previousFields, [key]: value }))`
+  - No: `setFields((f) => ({ ...f, [key]: value }))`
+  - Yes: `onChange={(value) => handleChange('title', value)}`
+  - No: `onChange={(v) => handleChange('title', v)}`
+- Array index parameters should be named by what they index: `pageIndex`, `chunkIndex`, `itemIndex` — not `i`.

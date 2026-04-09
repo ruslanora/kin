@@ -11,7 +11,7 @@ type PropsType = {
 const TabComponent: FunctionComponent<PropsType> = ({ children }) => {
   return (
     <div className="w-full overflow-x-auto">
-      <ul className="h-fit w-fit flex flex-nowrap flex-row items-center justify-start">
+      <ul className="h-fit w-fit flex flex-nowrap flex-row items-center justify-start p-2">
         {children}
       </ul>
     </div>
