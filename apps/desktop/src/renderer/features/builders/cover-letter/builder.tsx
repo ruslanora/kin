@@ -1,4 +1,4 @@
-import { RichTextEditor, Spinner, Typography } from '@kin/ui';
+import { RichTextEditor, Typography } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 
 import { AboutSection } from '../resume/about-section';
@@ -6,16 +6,7 @@ import { useCoverLetter } from './context';
 import { CoverLetterPreview } from './preview';
 
 export const CoverLetterBuilder: FunctionComponent = () => {
-  const { isLoading, coverLetter, patchContent, updateContent } =
-    useCoverLetter();
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <Spinner size="md" />
-      </div>
-    );
-  }
+  const { coverLetter, patchContent, updateContent } = useCoverLetter();
 
   return (
     <div className="flex flex-row h-full overflow-hidden">

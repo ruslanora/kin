@@ -10,6 +10,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -19,7 +20,6 @@ export type ResumeSettingsType = { spacingMultiplier: number };
 
 type ResumeContextType = {
   resume: ResumeWithSectionsType | null;
-  isLoading: boolean;
   parsedSettings: ResumeSettingsType;
   patchBasicInfo: (fields: Partial<ResumeType>) => void;
   updateBasicInfo: (fields: Partial<ResumeType>) => void;
@@ -68,7 +68,6 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
   const [resume, setResume] = useState<ResumeWithSectionsType | null>(
     initialResume,
   );
-  const [isLoading] = useState(false);
 
   const parsedSettings = useMemo<ResumeSettingsType>(() => {
     try {
@@ -83,6 +82,14 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
   const basicInfoDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
+
+  useEffect(() => {
+    return () => {
+      if (basicInfoDebounceRef.current) {
+        clearTimeout(basicInfoDebounceRef.current);
+      }
+    };
+  }, []);
 
   const patchBasicInfo = useCallback((fields: Partial<ResumeType>) => {
     setResume((prev) => {
@@ -311,6 +318,7 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
           }
         }
       }
+      if (sectionId === -1) return;
       window.api.resume.upsertContent({ id, sectionId, ...fields });
     },
     [],
@@ -359,7 +367,6 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
 
   const value: ResumeContextType = {
     resume,
-    isLoading,
     parsedSettings,
     patchBasicInfo,
     updateBasicInfo,

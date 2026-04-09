@@ -159,44 +159,46 @@ export const registerResumeHandlers = (): void => {
             .all()
         : [];
 
-    for (const section of masterSections) {
-      const newSection = db
-        .insert(resumeSections)
-        .values({
-          resumeId: forked.id,
-          name: section.name,
-          order: section.order,
-          contentType: section.contentType,
-          preset: section.preset,
-          isVisible: section.isVisible,
-        })
-        .returning()
-        .get();
-
-      const sectionContents = masterContents.filter(
-        (c) => c.sectionId === section.id,
-      );
-
-      for (const content of sectionContents) {
-        db.insert(resumeContents)
+    db.transaction((tx) => {
+      for (const section of masterSections) {
+        const newSection = tx
+          .insert(resumeSections)
           .values({
-            sectionId: newSection.id,
-            order: content.order,
-            isVisible: content.isVisible,
-            title: content.title,
-            subtitle: content.subtitle,
-            location: content.location,
-            website: content.website,
-            startMonth: content.startMonth,
-            startYear: content.startYear,
-            endMonth: content.endMonth,
-            endYear: content.endYear,
-            isCurrent: content.isCurrent,
-            content: content.content,
+            resumeId: forked.id,
+            name: section.name,
+            order: section.order,
+            contentType: section.contentType,
+            preset: section.preset,
+            isVisible: section.isVisible,
           })
-          .run();
+          .returning()
+          .get();
+
+        const sectionContents = masterContents.filter(
+          (c) => c.sectionId === section.id,
+        );
+
+        for (const content of sectionContents) {
+          tx.insert(resumeContents)
+            .values({
+              sectionId: newSection.id,
+              order: content.order,
+              isVisible: content.isVisible,
+              title: content.title,
+              subtitle: content.subtitle,
+              location: content.location,
+              website: content.website,
+              startMonth: content.startMonth,
+              startYear: content.startYear,
+              endMonth: content.endMonth,
+              endYear: content.endYear,
+              isCurrent: content.isCurrent,
+              content: content.content,
+            })
+            .run();
+        }
       }
-    }
+    });
 
     return getResumeWithSections(db, forked.id);
   });

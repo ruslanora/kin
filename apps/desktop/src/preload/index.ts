@@ -167,7 +167,7 @@ const api = {
       const MAX_FILE_SIZE = 1024 * 1024;
 
       if (args.buffer.length > MAX_FILE_SIZE) {
-        throw new Error('File exceeds the 50 MB size limit');
+        throw new Error('File exceeds the 1 MB size limit');
       }
 
       return (await ipcRenderer.invoke('file:upload', args)) as FileType;

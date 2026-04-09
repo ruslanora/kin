@@ -5,13 +5,13 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from 'react';
 
 type CoverLetterContextType = {
   coverLetter: CoverLetterType | null;
-  isLoading: boolean;
   patchContent: (content: string) => void;
   updateContent: (content: string) => void;
 };
@@ -44,10 +44,17 @@ export const CoverLetterProvider: FunctionComponent<ProviderPropsType> = ({
   const [coverLetter, setCoverLetter] = useState<CoverLetterType | null>(
     initialCoverLetter,
   );
-  const [isLoading] = useState(false);
 
   const coverLetterRef = useRef<CoverLetterType | null>(initialCoverLetter);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
 
   const patchContent = useCallback((content: string) => {
     setCoverLetter((prev) => {
@@ -76,7 +83,6 @@ export const CoverLetterProvider: FunctionComponent<ProviderPropsType> = ({
 
   const value: CoverLetterContextType = {
     coverLetter,
-    isLoading,
     patchContent,
     updateContent,
   };

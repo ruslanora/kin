@@ -60,6 +60,8 @@ export const CoverLetter: FunctionComponent = () => {
 
   const handleBuild = async () => {
     setLoadingBuilder(true);
+    setError(null);
+
     try {
       let resumeId = job.resumeId;
 
@@ -80,6 +82,8 @@ export const CoverLetter: FunctionComponent = () => {
 
       await updateJob({ coverLetterId: cl.id });
       setCoverLetter(cl);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong');
     } finally {
       setLoadingBuilder(false);
     }
@@ -100,6 +104,8 @@ export const CoverLetter: FunctionComponent = () => {
       });
 
       setFiles((prev) => [...prev, uploaded]);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Upload failed');
     } finally {
       setUploading(false);
     }
@@ -123,7 +129,7 @@ export const CoverLetter: FunctionComponent = () => {
           <Spinner size="md" />
         </div>
       ) : isBuilding && resume && coverLetter ? (
-        <div className="flex-1 min-h-0 border-t border-stone-200 dar:border-stone-800">
+        <div className="flex-1 min-h-0 border-t border-stone-200 dark:border-stone-800">
           <ResumeProvider initialResume={resume}>
             <CoverLetterProvider initialCoverLetter={coverLetter}>
               <CoverLetterBuilder />

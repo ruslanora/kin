@@ -25,7 +25,6 @@ export type PageContentType = {
 
 export type CoverLetterContextType = {
   coverLetter: CoverLetterType | null;
-  isLoading: boolean;
   patchContent: (content: string) => void;
   updateContent: (content: string) => void;
 };
