@@ -12,7 +12,7 @@ import { useTracker } from './context';
 import { JobModal } from './job-modal';
 import { boardLabel } from './utils';
 
-export const Toolbar: FunctionComponent = () => {
+export const TrackerPanel: FunctionComponent = () => {
   const archiveModal = createModal();
   const jobModal = createModal();
 
@@ -36,9 +36,9 @@ export const Toolbar: FunctionComponent = () => {
 
   return (
     <>
-      <div className="w-full flex flex-row flex-nowrap items-center justify-between p-4">
+      <div className="w-full flex flex-row flex-nowrap items-center justify-between">
         <div className="flex flex-row flex-nowrap items-center justify-start gap-2">
-          <Typography.Heading>Job Tracker</Typography.Heading>
+          <Typography.Heading as="h2">Job Tracker</Typography.Heading>
         </div>
         <div className="flex flex-row items-center justify-center gap-4">
           {isActiveBoard && (

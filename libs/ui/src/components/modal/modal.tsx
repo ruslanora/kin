@@ -42,7 +42,7 @@ const ModalComponent: FunctionComponent<PropsType> = ({
               'w-full max-w-lg h-fit max-h-125',
               'bg-stone-50 dark:bg-stone-950',
               'border border-stone-200 dark:border-stone-800',
-              'rounded-lg shadow-2xl',
+              'rounded-3xl shadow-2xl',
             )}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

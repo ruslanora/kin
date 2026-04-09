@@ -1,12 +1,11 @@
-import { Badge, classNames, SearchInput } from '@kin/ui';
-import { type FunctionComponent, useMemo, useState } from 'react';
+import { Badge, classNames } from '@kin/ui';
+import { type FunctionComponent, useMemo } from 'react';
 
 import { useDatabase } from './context';
 import { groupByLetter } from './utils';
 
 export const Companies: FunctionComponent = () => {
-  const { companies, selectedCompany, selectCompany } = useDatabase();
-  const [search, setSearch] = useState('');
+  const { companies, selectedCompany, selectCompany, search } = useDatabase();
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
@@ -22,12 +21,7 @@ export const Companies: FunctionComponent = () => {
   );
 
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <SearchInput
-        placeholder="Search companies"
-        value={search}
-        setValue={setSearch}
-      />
+    <div className="flex flex-col p-4">
       <div className="flex flex-col">
         {groups.map(({ letter, items }) => (
           <div key={`companies-${letter}`}>

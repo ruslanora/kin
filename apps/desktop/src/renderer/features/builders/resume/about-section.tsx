@@ -32,8 +32,8 @@ export const AboutSection: FunctionComponent = () => {
 
   return (
     <>
-      <div className="p-4 pb-0">
-        <Typography.Heading level="h2" as="h1">
+      <div className="p-4 pl-8">
+        <Typography.Heading level="h2" as="h2">
           About
         </Typography.Heading>
       </div>

@@ -2,6 +2,7 @@
 
 export { Badge } from './badge';
 export { Button } from './button';
+export { CardButton } from './card-button';
 export { Checkbox } from './checkbox';
 export { DatePicker } from './datepicker';
 export { createDrawer, Drawer, useDrawer } from './drawer';

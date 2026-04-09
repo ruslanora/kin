@@ -52,12 +52,12 @@ export const Column: FunctionComponent<PropsType> = ({ column }) => {
         isCardDragging ? 'z-20' : '',
       )}
     >
-      <div className="flex flex-col h-full rounded-md bg-stone-100 dark:bg-stone-900">
+      <div className="flex flex-col h-full rounded-2xl bg-stone-100 dark:bg-stone-900">
         <div className="flex flex-row items-center justify-between p-2 gap-2">
           {editing ? (
             <input
               className={classNames(
-                'h-9 flex-1 min-w-0 bg-transparent outline-none pl-2',
+                'h-10 flex-1 min-w-0 bg-transparent outline-none pl-2',
                 'text-sm font-medium text-stone-800 dark:text-stone-100',
                 'border-b border-stone-300 dark:border-stone-600',
                 'focus:border-stone-500 dark:focus:border-stone-400',
@@ -76,7 +76,7 @@ export const Column: FunctionComponent<PropsType> = ({ column }) => {
               }}
             />
           ) : (
-            <div className="w-full h-9 flex items-center justify-start pl-2">
+            <div className="h-10 w-full flex items-center justify-start pl-2">
               <span className="min-w-0 text-sm font-medium text-stone-800 dark:text-stone-100 truncate">
                 {column.name}
               </span>

@@ -26,7 +26,7 @@ export const Textarea: FunctionComponent<PropsType> = ({
         'block w-full p-3',
         width === 'fixed' && 'max-w-sm',
         'text-sm font-medium text-stone-950 dark:text-stone-50',
-        'border rounded-md shadow-xs',
+        'border rounded-xl shadow-xs',
         'transition-all duration-300 ease-in-out',
         'bg-stone-50 dark:bg-stone-950',
         'border-stone-200 dark:border-stone-800',

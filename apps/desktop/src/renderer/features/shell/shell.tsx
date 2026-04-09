@@ -1,4 +1,4 @@
-import { Shell } from '@kin/ui';
+import { Button, Shell } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -28,9 +28,9 @@ export const ApplicationShell: FunctionComponent = () => {
           ))}
         </Shell.Sidebar.Body>
         <Shell.Sidebar.Footer>
-          <ul className="w-full flex flex-col items-stretch justify-start gap-2">
-            <SectionItem icon="settings" name="Settings" href="/settings" />
-          </ul>
+          <Button style="accent" width="full">
+            Support the Project
+          </Button>
         </Shell.Sidebar.Footer>
       </Shell.Sidebar>
       <Shell.Content>

@@ -17,7 +17,7 @@ export const ModalHeader: FunctionComponent<PropsType> = ({ children }) => {
     <div
       className={classNames(
         'w-full flex flex-row items-center justify-between',
-        'pl-6 py-4 pr-2',
+        'p-2 pl-6',
       )}
     >
       <span className="text-sm font-medium truncate">{children}</span>

@@ -1,7 +1,6 @@
 import {
   Button,
   createModal,
-  IconButton,
   Modal,
   Rating,
   Select,
@@ -12,12 +11,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { useJob } from './context';
 
-export const Toolbar: FunctionComponent = () => {
+export const JobPanel: FunctionComponent = () => {
   const deleteModal = createModal();
   const { job, columns, updateJob, deleteJob } = useJob();
   const navigate = useNavigate();
 
-  const heading = `${job.title ?? '—'} at ${job.companyName}`;
+  const heading = `${job?.title ?? '—'} at ${job?.companyName}`;
 
   const handleColumnChange = async (
     value: number | string | null | undefined,
@@ -26,7 +25,7 @@ export const Toolbar: FunctionComponent = () => {
 
     const columnId = Number(value);
 
-    if (columnId === job.columnId) return;
+    if (columnId === job?.columnId) return;
 
     await updateJob({ columnId });
   };
@@ -38,11 +37,8 @@ export const Toolbar: FunctionComponent = () => {
 
   return (
     <>
-      <div className="w-full flex flex-row flex-nowrap items-center justify-between p-4">
-        <div className="flex flex-row flex-nowrap items-center justify-start gap-2">
-          <IconButton icon="arrow-left" onClick={() => navigate(-1)} />
-          <Typography.Heading>{heading}</Typography.Heading>
-        </div>
+      <div className="w-full flex flex-row flex-nowrap items-center justify-between">
+        <Typography.Heading as="h2">{heading}</Typography.Heading>
         <div className="flex flex-row items-center justify-center gap-4">
           <Rating
             value={job.excitement}

@@ -1,79 +1,11 @@
-import type {
-  ColumnType,
-  JobWithCompanyType,
-} from '@kin/desktop/main/database';
 import { Spinner, Typography } from '@kin/ui';
-import { type FunctionComponent, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import type { FunctionComponent } from 'react';
 
-import { JobContext } from './context';
+import { useJob } from './context';
 import { TabControl } from './tab-control';
-import { Toolbar } from './toolbar';
 
 export const Job: FunctionComponent = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-
-  const [job, setJob] = useState<JobWithCompanyType | null>(null);
-  const [columns, setColumns] = useState<Array<ColumnType>>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  const updateJob = async (data: Record<string, unknown>): Promise<void> => {
-    const updated = await window.api.job.update({ id: job!.id, ...data });
-    setJob({ ...updated, companyName: job!.companyName });
-  };
-
-  const deleteJob = async (): Promise<void> => {
-    await window.api.job.delete({ id: job!.id });
-    navigate('/tracker');
-  };
-
-  useEffect(() => {
-    if (!id) {
-      navigate('/tracker');
-      return;
-    }
-
-    setLoading(true);
-
-    (async () => {
-      try {
-        const jobId = Number(id);
-
-        const [fetchedJob, activeBoard, archivedBoards] = await Promise.all([
-          window.api.job.getById({ id: jobId }),
-          window.api.board.getActive(),
-          window.api.board.getArchived(),
-        ]);
-
-        if (!fetchedJob) {
-          navigate('/tracker');
-          return;
-        }
-
-        const allBoards = [activeBoard, ...archivedBoards];
-        const columnsArrays = await Promise.all(
-          allBoards.map((board) =>
-            window.api.board.getColumns({ boardId: board.id }),
-          ),
-        );
-
-        const jobColumns =
-          columnsArrays.find((cols: ColumnType[]) =>
-            cols.some((col) => col.id === fetchedJob.columnId),
-          ) ?? [];
-
-        setJob(fetchedJob);
-        setColumns(jobColumns);
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  const { loading, error, job } = useJob();
 
   if (loading) {
     return (
@@ -95,13 +27,10 @@ export const Job: FunctionComponent = () => {
   }
 
   return (
-    <JobContext.Provider value={{ job, columns, updateJob, deleteJob }}>
-      <div className="w-full h-full flex flex-col items-stretch justify-start">
-        <Toolbar />
-        <div className="w-full flex-1 min-h-0 flex flex-col">
-          <TabControl />
-        </div>
+    <div className="w-full h-full flex flex-col items-stretch justify-start">
+      <div className="w-full flex-1 min-h-0 flex flex-col">
+        <TabControl />
       </div>
-    </JobContext.Provider>
+    </div>
   );
 };

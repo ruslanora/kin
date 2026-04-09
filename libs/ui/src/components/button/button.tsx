@@ -53,7 +53,7 @@ export const Button: FunctionComponent<PropsType> = ({
       onBlur={onBlur}
       disabled={disabled}
       className={classNames(
-        'relative cursor-pointer inline-block box-border border rounded-md shadow-xs',
+        'relative cursor-pointer inline-block box-border border rounded-xl shadow-xs',
         'font-medium leading-none tracking-normal',
         'transition-all duration-300 ease-in-out',
         'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
@@ -66,11 +66,11 @@ export const Button: FunctionComponent<PropsType> = ({
         style === 'secondary' &&
           'text-stone-950 bg-transparent border-stone-200 hover:bg-stone-200 dark:text-stone-50 dark:bg-transparent dark:border-stone-800 dark:hover:border-stone-800 hover:dark:bg-stone-800',
         style === 'accent' &&
-          'text-stone-50 bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600 dark:text-stone-50 dark:bg-blue-600 dark:border-blue-600 dark:hover:bg-blue-500 dark:hover:border-blue-500',
+          'text-stone-50 bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600',
         style === 'success' &&
-          'text-stone-50 bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600 dark:text-stone-50 dark:bg-green-600 dark:border-green-600 dark:hover:bg-green-500 dark:hover:border-green-500',
+          'text-stone-50 bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600',
         style === 'danger' &&
-          'text-stone-50 bg-rose-500 border-rose-500 hover:bg-rose-600 hover:border-rose-600 dark:text-stone-50 dark:bg-rose-600 dark:border-rose-600 dark:hover:bg-rose-500 dark:hover:border-rose-500',
+          'text-stone-50 bg-rose-500 border-rose-500 hover:bg-rose-600 hover:border-rose-600',
         style === 'ghost' &&
           'text-stone-950 hover:text-blue-600 dark:text-stone-50 dark:hover:text-blue-500 bg-transparent border-transparent',
         !loading &&

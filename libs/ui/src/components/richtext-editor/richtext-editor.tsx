@@ -57,7 +57,7 @@ export const RichTextEditor: FunctionComponent<PropsType> = ({
   return (
     <div
       className={classNames(
-        'w-full p-2 border rounded-md shadow-xs',
+        'w-full p-2 border rounded-xl shadow-xs',
         'transition-all duration-300 ease-in-out',
         'bg-stone-50 border-stone-200',
         'dark:bg-stone-950 dark:border-stone-800',

@@ -85,7 +85,7 @@ export const Card: FunctionComponent<PropsType> = ({
       }}
       whileDrag={{ opacity: 0.85, scale: 1.02 }}
       className={classNames(
-        'rounded-md pt-3 pr-2 pl-3 pb-4',
+        'rounded-xl pt-3 pr-2 pl-3 pb-4',
         'bg-white dark:bg-stone-800',
         'border border-stone-200 dark:border-stone-700',
         'cursor-pointer select-none',
