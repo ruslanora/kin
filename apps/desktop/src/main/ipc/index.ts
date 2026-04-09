@@ -3,6 +3,7 @@ import type { BrowserWindow } from 'electron';
 import { registerBoardHandlers } from './board';
 import { registerCompanyHandlers } from './company';
 import { registerContactHandlers } from './contact';
+import { registerCoverLetterHandlers } from './cover-letter';
 import { registerDataHandlers } from './data';
 import { registerFileHandlers } from './file';
 import { registerInterviewHandlers } from './interview';
@@ -15,6 +16,7 @@ export const setupIpc = (window: BrowserWindow): void => {
   registerBoardHandlers();
   registerCompanyHandlers();
   registerContactHandlers();
+  registerCoverLetterHandlers();
   registerDataHandlers();
   registerFileHandlers();
   registerJobHandlers();

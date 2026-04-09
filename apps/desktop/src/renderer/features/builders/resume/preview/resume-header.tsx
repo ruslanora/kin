@@ -1,14 +1,15 @@
 import type { ResumeWithSectionsType } from '@kin/desktop/main/database';
 import type { FunctionComponent } from 'react';
 
-type Props = {
+type PropsType = {
   resume: ResumeWithSectionsType;
 };
 
-export const ResumeHeader: FunctionComponent<Props> = ({ resume }) => {
+export const ResumeHeader: FunctionComponent<PropsType> = ({ resume }) => {
   const fullName = [resume.firstName, resume.lastName]
     .filter(Boolean)
     .join(' ');
+
   const contactItems = [
     resume.address,
     resume.email,

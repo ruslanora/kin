@@ -10,16 +10,12 @@ import {
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
 
+import { toMonthString } from '../../utils';
 import { useResume } from '../context';
 
 type PropsType = {
   content: ResumeContentType;
 };
-
-const toMonthString = (
-  month: number | null | undefined,
-  year: number | null | undefined,
-) => (year && month ? `${year}-${String(month).padStart(2, '0')}` : '');
 
 export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
   const { patchContent, updateContent, deleteContent } = useResume();
@@ -51,11 +47,14 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
 
   const handleDateChange = (key: 'startDate' | 'endDate', value: string) => {
     setFields((f) => ({ ...f, [key]: value }));
+
     const [year, month] = value ? value.split('-').map(Number) : [null, null];
+
     const patch =
       key === 'startDate'
         ? { startMonth: month || null, startYear: year || null }
         : { endMonth: month || null, endYear: year || null };
+
     patchContent(content.id, patch);
     updateContent(content.id, patch);
   };

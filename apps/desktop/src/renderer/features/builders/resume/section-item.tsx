@@ -11,12 +11,12 @@ import { CategoryRecord } from './records/category-record';
 import { ListRecord } from './records/list-record';
 import { PeriodRecord } from './records/period-record';
 
-type SectionWithContents = ResumeSectionType & {
+type SectionWithContentsType = ResumeSectionType & {
   contents: ResumeContentType[];
 };
 
 type PropsType = {
-  section: SectionWithContents;
+  section: SectionWithContentsType;
   isReordering: boolean;
 };
 

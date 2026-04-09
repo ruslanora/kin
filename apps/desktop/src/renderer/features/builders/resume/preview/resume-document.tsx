@@ -1,48 +1,17 @@
-import type {
-  ResumeContentType,
-  ResumeSectionType,
-  ResumeWithSectionsType,
-} from '@kin/desktop/main/database';
+import type { ResumeWithSectionsType } from '@kin/desktop/main/database';
 import { type FunctionComponent, useRef } from 'react';
 
-import { DESIGN_MAP } from './designs/index';
+import { DESIGN_MAP } from '../../designs/index';
 import { PageLayout } from './page-layout';
-import { ResumeHeader } from './resume-header';
-import { ResumeSection } from './resume-section';
+import { SourceResume } from './source-resume';
 import { usePageBreaks } from './use-page-breaks';
 
-type Props = {
+type PropsType = {
   resume: ResumeWithSectionsType;
   spacingMultiplier: number;
 };
 
-const SourceResume: FunctionComponent<{ resume: ResumeWithSectionsType }> = ({
-  resume,
-}) => {
-  const visibleSections = resume.sections.filter((s) => s.isVisible !== false);
-  return (
-    <>
-      <ResumeHeader resume={resume} />
-      {visibleSections.map((section) => (
-        <ResumeSection
-          key={section.id}
-          chunk={{
-            section: section as ResumeSectionType & {
-              contents: ResumeContentType[];
-            },
-            contentRange: [
-              0,
-              section.contents.filter((c) => c.isVisible !== false).length,
-            ],
-            showSectionHeading: true,
-          }}
-        />
-      ))}
-    </>
-  );
-};
-
-export const ResumeDocument: FunctionComponent<Props> = ({
+export const ResumeDocument: FunctionComponent<PropsType> = ({
   resume,
   spacingMultiplier,
 }) => {

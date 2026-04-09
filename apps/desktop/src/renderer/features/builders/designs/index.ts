@@ -1,10 +1,7 @@
+import type { DesignDefinitionType } from '../types';
 import { classic } from './classic';
 
-export type DesignDefinitionType = {
-  id: string;
-  label: string;
-  css: string;
-};
+export type { DesignDefinitionType } from '../types';
 
 export const DESIGN_LIST: Array<DesignDefinitionType> = [classic];
 

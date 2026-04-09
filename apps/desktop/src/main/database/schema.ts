@@ -230,6 +230,8 @@ export type ResumeWithSectionsType = ResumeType & {
   sections: Array<ResumeSectionType & { contents: ResumeContentType[] }>;
 };
 
+export type CoverLetterType = typeof coverLetters.$inferSelect;
+
 export type BoardType = typeof boards.$inferSelect;
 export type ColumnType = typeof columns.$inferSelect;
 export type CompanyType = typeof companies.$inferSelect;

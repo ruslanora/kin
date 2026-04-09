@@ -1,16 +1,16 @@
 import type { ResumeWithSectionsType } from '@kin/desktop/main/database';
 import type { FunctionComponent } from 'react';
 
+import type { PageContentType } from '../../types';
 import { ResumeHeader } from './resume-header';
 import { ResumeSection } from './resume-section';
-import type { PageContent } from './use-page-breaks';
 
-type Props = {
-  page: PageContent;
+type PropsType = {
+  page: PageContentType;
   resume: ResumeWithSectionsType;
 };
 
-export const PageLayout: FunctionComponent<Props> = ({ page, resume }) => {
+export const PageLayout: FunctionComponent<PropsType> = ({ page, resume }) => {
   return (
     <div
       className="resume-page"

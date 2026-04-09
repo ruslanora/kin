@@ -15,16 +15,16 @@ import {
   useState,
 } from 'react';
 
-export type ResumeSettings = { spacingMultiplier: number };
+export type ResumeSettingsType = { spacingMultiplier: number };
 
-type ContextType = {
+type ResumeContextType = {
   resume: ResumeWithSectionsType | null;
   isLoading: boolean;
-  parsedSettings: ResumeSettings;
+  parsedSettings: ResumeSettingsType;
   patchBasicInfo: (fields: Partial<ResumeType>) => void;
   updateBasicInfo: (fields: Partial<ResumeType>) => void;
   updateDesign: (design: string) => void;
-  updateSettings: (patch: Partial<ResumeSettings>) => void;
+  updateSettings: (patch: Partial<ResumeSettingsType>) => void;
   addSection: (
     contentType: 'period' | 'category' | 'list',
     name: string,
@@ -44,9 +44,14 @@ type ContextType = {
   reorderContents: (sectionId: number, orderedIds: number[]) => void;
 };
 
-export const ResumeContext = createContext<ContextType | null>(null);
+type ProviderPropsType = {
+  initialResume: ResumeWithSectionsType;
+  children: ReactNode;
+};
 
-export const useResume = (): ContextType => {
+export const ResumeContext = createContext<ResumeContextType | null>(null);
+
+export const useResume = (): ResumeContextType => {
   const context = useContext(ResumeContext);
 
   if (!context) {
@@ -56,12 +61,7 @@ export const useResume = (): ContextType => {
   return context;
 };
 
-type ProviderProps = {
-  initialResume: ResumeWithSectionsType;
-  children: ReactNode;
-};
-
-export const ResumeProvider: FunctionComponent<ProviderProps> = ({
+export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
   initialResume,
   children,
 }) => {
@@ -70,7 +70,7 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
   );
   const [isLoading] = useState(false);
 
-  const parsedSettings = useMemo<ResumeSettings>(() => {
+  const parsedSettings = useMemo<ResumeSettingsType>(() => {
     try {
       const raw = JSON.parse(resume?.settings ?? '{}');
       return { spacingMultiplier: 1.0, ...raw };
@@ -123,7 +123,7 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
   );
 
   const updateSettings = useCallback(
-    (patch: Partial<ResumeSettings>) => {
+    (patch: Partial<ResumeSettingsType>) => {
       const current = (() => {
         try {
           return JSON.parse(resumeRef.current?.settings ?? '{}');
@@ -357,7 +357,7 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
     [],
   );
 
-  const value: ContextType = {
+  const value: ResumeContextType = {
     resume,
     isLoading,
     parsedSettings,

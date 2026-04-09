@@ -5,6 +5,7 @@ import type {
   ColumnType,
   CompanyType,
   ContactType,
+  CoverLetterType,
   FileType,
   InterviewType,
   InterviewWithJobType,
@@ -230,6 +231,14 @@ const api = {
     generatePdf: async (args: { html: string; filename: string }) => {
       await ipcRenderer.invoke('resume:generatePdf', args);
     },
+  },
+
+  coverLetter: {
+    getMaster: async () =>
+      (await ipcRenderer.invoke('coverLetter:getMaster')) as CoverLetterType,
+
+    update: async (args: { id: number; content: string }) =>
+      (await ipcRenderer.invoke('coverLetter:update', args)) as CoverLetterType,
   },
 
   job: {

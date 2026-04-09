@@ -13,6 +13,7 @@ export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
   const { patchContent, updateContent, deleteContent } = useResume();
 
   const isHidden = content.isVisible === false;
+
   const [fields, setFields] = useState({
     title: content.title ?? '',
     content: content.content ?? '',

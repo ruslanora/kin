@@ -5,36 +5,30 @@ import type {
 } from '@kin/desktop/main/database';
 import { type RefObject, useLayoutEffect, useRef, useState } from 'react';
 
-export type SectionChunkType = {
-  section: ResumeSectionType & { contents: Array<ResumeContentType> };
-  contentRange: [number, number];
-  showSectionHeading: boolean;
-};
-
-export type PageContent = {
-  header?: true;
-  chunks: Array<SectionChunkType>;
-};
+import type { PageContentType, SectionChunkType } from '../../types';
 
 const CONTENT_HEIGHT = 1056 - 72 * 2;
 
 export function usePageBreaks(
   sourceRef: RefObject<HTMLDivElement | null>,
   resume: ResumeWithSectionsType,
-): PageContent[] {
-  const [pages, setPages] = useState<PageContent[]>([
+): PageContentType[] {
+  const [pages, setPages] = useState<PageContentType[]>([
     { header: true, chunks: [] },
   ]);
+
   const prevKeyRef = useRef<string>('');
 
   useLayoutEffect(() => {
     const source = sourceRef.current;
+
     if (!source) return;
 
     const compute = () => {
       const headerEl = source.querySelector<HTMLElement>(
         '[data-resume-header]',
       );
+
       const headerHeight = headerEl?.offsetHeight ?? 0;
 
       const visibleSections = resume.sections.filter(
@@ -62,17 +56,20 @@ export function usePageBreaks(
         const visibleContents = section.contents.filter(
           (c) => c.isVisible !== false,
         );
+
         if (visibleContents.length === 0) continue;
 
         const headingEl = source.querySelector<HTMLElement>(
           `[data-section-id="${section.id}"]`,
         );
+
         const sectionHeadingHeight = headingEl?.offsetHeight ?? 0;
 
         visibleContents.forEach((content, idx) => {
           const contentEl = source.querySelector<HTMLElement>(
             `[data-content-id="${content.id}"]`,
           );
+
           const height = contentEl?.offsetHeight ?? 0;
 
           flatItems.push({
@@ -88,9 +85,9 @@ export function usePageBreaks(
         });
       }
 
-      const result: PageContent[] = [];
+      const result: PageContentType[] = [];
 
-      let currentPage: PageContent = { chunks: [] };
+      let currentPage: PageContentType = { chunks: [] };
       let cursor = 0;
 
       const flushPage = () => {
@@ -117,14 +114,17 @@ export function usePageBreaks(
         };
 
         currentPage.chunks.push(chunk);
+
         return chunk;
       };
 
       for (const item of flatItems) {
         if (item.kind === 'header') {
           if (cursor + item.height > CONTENT_HEIGHT && cursor > 0) flushPage();
+
           currentPage.header = true;
           cursor += item.height;
+
           continue;
         }
 
