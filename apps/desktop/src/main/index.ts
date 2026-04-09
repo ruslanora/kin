@@ -7,7 +7,7 @@ import { updateElectronApp } from 'update-electron-app';
 
 import { runMigrations, seedDefaults } from './database';
 import { setupIpc } from './ipc';
-import { startServer, stopServer } from './server';
+import { startServer, stopServer } from './services/server';
 
 log.errorHandler.startCatching();
 

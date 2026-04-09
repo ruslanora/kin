@@ -76,7 +76,7 @@ importers:
     dependencies:
       '@kin/ui':
         specifier: workspace:*
-        version: file:libs/ui(@tiptap/extension-placeholder@3.22.1(@tiptap/extensions@3.22.2(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)))(@tiptap/react@3.22.1(@floating-ui/dom@1.7.6)(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@tiptap/starter-kit@3.22.1)(react-dom@19.2.4(react@19.2.4))(react-icons@5.6.0(react@19.2.4))(react@19.2.4)
+        version: link:../../libs/ui
       better-sqlite3:
         specifier: ^12.8.0
         version: 12.8.0
@@ -92,6 +92,9 @@ importers:
       framer-motion:
         specifier: ^12.38.0
         version: 12.38.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      node-mac-permissions:
+        specifier: ^2.5.0
+        version: 2.5.0
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -185,7 +188,7 @@ importers:
     dependencies:
       '@kin/ui':
         specifier: workspace:*
-        version: file:libs/ui(@tiptap/extension-placeholder@3.22.1(@tiptap/extensions@3.22.2(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)))(@tiptap/react@3.22.1(@floating-ui/dom@1.7.6)(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@tiptap/starter-kit@3.22.1)(react-dom@19.2.4(react@19.2.4))(react-icons@5.6.0(react@19.2.4))(react@19.2.4)
+        version: link:../../libs/ui
       '@tiptap/extension-placeholder':
         specifier: 3.22.1
         version: 3.22.1(@tiptap/extensions@3.22.2(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2))
@@ -2219,16 +2222,6 @@ packages:
       {
         integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==,
       }
-
-  '@kin/ui@file:libs/ui':
-    resolution: { directory: libs/ui, type: directory }
-    peerDependencies:
-      '@tiptap/extension-placeholder': 3.22.1
-      '@tiptap/react': 3.22.1
-      '@tiptap/starter-kit': 3.22.1
-      react: ^19
-      react-dom: ^19
-      react-icons: ^5.6.0
 
   '@listr2/prompt-adapter-inquirer@2.0.22':
     resolution:
@@ -8434,6 +8427,12 @@ packages:
       }
     engines: { node: '>=22.12.0' }
 
+  node-addon-api@7.1.1:
+    resolution:
+      {
+        integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==,
+      }
+
   node-api-version@0.2.1:
     resolution:
       {
@@ -8480,6 +8479,13 @@ packages:
       {
         integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==,
       }
+
+  node-mac-permissions@2.5.0:
+    resolution:
+      {
+        integrity: sha512-zR8SVCaN3WqV1xwWd04XVAdzm3UTdjbxciLrZtB0Cc7F2Kd34AJfhPD4hm1HU0YH3oGUZO4X9OBLY5ijSTHsGw==,
+      }
+    os: [darwin]
 
   node-releases@2.0.37:
     resolution:
@@ -12487,15 +12493,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  '@kin/ui@file:libs/ui(@tiptap/extension-placeholder@3.22.1(@tiptap/extensions@3.22.2(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)))(@tiptap/react@3.22.1(@floating-ui/dom@1.7.6)(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@tiptap/starter-kit@3.22.1)(react-dom@19.2.4(react@19.2.4))(react-icons@5.6.0(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@tiptap/extension-placeholder': 3.22.1(@tiptap/extensions@3.22.2(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2))
-      '@tiptap/react': 3.22.1(@floating-ui/dom@1.7.6)(@tiptap/core@3.22.1(@tiptap/pm@3.22.2))(@tiptap/pm@3.22.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@tiptap/starter-kit': 3.22.1
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-      react-icons: 5.6.0(react@19.2.4)
 
   '@listr2/prompt-adapter-inquirer@2.0.22(@inquirer/prompts@6.0.1)':
     dependencies:
@@ -16662,6 +16659,8 @@ snapshots:
     dependencies:
       semver: 7.7.4
 
+  node-addon-api@7.1.1: {}
+
   node-api-version@0.2.1:
     dependencies:
       semver: 7.7.4
@@ -16697,6 +16696,11 @@ snapshots:
       - supports-color
 
   node-int64@0.4.0: {}
+
+  node-mac-permissions@2.5.0:
+    dependencies:
+      bindings: 1.5.0
+      node-addon-api: 7.1.1
 
   node-releases@2.0.37: {}
 

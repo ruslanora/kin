@@ -8,7 +8,7 @@ import {
   Toggle,
   Typography,
 } from '@kin/ui';
-import { type FunctionComponent, useState } from 'react';
+import { type FunctionComponent, useEffect, useState } from 'react';
 
 import { useFocusRing, useTheme } from '../hooks';
 import { PageContainer } from './container';
@@ -19,11 +19,25 @@ export const SettingsPage: FunctionComponent = () => {
   const modal = createModal();
   const [exportLoading, setExportLoading] = useState<boolean>(false);
   const [deletionLoading, setDeletionLoading] = useState<boolean>(false);
+  const [calendarPermission, setCalendarPermission] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    window.api.calendar.getPermissionStatus().then((status) => {
+      setCalendarPermission(status);
+    });
+  }, []);
 
   const handleOnExport = async () => {
     setExportLoading(true);
     await window.api.data.export();
     setExportLoading(false);
+  };
+
+  const handleOnConnectCalendar = async () => {
+    const status = await window.api.calendar.requestPermission();
+    setCalendarPermission(status);
   };
 
   const handleOnDelete = async () => {
@@ -89,6 +103,23 @@ export const SettingsPage: FunctionComponent = () => {
                 </CardButton>
               </li>
             </ul>
+          </section>
+          <section className="flex flex-col items-stretch justify-start gap-4">
+            <Typography.Heading level="h2">Synchronization</Typography.Heading>
+            <Typography.Heading level="h3">Calendar</Typography.Heading>
+            <Typography.Paragraph>
+              Sync your scheduled interviews with macOS Calendar so they appear
+              alongside your other events on all your Apple devices.
+            </Typography.Paragraph>
+            {calendarPermission === 'authorized' ? (
+              <Button style="secondary" disabled>
+                Already in Sync
+              </Button>
+            ) : (
+              <Button style="secondary" onClick={handleOnConnectCalendar}>
+                Connect Calendar
+              </Button>
+            )}
           </section>
           <section className="flex flex-col items-stretch justify-start gap-4">
             <Typography.Heading level="h2">Data Control</Typography.Heading>

@@ -11,7 +11,7 @@ const rootNodeModules = path.resolve(__dirname, '../../node_modules');
 const config: ForgeConfig = {
   packagerConfig: {
     asar: {
-      unpack: '**/node_modules/better-sqlite3/**',
+      unpack: '**/node_modules/{better-sqlite3,node-mac-permissions}/**',
     },
     extraResource: ['src/main/database/migrations'],
     icon: 'assets/icons/icon',
@@ -19,7 +19,12 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   hooks: {
     packageAfterCopy: async (_config, buildPath) => {
-      for (const pkg of ['better-sqlite3', 'bindings', 'file-uri-to-path']) {
+      for (const pkg of [
+        'better-sqlite3',
+        'node-mac-permissions',
+        'bindings',
+        'file-uri-to-path',
+      ]) {
         const src = path.join(rootNodeModules, pkg);
         const dest = path.join(buildPath, 'node_modules', pkg);
         if (fs.existsSync(src) && !fs.existsSync(dest)) {
