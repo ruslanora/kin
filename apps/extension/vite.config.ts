@@ -9,7 +9,7 @@ export default defineConfig({
   base: '',
   resolve: {
     alias: {
-      '@kin/ui': resolve(__dirname, '../../libs/ui/src/index.ts'),
+      '@kin/ui': resolve(__dirname, '../../libs/ui/src/index.tsx'),
     },
   },
   build: {
