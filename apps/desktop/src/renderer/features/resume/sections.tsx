@@ -1,4 +1,11 @@
-import { classNames, createModal, IconButton, Typography } from '@kin/ui';
+import {
+  Button,
+  classNames,
+  createModal,
+  Icon,
+  IconButton,
+  Typography,
+} from '@kin/ui';
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
 
@@ -55,13 +62,10 @@ export const ResumeSections: FunctionComponent = () => {
         <Typography.Heading level="h2" as="h1">
           Sections
         </Typography.Heading>
-        <div className="flex flex-row items-center justify-end gap-2">
-          {!isReordering && <IconButton icon="plus" onClick={addModal.open} />}
-          <IconButton
-            icon={isReordering ? 'check' : 'move2'}
-            onClick={() => setIsReordering((v) => !v)}
-          />
-        </div>
+        <IconButton
+          icon={isReordering ? 'check' : 'move2'}
+          onClick={() => setIsReordering((v) => !v)}
+        />
       </div>
 
       {resume.sections.map((section) => (
@@ -87,6 +91,18 @@ export const ResumeSections: FunctionComponent = () => {
           <SectionItem section={section} isReordering={isReordering} />
         </div>
       ))}
+
+      {!isReordering && (
+        <Button
+          type="button"
+          style="primary"
+          width="full"
+          onClick={addModal.open}
+        >
+          <Icon name="plus" size={18} />
+          <span>Add Section</span>
+        </Button>
+      )}
 
       <AddSectionModal modal={addModal} />
     </div>

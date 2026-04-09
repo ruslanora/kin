@@ -1,0 +1,1 @@
+ALTER TABLE `resume_contents` ADD `location` text;

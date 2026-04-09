@@ -10,19 +10,27 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 
+export type ResumeSettings = { spacingMultiplier: number };
+
 type ContextType = {
   resume: ResumeWithSectionsType | null;
   isLoading: boolean;
+  parsedSettings: ResumeSettings;
+  patchBasicInfo: (fields: Partial<ResumeType>) => void;
   updateBasicInfo: (fields: Partial<ResumeType>) => void;
+  updateDesign: (design: string) => void;
+  updateSettings: (patch: Partial<ResumeSettings>) => void;
   addSection: (
     contentType: 'period' | 'category' | 'list',
     name: string,
     preset?: string,
   ) => Promise<void>;
+  patchSection: (id: number, fields: Partial<ResumeSectionType>) => void;
   updateSection: (id: number, fields: Partial<ResumeSectionType>) => void;
   deleteSection: (id: number) => Promise<void>;
   reorderSections: (orderedIds: number[]) => void;
@@ -30,6 +38,7 @@ type ContextType = {
     sectionId: number,
     contentType: 'period' | 'category' | 'list',
   ) => Promise<void>;
+  patchContent: (id: number, fields: Partial<ResumeContentType>) => void;
   updateContent: (id: number, fields: Partial<ResumeContentType>) => void;
   deleteContent: (id: number) => Promise<void>;
   reorderContents: (sectionId: number, orderedIds: number[]) => void;
@@ -61,13 +70,28 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
   );
   const [isLoading] = useState(false);
 
+  const parsedSettings = useMemo<ResumeSettings>(() => {
+    try {
+      const raw = JSON.parse(resume?.settings ?? '{}');
+      return { spacingMultiplier: 1.0, ...raw };
+    } catch {
+      return { spacingMultiplier: 1.0 };
+    }
+  }, [resume?.settings]);
+
   const resumeRef = useRef<ResumeWithSectionsType | null>(initialResume);
   const basicInfoDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
-  const contentDebounceRefs = useRef<
-    Map<number, ReturnType<typeof setTimeout>>
-  >(new Map());
+
+  const patchBasicInfo = useCallback((fields: Partial<ResumeType>) => {
+    setResume((prev) => {
+      if (!prev) return prev;
+      const updated = { ...prev, ...fields };
+      resumeRef.current = updated;
+      return updated;
+    });
+  }, []);
 
   const updateBasicInfo = useCallback(
     (fields: Partial<ResumeType>) => {
@@ -91,6 +115,28 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
     [resume],
   );
 
+  const updateDesign = useCallback(
+    (design: string) => {
+      updateBasicInfo({ design });
+    },
+    [updateBasicInfo],
+  );
+
+  const updateSettings = useCallback(
+    (patch: Partial<ResumeSettings>) => {
+      const current = (() => {
+        try {
+          return JSON.parse(resumeRef.current?.settings ?? '{}');
+        } catch {
+          return {};
+        }
+      })();
+      const merged = { spacingMultiplier: 1.0, ...current, ...patch };
+      updateBasicInfo({ settings: JSON.stringify(merged) });
+    },
+    [updateBasicInfo],
+  );
+
   const addSection = useCallback(
     async (
       contentType: 'period' | 'category' | 'list',
@@ -102,34 +148,46 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
       const newSection = await window.api.resume.upsertSection({
         resumeId: resume.id,
         name,
-        order: 0,
+        order: resume.sections.length,
         contentType,
         preset,
       });
 
-      const initialContents: ResumeContentType[] = [];
-
-      if (contentType === 'list') {
-        const newContent = await window.api.resume.upsertContent({
-          sectionId: newSection.id,
-          order: 0,
-        });
-        initialContents.push(newContent);
-      }
+      const newContent = await window.api.resume.upsertContent({
+        sectionId: newSection.id,
+        order: 0,
+      });
+      const initialContents: ResumeContentType[] = [newContent];
 
       setResume((prev) =>
         prev
           ? {
               ...prev,
               sections: [
-                { ...newSection, contents: initialContents },
                 ...prev.sections,
+                { ...newSection, contents: initialContents },
               ],
             }
           : prev,
       );
     },
     [resume],
+  );
+
+  const patchSection = useCallback(
+    (id: number, fields: Partial<ResumeSectionType>) => {
+      setResume((prev) =>
+        prev
+          ? {
+              ...prev,
+              sections: prev.sections.map((s) =>
+                s.id === id ? { ...s, ...fields } : s,
+              ),
+            }
+          : prev,
+      );
+    },
+    [],
   );
 
   const updateSection = useCallback(
@@ -220,7 +278,7 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
     [resume],
   );
 
-  const updateContent = useCallback(
+  const patchContent = useCallback(
     (id: number, fields: Partial<ResumeContentType>) => {
       setResume((prev) => {
         if (!prev) return prev;
@@ -236,30 +294,24 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
         resumeRef.current = updated;
         return updated;
       });
+    },
+    [],
+  );
 
-      const existing = contentDebounceRefs.current.get(id);
-      if (existing) {
-        clearTimeout(existing);
-      }
-
-      const timer = setTimeout(async () => {
-        // Find sectionId from the ref to avoid stale closure
-        const currentResume = resumeRef.current;
-        let sectionId = -1;
-        if (currentResume) {
-          for (const s of currentResume.sections) {
-            const found = s.contents.find((c) => c.id === id);
-            if (found) {
-              sectionId = s.id;
-              break;
-            }
+  const updateContent = useCallback(
+    (id: number, fields: Partial<ResumeContentType>) => {
+      // Find sectionId from the ref to avoid stale closure
+      let sectionId = -1;
+      const currentResume = resumeRef.current;
+      if (currentResume) {
+        for (const s of currentResume.sections) {
+          if (s.contents.find((c) => c.id === id)) {
+            sectionId = s.id;
+            break;
           }
         }
-        await window.api.resume.upsertContent({ id, sectionId, ...fields });
-        contentDebounceRefs.current.delete(id);
-      }, 600);
-
-      contentDebounceRefs.current.set(id, timer);
+      }
+      window.api.resume.upsertContent({ id, sectionId, ...fields });
     },
     [],
   );
@@ -308,12 +360,18 @@ export const ResumeProvider: FunctionComponent<ProviderProps> = ({
   const value: ContextType = {
     resume,
     isLoading,
+    parsedSettings,
+    patchBasicInfo,
     updateBasicInfo,
+    updateDesign,
+    updateSettings,
     addSection,
+    patchSection,
     updateSection,
     deleteSection,
     reorderSections,
     addContent,
+    patchContent,
     updateContent,
     deleteContent,
     reorderContents,

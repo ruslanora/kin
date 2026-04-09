@@ -57,6 +57,7 @@ export const resumeContents = sqliteTable(
       .default(true),
     title: text('title'),
     subtitle: text('subtitle'),
+    location: text('location'),
     website: text('website'),
     startMonth: integer('start_month'),
     startYear: integer('start_year'),

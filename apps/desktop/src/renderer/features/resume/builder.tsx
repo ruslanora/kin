@@ -25,7 +25,7 @@ export const ResumeBuilder: FunctionComponent = () => {
           <ResumeSections />
         </div>
       </div>
-      <div className="flex-1 flex items-center justify-center border-l border-stone-200 dark:border-stone-800">
+      <div className="flex-1 flex flex-col overflow-hidden border-l border-stone-200 dark:border-stone-800">
         <ResumePreview />
       </div>
     </div>

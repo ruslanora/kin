@@ -24,14 +24,24 @@ export const SectionItem: FunctionComponent<PropsType> = ({
   section,
   isReordering,
 }) => {
-  const { updateSection, deleteSection, addContent, reorderContents } =
-    useResume();
+  const {
+    patchSection,
+    updateSection,
+    deleteSection,
+    addContent,
+    reorderContents,
+  } = useResume();
 
   const [name, setName] = useState(section.name ?? '');
   const [dragContentId, setDragContentId] = useState<number | null>(null);
   const [dragOverContentId, setDragOverContentId] = useState<number | null>(
     null,
   );
+
+  const handleNameChange = (value: string) => {
+    setName(value);
+    patchSection(section.id, { name: value });
+  };
 
   const handleNameBlur = () => {
     updateSection(section.id, { name });
@@ -144,7 +154,7 @@ export const SectionItem: FunctionComponent<PropsType> = ({
           <TextInput
             label="Section Name"
             value={name}
-            onChange={setName}
+            onChange={handleNameChange}
             onBlur={handleNameBlur}
           />
         </div>
@@ -179,7 +189,7 @@ export const SectionItem: FunctionComponent<PropsType> = ({
       )}
 
       {section.contentType !== 'list' && (
-        <div className="pl-4">
+        <div className="w-full flex items-center justify-end">
           <Button type="button" style="secondary" onClick={handleAddRecord}>
             Add Record
           </Button>

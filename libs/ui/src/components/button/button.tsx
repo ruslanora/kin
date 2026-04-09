@@ -88,7 +88,7 @@ export const Button: FunctionComponent<PropsType> = ({
       </div>
       <div
         className={classNames(
-          'h-fit w-fit whitespace-nowrap flex-nowrap',
+          'h-fit w-full whitespace-nowrap flex-nowrap',
           'flex flex-row items-center justify-center shrink-0',
           loading ? '-z-10 opacity-0' : 'z-10 opacity-100',
         )}

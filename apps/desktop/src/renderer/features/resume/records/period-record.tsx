@@ -22,47 +22,48 @@ const toMonthString = (
 ) => (year && month ? `${year}-${String(month).padStart(2, '0')}` : '');
 
 export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
-  const { updateContent, deleteContent } = useResume();
+  const { patchContent, updateContent, deleteContent } = useResume();
 
-  const [isHidden, setIsHidden] = useState(false);
+  const isHidden = content.isVisible === false;
   const [fields, setFields] = useState({
     title: content.title ?? '',
     subtitle: content.subtitle ?? '',
+    location: content.location ?? '',
     startDate: toMonthString(content.startMonth, content.startYear),
     endDate: toMonthString(content.endMonth, content.endYear),
     isCurrent: content.isCurrent ?? false,
     content: content.content ?? '',
   });
 
+  const handleChange = <K extends keyof typeof fields>(
+    key: K,
+    value: (typeof fields)[K],
+  ) => {
+    setFields((f) => ({ ...f, [key]: value }));
+    patchContent(content.id, { [key]: value } as Partial<ResumeContentType>);
+  };
+
   const handleBlur = (key: keyof typeof fields) => {
-    const value = fields[key];
-    updateContent(content.id, { [key]: value });
+    updateContent(content.id, {
+      [key]: fields[key],
+    } as Partial<ResumeContentType>);
   };
 
   const handleDateChange = (key: 'startDate' | 'endDate', value: string) => {
     setFields((f) => ({ ...f, [key]: value }));
     const [year, month] = value ? value.split('-').map(Number) : [null, null];
-    if (key === 'startDate') {
-      updateContent(content.id, {
-        startMonth: month || null,
-        startYear: year || null,
-      });
-    } else {
-      updateContent(content.id, {
-        endMonth: month || null,
-        endYear: year || null,
-      });
-    }
+    const patch =
+      key === 'startDate'
+        ? { startMonth: month || null, startYear: year || null }
+        : { endMonth: month || null, endYear: year || null };
+    patchContent(content.id, patch);
+    updateContent(content.id, patch);
   };
 
   const handleCheckbox = (checked: boolean) => {
     setFields((f) => ({ ...f, isCurrent: checked }));
+    patchContent(content.id, { isCurrent: checked });
     updateContent(content.id, { isCurrent: checked });
-  };
-
-  const handleContentChange = (html: string) => {
-    setFields((f) => ({ ...f, content: html }));
-    updateContent(content.id, { content: html });
   };
 
   return (
@@ -72,13 +73,16 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
           <TextInput
             label="Company or Organization"
             value={fields.title}
-            onChange={(v) => setFields((f) => ({ ...f, title: v }))}
+            onChange={(v) => handleChange('title', v)}
             onBlur={() => handleBlur('title')}
           />
         </div>
         <IconButton
           icon={isHidden ? 'eyeOff' : 'eye'}
-          onClick={() => setIsHidden((v) => !v)}
+          onClick={() => {
+            patchContent(content.id, { isVisible: isHidden });
+            updateContent(content.id, { isVisible: isHidden });
+          }}
         />
         <IconButton icon="trash" onClick={() => deleteContent(content.id)} />
       </div>
@@ -92,8 +96,14 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
           <TextInput
             label="Position or Title"
             value={fields.subtitle}
-            onChange={(v) => setFields((f) => ({ ...f, subtitle: v }))}
+            onChange={(v) => handleChange('subtitle', v)}
             onBlur={() => handleBlur('subtitle')}
+          />
+          <TextInput
+            label="Location"
+            value={fields.location}
+            onChange={(v) => handleChange('location', v)}
+            onBlur={() => handleBlur('location')}
           />
           <div className="grid grid-cols-2 gap-2">
             <DatePicker
@@ -117,7 +127,8 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
           <RichTextEditor
             placeholder="Description"
             value={fields.content}
-            onChange={handleContentChange}
+            onChange={(html) => handleChange('content', html)}
+            onBlur={(html) => updateContent(content.id, { content: html })}
           />
         </div>
       </div>

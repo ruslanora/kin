@@ -10,21 +10,24 @@ type PropsType = {
 };
 
 export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
-  const { updateContent, deleteContent } = useResume();
+  const { patchContent, updateContent, deleteContent } = useResume();
 
-  const [isHidden, setIsHidden] = useState(false);
+  const isHidden = content.isVisible === false;
   const [fields, setFields] = useState({
     title: content.title ?? '',
     content: content.content ?? '',
   });
 
-  const handleBlur = (key: 'title') => {
-    updateContent(content.id, { [key]: fields[key] });
+  const handleChange = <K extends keyof typeof fields>(
+    key: K,
+    value: string,
+  ) => {
+    setFields((f) => ({ ...f, [key]: value }));
+    patchContent(content.id, { [key]: value });
   };
 
-  const handleContentChange = (html: string) => {
-    setFields((f) => ({ ...f, content: html }));
-    updateContent(content.id, { content: html });
+  const handleBlur = (key: keyof typeof fields) => {
+    updateContent(content.id, { [key]: fields[key] });
   };
 
   return (
@@ -39,13 +42,16 @@ export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
           <TextInput
             label="Category Title"
             value={fields.title}
-            onChange={(v) => setFields((f) => ({ ...f, title: v }))}
+            onChange={(v) => handleChange('title', v)}
             onBlur={() => handleBlur('title')}
           />
         </div>
         <IconButton
           icon={isHidden ? 'eyeOff' : 'eye'}
-          onClick={() => setIsHidden((v) => !v)}
+          onClick={() => {
+            patchContent(content.id, { isVisible: isHidden });
+            updateContent(content.id, { isVisible: isHidden });
+          }}
         />
         <IconButton icon="trash" onClick={() => deleteContent(content.id)} />
       </div>
@@ -58,7 +64,8 @@ export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
         <Textarea
           placeholder="Content"
           value={fields.content}
-          setValue={handleContentChange}
+          setValue={(v) => handleChange('content', v)}
+          onBlur={() => handleBlur('content')}
         />
       </div>
     </div>

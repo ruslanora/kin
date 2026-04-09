@@ -222,6 +222,14 @@ const api = {
     reorderContents: async (args: { orderedIds: number[] }) => {
       await ipcRenderer.invoke('resume:reorderContents', args);
     },
+
+    exportTxt: async (args: { text: string; filename: string }) => {
+      await ipcRenderer.invoke('resume:exportTxt', args);
+    },
+
+    generatePdf: async (args: { html: string; filename: string }) => {
+      await ipcRenderer.invoke('resume:generatePdf', args);
+    },
   },
 
   job: {

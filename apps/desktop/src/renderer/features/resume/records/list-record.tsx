@@ -10,20 +10,21 @@ type PropsType = {
 };
 
 export const ListRecord: FunctionComponent<PropsType> = ({ content }) => {
-  const { updateContent } = useResume();
+  const { patchContent, updateContent } = useResume();
 
   const [contentValue, setContentValue] = useState(content.content ?? '');
 
-  const handleContentChange = (html: string) => {
+  const handleChange = (html: string) => {
     setContentValue(html);
-    updateContent(content.id, { content: html });
+    patchContent(content.id, { content: html });
   };
 
   return (
     <Textarea
       placeholder="List items"
       value={contentValue}
-      setValue={handleContentChange}
+      setValue={handleChange}
+      onBlur={() => updateContent(content.id, { content: contentValue })}
     />
   );
 };

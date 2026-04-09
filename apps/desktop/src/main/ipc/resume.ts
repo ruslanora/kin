@@ -1,4 +1,6 @@
 import { asc, eq, inArray } from 'drizzle-orm';
+import { BrowserWindow, dialog, shell } from 'electron';
+import { writeFileSync } from 'fs';
 
 import { getDb } from '../database/client';
 import type {
@@ -179,6 +181,45 @@ export const registerResumeHandlers = (): void => {
     const db = getDb();
     db.delete(resumeContents).where(eq(resumeContents.id, id)).run();
   });
+
+  handle(
+    'resume:exportTxt',
+    async (_event, { text, filename }: { text: string; filename: string }) => {
+      const { filePath } = await dialog.showSaveDialog({
+        defaultPath: filename,
+        filters: [{ name: 'Text', extensions: ['txt'] }],
+      });
+      if (filePath) {
+        writeFileSync(filePath, text, 'utf-8');
+        shell.openPath(filePath);
+      }
+    },
+  );
+
+  handle(
+    'resume:generatePdf',
+    async (_event, { html, filename }: { html: string; filename: string }) => {
+      const win = new BrowserWindow({ show: false, width: 816 });
+      await win.loadURL(
+        `data:text/html;base64,${Buffer.from(html).toString('base64')}`,
+      );
+      const pdf = await win.webContents.printToPDF({
+        pageSize: 'Letter',
+        printBackground: true,
+        margins: { marginType: 'none' },
+      });
+      win.close();
+
+      const { filePath } = await dialog.showSaveDialog({
+        defaultPath: filename,
+        filters: [{ name: 'PDF', extensions: ['pdf'] }],
+      });
+      if (filePath) {
+        writeFileSync(filePath, pdf);
+        shell.openPath(filePath);
+      }
+    },
+  );
 
   handle(
     'resume:reorderContents',

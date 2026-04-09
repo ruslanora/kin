@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useResume } from './context';
 
 export const AboutSection: FunctionComponent = () => {
-  const { resume, updateBasicInfo } = useResume();
+  const { resume, patchBasicInfo, updateBasicInfo } = useResume();
 
   const [fields, setFields] = useState({
     firstName: resume?.firstName ?? '',
@@ -17,6 +17,14 @@ export const AboutSection: FunctionComponent = () => {
     address: resume?.address ?? '',
     summary: resume?.summary ?? '',
   });
+
+  const handleChange = <K extends keyof typeof fields>(
+    key: K,
+    value: string,
+  ) => {
+    setFields((f) => ({ ...f, [key]: value }));
+    patchBasicInfo({ [key]: value });
+  };
 
   const handleBlur = (key: keyof typeof fields) => {
     updateBasicInfo({ [key]: fields[key] });
@@ -34,50 +42,50 @@ export const AboutSection: FunctionComponent = () => {
           <TextInput
             label="First Name"
             value={fields.firstName}
-            onChange={(v) => setFields((f) => ({ ...f, firstName: v }))}
+            onChange={(v) => handleChange('firstName', v)}
             onBlur={() => handleBlur('firstName')}
           />
           <TextInput
             label="Last Name"
             value={fields.lastName}
-            onChange={(v) => setFields((f) => ({ ...f, lastName: v }))}
+            onChange={(v) => handleChange('lastName', v)}
             onBlur={() => handleBlur('lastName')}
           />
           <TextInput
             label="Email"
             value={fields.email}
-            onChange={(v) => setFields((f) => ({ ...f, email: v }))}
+            onChange={(v) => handleChange('email', v)}
             onBlur={() => handleBlur('email')}
           />
           <TextInput
             label="Phone"
             value={fields.phone}
-            onChange={(v) => setFields((f) => ({ ...f, phone: v }))}
+            onChange={(v) => handleChange('phone', v)}
             onBlur={() => handleBlur('phone')}
           />
         </div>
         <TextInput
           label="LinkedIn"
           value={fields.linkedin}
-          onChange={(v) => setFields((f) => ({ ...f, linkedin: v }))}
+          onChange={(v) => handleChange('linkedin', v)}
           onBlur={() => handleBlur('linkedin')}
         />
         <TextInput
           label="Website"
           value={fields.website}
-          onChange={(v) => setFields((f) => ({ ...f, website: v }))}
+          onChange={(v) => handleChange('website', v)}
           onBlur={() => handleBlur('website')}
         />
         <TextInput
           label="Address"
           value={fields.address}
-          onChange={(v) => setFields((f) => ({ ...f, address: v }))}
+          onChange={(v) => handleChange('address', v)}
           onBlur={() => handleBlur('address')}
         />
         <Textarea
           placeholder="Summary"
           value={fields.summary}
-          setValue={(v) => setFields((f) => ({ ...f, summary: v }))}
+          setValue={(v) => handleChange('summary', v)}
           onBlur={() => handleBlur('summary')}
           rows={3}
         />
