@@ -68,7 +68,7 @@ export const AddSectionModal: FunctionComponent<PropsType> = ({ modal }) => {
                   name={opt.label}
                   value={opt.value}
                   selected={contentType}
-                  setSelected={(v) => setContentType(v as ContentType)}
+                  setSelected={(value) => setContentType(value as ContentType)}
                   helper={opt.description}
                 />
               ))}

@@ -14,7 +14,7 @@ export const ResumeSection: FunctionComponent<PropsType> = ({ chunk }) => {
   const [start, end] = contentRange;
 
   const visibleContents = section.contents
-    .filter((c) => c.isVisible !== false)
+    .filter((content) => content.isVisible !== false)
     .slice(start, end);
 
   return (

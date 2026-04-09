@@ -23,8 +23,8 @@ export const CoverLetterHeader: FunctionComponent<PropsType> = ({ resume }) => {
       {fullName && <h1 className="cover-letter-name">{fullName}</h1>}
       {contactItems.length > 0 && (
         <div className="cover-letter-contact">
-          {contactItems.map((item, i) => (
-            <span key={i} className="cover-letter-contact-item">
+          {contactItems.map((item, itemIndex) => (
+            <span key={itemIndex} className="cover-letter-contact-item">
               {item}
             </span>
           ))}

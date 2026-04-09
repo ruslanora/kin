@@ -45,8 +45,8 @@ export const ResumeDocument: FunctionComponent<PropsType> = ({
       >
         <SourceResume resume={resume} />
       </div>
-      {pages.map((page, i) => (
-        <PageLayout key={i} page={page} resume={resume} />
+      {pages.map((page, pageIndex) => (
+        <PageLayout key={pageIndex} page={page} resume={resume} />
       ))}
     </div>
   );

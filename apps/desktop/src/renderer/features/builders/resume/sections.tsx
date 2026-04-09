@@ -38,7 +38,7 @@ export const ResumeSections: FunctionComponent = () => {
       return;
     }
 
-    const ids = resume.sections.map((s) => s.id);
+    const ids = resume.sections.map((section) => section.id);
     const fromIdx = ids.indexOf(dragId);
     const toIdx = ids.indexOf(targetId);
     const reordered = [...ids];
@@ -64,7 +64,7 @@ export const ResumeSections: FunctionComponent = () => {
         </Typography.Heading>
         <IconButton
           icon={isReordering ? 'check' : 'move2'}
-          onClick={() => setIsReordering((v) => !v)}
+          onClick={() => setIsReordering((currentValue) => !currentValue)}
         />
       </div>
 

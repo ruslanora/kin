@@ -7,8 +7,22 @@ import { type RefObject, useLayoutEffect, useRef, useState } from 'react';
 
 import type { PageContentType, SectionChunkType } from '../../types';
 
+// Letter-size page height (1056px) minus top and bottom padding (72px each).
+// This is the usable vertical space available for content on a single page.
 const CONTENT_HEIGHT = 1056 - 72 * 2;
 
+/**
+ * Calculates where page breaks should occur by measuring the actual rendered
+ * heights of each section and content item inside a hidden "source" element.
+ *
+ * Returns an array of pages, each describing which header and section chunks
+ * should appear on that page. A "chunk" is a contiguous slice of one section's
+ * content items that fits on a single page.
+ *
+ * The hook re-runs every render and after fonts load to handle font-dependent
+ * height changes. It only calls setPages when the layout actually changed,
+ * preventing infinite render loops.
+ */
 export function usePageBreaks(
   sourceRef: RefObject<HTMLDivElement | null>,
   resume: ResumeWithSectionsType,
@@ -32,7 +46,7 @@ export function usePageBreaks(
       const headerHeight = headerEl?.offsetHeight ?? 0;
 
       const visibleSections = resume.sections.filter(
-        (s) => s.isVisible !== false,
+        (section) => section.isVisible !== false,
       );
 
       type PlacedItem =
@@ -54,7 +68,7 @@ export function usePageBreaks(
 
       for (const section of visibleSections) {
         const visibleContents = section.contents.filter(
-          (c) => c.isVisible !== false,
+          (content) => content.isVisible !== false,
         );
 
         if (visibleContents.length === 0) continue;
@@ -149,13 +163,15 @@ export function usePageBreaks(
         result.push(currentPage);
       }
 
+      // Serialize page layout to a string so we can skip re-renders when
+      // nothing actually changed (avoids infinite layout loops).
       const key = JSON.stringify(
-        result.map((p) => ({
-          h: p.header,
-          c: p.chunks.map((ch) => ({
-            id: ch.section.id,
-            r: ch.contentRange,
-            sh: ch.showSectionHeading,
+        result.map((page) => ({
+          header: page.header,
+          chunks: page.chunks.map((chunk) => ({
+            id: chunk.section.id,
+            contentRange: chunk.contentRange,
+            showSectionHeading: chunk.showSectionHeading,
           })),
         })),
       );

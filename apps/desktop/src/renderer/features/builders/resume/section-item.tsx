@@ -80,7 +80,7 @@ export const SectionItem: FunctionComponent<PropsType> = ({
       return;
     }
 
-    const ids = section.contents.map((c) => c.id);
+    const ids = section.contents.map((content) => content.id);
     const fromIdx = ids.indexOf(dragContentId);
     const toIdx = ids.indexOf(targetId);
     const reordered = [...ids];

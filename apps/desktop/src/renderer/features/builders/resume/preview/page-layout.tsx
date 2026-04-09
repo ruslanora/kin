@@ -25,16 +25,18 @@ export const PageLayout: FunctionComponent<PropsType> = ({ page, resume }) => {
     >
       <div style={{ padding: 72 }}>
         {page.header && <ResumeHeader resume={resume} />}
-        {page.chunks.map((chunk, i) => {
+        {page.chunks.map((chunk, chunkIndex) => {
+          // Re-fetch the section from the live resume data so that edits made
+          // in the left panel are reflected immediately in the preview.
           const freshSection = resume.sections.find(
-            (s) => s.id === chunk.section.id,
+            (section) => section.id === chunk.section.id,
           );
           const freshChunk = freshSection
             ? { ...chunk, section: freshSection }
             : chunk;
           return (
             <ResumeSection
-              key={`${chunk.section.id}-${i}`}
+              key={`${chunk.section.id}-${chunkIndex}`}
               chunk={freshChunk}
             />
           );

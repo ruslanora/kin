@@ -31,14 +31,18 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
     content: content.content ?? '',
   });
 
+  // handleChange updates local state + context state instantly (no DB call) so
+  // the preview stays in sync while the user is typing.
   const handleChange = <K extends keyof typeof fields>(
     key: K,
     value: (typeof fields)[K],
   ) => {
-    setFields((f) => ({ ...f, [key]: value }));
+    setFields((previousFields) => ({ ...previousFields, [key]: value }));
     patchContent(content.id, { [key]: value } as Partial<ResumeContentType>);
   };
 
+  // handleBlur fires when the user leaves a field and actually persists the
+  // value to the database via IPC.
   const handleBlur = (key: keyof typeof fields) => {
     updateContent(content.id, {
       [key]: fields[key],
@@ -46,7 +50,7 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
   };
 
   const handleDateChange = (key: 'startDate' | 'endDate', value: string) => {
-    setFields((f) => ({ ...f, [key]: value }));
+    setFields((previousFields) => ({ ...previousFields, [key]: value }));
 
     const [year, month] = value ? value.split('-').map(Number) : [null, null];
 
@@ -60,7 +64,7 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
   };
 
   const handleCheckbox = (checked: boolean) => {
-    setFields((f) => ({ ...f, isCurrent: checked }));
+    setFields((previousFields) => ({ ...previousFields, isCurrent: checked }));
     patchContent(content.id, { isCurrent: checked });
     updateContent(content.id, { isCurrent: checked });
   };
@@ -72,7 +76,7 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
           <TextInput
             label="Company or Organization"
             value={fields.title}
-            onChange={(v) => handleChange('title', v)}
+            onChange={(value) => handleChange('title', value)}
             onBlur={() => handleBlur('title')}
           />
         </div>
@@ -95,26 +99,26 @@ export const PeriodRecord: FunctionComponent<PropsType> = ({ content }) => {
           <TextInput
             label="Position or Title"
             value={fields.subtitle}
-            onChange={(v) => handleChange('subtitle', v)}
+            onChange={(value) => handleChange('subtitle', value)}
             onBlur={() => handleBlur('subtitle')}
           />
           <TextInput
             label="Location"
             value={fields.location}
-            onChange={(v) => handleChange('location', v)}
+            onChange={(value) => handleChange('location', value)}
             onBlur={() => handleBlur('location')}
           />
           <div className="grid grid-cols-2 gap-2">
             <DatePicker
               type="month"
               value={fields.startDate}
-              setValue={(v) => handleDateChange('startDate', v)}
+              setValue={(value) => handleDateChange('startDate', value)}
             />
             {!fields.isCurrent && (
               <DatePicker
                 type="month"
                 value={fields.endDate}
-                setValue={(v) => handleDateChange('endDate', v)}
+                setValue={(value) => handleDateChange('endDate', value)}
               />
             )}
           </div>

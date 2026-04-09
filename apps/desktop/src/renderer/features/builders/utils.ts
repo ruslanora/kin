@@ -1,10 +1,12 @@
 import type { ResumeWithSectionsType } from '@kin/desktop/main/database';
 
+/** Converts a separate month and year into a YYYY-MM string (e.g. "2024-03"). */
 export const toMonthString = (
   month: number | null | undefined,
   year: number | null | undefined,
 ) => (year && month ? `${year}-${String(month).padStart(2, '0')}` : '');
 
+/** Formats a month/year pair into a human-readable string (e.g. "January 2024"). */
 export const formatDate = (
   month: number | null | undefined,
   year: number | null | undefined,
@@ -18,6 +20,10 @@ export const formatDate = (
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 };
 
+/**
+ * Strips HTML tags from a string and converts list items / paragraph breaks
+ * into plain-text newlines and bullet characters.
+ */
 export const stripHtml = (html: string): string =>
   html
     .replace(/<li[^>]*>/gi, '• ')
@@ -32,6 +38,7 @@ export const stripHtml = (html: string): string =>
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 
+/** Builds a plain-text (.txt) representation of the resume for export. */
 export const buildResumeTxt = (resume: ResumeWithSectionsType): string => {
   const lines: string[] = [];
 
@@ -55,9 +62,11 @@ export const buildResumeTxt = (resume: ResumeWithSectionsType): string => {
     lines.push(resume.summary);
   }
 
-  for (const section of resume.sections.filter((s) => s.isVisible !== false)) {
+  for (const section of resume.sections.filter(
+    (section) => section.isVisible !== false,
+  )) {
     const visibleContents = section.contents.filter(
-      (c) => c.isVisible !== false,
+      (content) => content.isVisible !== false,
     );
 
     if (visibleContents.length === 0) continue;
@@ -100,6 +109,11 @@ export const buildResumeTxt = (resume: ResumeWithSectionsType): string => {
   return lines.join('\n');
 };
 
+/**
+ * Captures the current rendered resume DOM (`.resume-root`) and wraps it in a
+ * full HTML document suitable for PDF generation. The hidden source element
+ * (aria-hidden) is stripped out before cloning.
+ */
 export const buildResumePdfHtml = (): string => {
   const root = document.querySelector('.resume-root');
 
@@ -123,6 +137,7 @@ export const buildResumePdfHtml = (): string => {
 </html>`;
 };
 
+/** Builds a plain-text (.txt) representation of the cover letter for export. */
 export const buildCoverLetterTxt = (
   resume: ResumeWithSectionsType,
   content: string,
@@ -149,6 +164,10 @@ export const buildCoverLetterTxt = (
   return lines.join('\n');
 };
 
+/**
+ * Captures the current rendered cover letter DOM (`.cover-letter-root`) and
+ * wraps it in a full HTML document suitable for PDF generation.
+ */
 export const buildCoverLetterPdfHtml = (): string => {
   const root = document.querySelector('.cover-letter-root');
 

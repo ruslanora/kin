@@ -35,8 +35,8 @@ export const ResumeHeader: FunctionComponent<PropsType> = ({ resume }) => {
       )}
       {contactItems.length > 0 && (
         <div className="resume-contact">
-          {contactItems.map((item, i) => (
-            <span key={i} className="resume-contact-item">
+          {contactItems.map((item, itemIndex) => (
+            <span key={itemIndex} className="resume-contact-item">
               {item}
             </span>
           ))}

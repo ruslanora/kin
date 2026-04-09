@@ -66,8 +66,11 @@ export const CoverLetterDesignPicker: FunctionComponent<PropsType> = ({
         <Select
           label="Design"
           selected={design}
-          setSelected={(v) => v && onDesignChange(String(v))}
-          options={DESIGN_LIST.map((d) => ({ name: d.label, value: d.id }))}
+          setSelected={(value) => value && onDesignChange(String(value))}
+          options={DESIGN_LIST.map((design) => ({
+            name: design.label,
+            value: design.id,
+          }))}
         />
       </div>
       <div className="flex-1">

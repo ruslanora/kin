@@ -23,7 +23,7 @@ export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
     key: K,
     value: string,
   ) => {
-    setFields((f) => ({ ...f, [key]: value }));
+    setFields((previousFields) => ({ ...previousFields, [key]: value }));
     patchContent(content.id, { [key]: value });
   };
 
@@ -43,7 +43,7 @@ export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
           <TextInput
             label="Category Title"
             value={fields.title}
-            onChange={(v) => handleChange('title', v)}
+            onChange={(value) => handleChange('title', value)}
             onBlur={() => handleBlur('title')}
           />
         </div>
@@ -65,7 +65,7 @@ export const CategoryRecord: FunctionComponent<PropsType> = ({ content }) => {
         <Textarea
           placeholder="Content"
           value={fields.content}
-          setValue={(v) => handleChange('content', v)}
+          setValue={(value) => handleChange('content', value)}
           onBlur={() => handleBlur('content')}
         />
       </div>

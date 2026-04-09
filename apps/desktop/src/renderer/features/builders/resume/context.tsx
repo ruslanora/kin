@@ -49,6 +49,15 @@ type ProviderPropsType = {
   children: ReactNode;
 };
 
+/**
+ * Resume context — provides all resume state and update functions to the
+ * builder UI. Use the `useResume()` hook to access these from any child.
+ *
+ * The "patch" variants (patchBasicInfo, patchSection, patchContent) update
+ * local React state immediately for a snappy UI. The "update" variants also
+ * persist the change to the database via IPC, usually with a debounce so we
+ * don't hammer the DB on every keystroke.
+ */
 export const ResumeContext = createContext<ResumeContextType | null>(null);
 
 export const useResume = (): ResumeContextType => {
@@ -187,8 +196,8 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
         prev
           ? {
               ...prev,
-              sections: prev.sections.map((s) =>
-                s.id === id ? { ...s, ...fields } : s,
+              sections: prev.sections.map((section) =>
+                section.id === id ? { ...section, ...fields } : section,
               ),
             }
           : prev,
@@ -205,14 +214,14 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
         prev
           ? {
               ...prev,
-              sections: prev.sections.map((s) =>
-                s.id === id ? { ...s, ...fields } : s,
+              sections: prev.sections.map((section) =>
+                section.id === id ? { ...section, ...fields } : section,
               ),
             }
           : prev,
       );
 
-      const section = resume.sections.find((s) => s.id === id);
+      const section = resume.sections.find((section) => section.id === id);
       if (!section) return;
 
       window.api.resume.upsertSection({
@@ -230,7 +239,7 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
       prev
         ? {
             ...prev,
-            sections: prev.sections.filter((s) => s.id !== id),
+            sections: prev.sections.filter((section) => section.id !== id),
           }
         : prev,
     );
@@ -242,7 +251,9 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
     setResume((prev) => {
       if (!prev) return prev;
 
-      const sectionMap = new Map(prev.sections.map((s) => [s.id, s]));
+      const sectionMap = new Map(
+        prev.sections.map((section) => [section.id, section]),
+      );
       const reordered = orderedIds
         .map((id) => sectionMap.get(id))
         .filter(Boolean) as Array<
@@ -259,7 +270,9 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
     async (sectionId: number, _contentType: 'period' | 'category' | 'list') => {
       if (!resume) return;
 
-      const section = resume.sections.find((s) => s.id === sectionId);
+      const section = resume.sections.find(
+        (section) => section.id === sectionId,
+      );
       if (!section) return;
 
       const nextOrder = section.contents.length;
@@ -273,10 +286,10 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
         prev
           ? {
               ...prev,
-              sections: prev.sections.map((s) =>
-                s.id === sectionId
-                  ? { ...s, contents: [...s.contents, newContent] }
-                  : s,
+              sections: prev.sections.map((section) =>
+                section.id === sectionId
+                  ? { ...section, contents: [...section.contents, newContent] }
+                  : section,
               ),
             }
           : prev,
@@ -291,10 +304,10 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
         if (!prev) return prev;
         const updated = {
           ...prev,
-          sections: prev.sections.map((s) => ({
-            ...s,
-            contents: s.contents.map((c) =>
-              c.id === id ? { ...c, ...fields } : c,
+          sections: prev.sections.map((section) => ({
+            ...section,
+            contents: section.contents.map((content) =>
+              content.id === id ? { ...content, ...fields } : content,
             ),
           })),
         };
@@ -311,9 +324,9 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
       let sectionId = -1;
       const currentResume = resumeRef.current;
       if (currentResume) {
-        for (const s of currentResume.sections) {
-          if (s.contents.find((c) => c.id === id)) {
-            sectionId = s.id;
+        for (const section of currentResume.sections) {
+          if (section.contents.find((content) => content.id === id)) {
+            sectionId = section.id;
             break;
           }
         }
@@ -329,9 +342,9 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
       prev
         ? {
             ...prev,
-            sections: prev.sections.map((s) => ({
-              ...s,
-              contents: s.contents.filter((c) => c.id !== id),
+            sections: prev.sections.map((section) => ({
+              ...section,
+              contents: section.contents.filter((content) => content.id !== id),
             })),
           }
         : prev,
@@ -347,15 +360,17 @@ export const ResumeProvider: FunctionComponent<ProviderPropsType> = ({
 
         return {
           ...prev,
-          sections: prev.sections.map((s) => {
-            if (s.id !== sectionId) return s;
+          sections: prev.sections.map((section) => {
+            if (section.id !== sectionId) return section;
 
-            const contentMap = new Map(s.contents.map((c) => [c.id, c]));
+            const contentMap = new Map(
+              section.contents.map((content) => [content.id, content]),
+            );
             const reordered = orderedIds
               .map((id) => contentMap.get(id))
               .filter(Boolean) as ResumeContentType[];
 
-            return { ...s, contents: reordered };
+            return { ...section, contents: reordered };
           }),
         };
       });

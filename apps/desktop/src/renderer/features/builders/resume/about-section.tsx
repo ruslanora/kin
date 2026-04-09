@@ -22,7 +22,7 @@ export const AboutSection: FunctionComponent = () => {
     key: K,
     value: string,
   ) => {
-    setFields((f) => ({ ...f, [key]: value }));
+    setFields((previousFields) => ({ ...previousFields, [key]: value }));
     patchBasicInfo({ [key]: value });
   };
 
@@ -42,50 +42,50 @@ export const AboutSection: FunctionComponent = () => {
           <TextInput
             label="First Name"
             value={fields.firstName}
-            onChange={(v) => handleChange('firstName', v)}
+            onChange={(value) => handleChange('firstName', value)}
             onBlur={() => handleBlur('firstName')}
           />
           <TextInput
             label="Last Name"
             value={fields.lastName}
-            onChange={(v) => handleChange('lastName', v)}
+            onChange={(value) => handleChange('lastName', value)}
             onBlur={() => handleBlur('lastName')}
           />
           <TextInput
             label="Email"
             value={fields.email}
-            onChange={(v) => handleChange('email', v)}
+            onChange={(value) => handleChange('email', value)}
             onBlur={() => handleBlur('email')}
           />
           <TextInput
             label="Phone"
             value={fields.phone}
-            onChange={(v) => handleChange('phone', v)}
+            onChange={(value) => handleChange('phone', value)}
             onBlur={() => handleBlur('phone')}
           />
         </div>
         <TextInput
           label="LinkedIn"
           value={fields.linkedin}
-          onChange={(v) => handleChange('linkedin', v)}
+          onChange={(value) => handleChange('linkedin', value)}
           onBlur={() => handleBlur('linkedin')}
         />
         <TextInput
           label="Website"
           value={fields.website}
-          onChange={(v) => handleChange('website', v)}
+          onChange={(value) => handleChange('website', value)}
           onBlur={() => handleBlur('website')}
         />
         <TextInput
           label="Address"
           value={fields.address}
-          onChange={(v) => handleChange('address', v)}
+          onChange={(value) => handleChange('address', value)}
           onBlur={() => handleBlur('address')}
         />
         <Textarea
           placeholder="Summary"
           value={fields.summary}
-          setValue={(v) => handleChange('summary', v)}
+          setValue={(value) => handleChange('summary', value)}
           onBlur={() => handleBlur('summary')}
           rows={3}
         />

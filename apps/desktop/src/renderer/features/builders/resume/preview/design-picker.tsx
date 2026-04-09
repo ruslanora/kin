@@ -55,8 +55,11 @@ export const DesignPicker: FunctionComponent = () => {
         <Select
           label="Design"
           selected={activeDesign}
-          setSelected={(v) => v && updateDesign(String(v))}
-          options={DESIGN_LIST.map((d) => ({ name: d.label, value: d.id }))}
+          setSelected={(value) => value && updateDesign(String(value))}
+          options={DESIGN_LIST.map((design) => ({
+            name: design.label,
+            value: design.id,
+          }))}
         />
       </div>
       <div className="flex-1">
@@ -66,7 +69,7 @@ export const DesignPicker: FunctionComponent = () => {
           max={3}
           step={0.05}
           value={spacing}
-          onChange={(v) => updateSettings({ spacingMultiplier: v })}
+          onChange={(value) => updateSettings({ spacingMultiplier: value })}
         />
       </div>
       <Button
