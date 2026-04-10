@@ -13,7 +13,7 @@
     "postinstall": "electron-rebuild -f -w better-sqlite3,node-mac-permissions --module-dir ../../node_modules/better-sqlite3",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
+    "make": "APPLE_IDENTITY= electron-forge make --targets @electron-forge/maker-zip",
     "make:mas": "electron-forge make --platform darwin --arch arm64 --targets @electron-forge/maker-pkg",
     "make:ci": "APPLE_IDENTITY= electron-forge make --targets @electron-forge/maker-zip",
     "publish": "electron-forge publish",
