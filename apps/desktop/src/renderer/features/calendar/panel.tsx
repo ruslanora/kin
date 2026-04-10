@@ -4,18 +4,18 @@ import type { FunctionComponent } from 'react';
 import { MONTHS } from './constants';
 import { useCalendar } from './context';
 
-export const Toolbar: FunctionComponent = () => {
+export const Panel: FunctionComponent = () => {
   const { month, goToCurrentMonth, goToNextMonth, goToPreviousMonth } =
     useCalendar();
 
   return (
     <div
       className={classNames(
-        'w-full flex flex-row items-center justify-between p-4 shrink-0',
+        'w-full flex flex-row items-center justify-between shrink-0',
         'flex-nowrap whitespace-nowrap',
       )}
     >
-      <Typography.Heading>
+      <Typography.Heading as="h2">
         {MONTHS[month.getMonth()]} {month.getFullYear()}
       </Typography.Heading>
       <div className="flex flex-row items-center justify-center gap-2">

@@ -50,7 +50,7 @@ export const TextInput: FunctionComponent<PropsType> = ({
             'block w-full h-10 px-3',
             'text-sm font-medium text-stone-950 dark:text-stone-50',
             'bg-stone-50 dark:bg-stone-950',
-            'border rounded-md shadow-xs',
+            'border rounded-xl shadow-xs',
             'focus:outline-none',
             'transition-all duration-300 ease-in-out',
             type === 'password' && 'pr-13',

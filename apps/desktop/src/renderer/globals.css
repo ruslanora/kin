@@ -22,3 +22,9 @@
     @apply transition-colors duration-300 ease-in-out;
   }
 }
+
+.no-focus-ring *,
+.no-focus-ring *:focus,
+.no-focus-ring *:focus-visible {
+  @apply ring-0! outline-0! focus:ring-0! focus:outline-0!;
+}

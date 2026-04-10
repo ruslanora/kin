@@ -42,7 +42,7 @@ export const Select: FunctionComponent<PropsType> = ({
           'block w-full h-10 px-3',
           'text-sm font-medium text-stone-950 dark:text-stone-50',
           'bg-stone-50 dark:bg-stone-950',
-          'border rounded-md shadow-xs border-stone-200 dark:border-stone-800',
+          'border rounded-xl shadow-xs border-stone-200 dark:border-stone-800',
           'focus:outline-none',
           'transition-all duration-300 ease-in-out cursor-pointer',
           isFocused && 'ring-4 ring-blue-300 dark:ring-blue-700',

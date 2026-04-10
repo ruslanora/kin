@@ -26,12 +26,15 @@
 
 ## Features
 
-| ![Image 1](.github/assets/preview-001.png) | ![Image 2](.github/assets/preview-002.png) |
-| ------------------------------------------ | ------------------------------------------ |
-| ![Image 3](.github/assets/preview-003.png) | ![Image 4](.github/assets/preview-004.png) |
+|                                    |                                    |
+| ---------------------------------- | ---------------------------------- |
+| ![Image 1](.github/assets/002.png) | ![Image 2](.github/assets/003.png) |
+| ![Image 3](.github/assets/004.png) | ![Image 4](.github/assets/005.png) |
+| ![Image 5](.github/assets/007.png) | ![Image 6](.github/assets/006.png) |
 
 - Track your job applications on a Kanban board
 - Keep everything in one place: resumes and cover letters you applied with, notes, contacts, and interviews
+- Create master resume and cover letter, and tailor them for each job
 - Avoid applying to the same company twice. The app will warn you if you do
 - Blocklist companies you never want to work for, and keep track of all companies and people you've interacted with
 - Streamline your job search with a Google Chrome extension

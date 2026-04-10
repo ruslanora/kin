@@ -4,8 +4,8 @@ import { asc, eq, getTableColumns, isNull, max, sql } from 'drizzle-orm';
 import type { BrowserWindow } from 'electron';
 import log from 'electron-log';
 
-import { getDb } from './database/client';
-import { boards, columns, companies, jobs } from './database/schema';
+import { getDb } from '../database/client';
+import { boards, columns, companies, jobs } from '../database/schema';
 
 const PORT = 6767;
 const HOST = '127.0.0.1';

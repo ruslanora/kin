@@ -2,7 +2,7 @@ import type {
   CoverLetterType,
   ResumeWithSectionsType,
 } from '@kin/desktop/main/database';
-import { Spinner } from '@kin/ui';
+import { Spinner, Typography } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 import { useEffect, useState } from 'react';
 
@@ -11,6 +11,7 @@ import {
   CoverLetterProvider,
 } from '../features/builders/cover-letter';
 import { ResumeProvider } from '../features/builders/resume';
+import { PageContainer } from './container';
 
 export const MasterCoverLetter: FunctionComponent = () => {
   const [resume, setResume] = useState<ResumeWithSectionsType | null>(null);
@@ -37,7 +38,11 @@ export const MasterCoverLetter: FunctionComponent = () => {
   return (
     <ResumeProvider initialResume={resume}>
       <CoverLetterProvider initialCoverLetter={coverLetter}>
-        <CoverLetterBuilder />
+        <PageContainer
+          panel={<Typography.Heading as="h2">Master Resume</Typography.Heading>}
+        >
+          <CoverLetterBuilder />
+        </PageContainer>
       </CoverLetterProvider>
     </ResumeProvider>
   );

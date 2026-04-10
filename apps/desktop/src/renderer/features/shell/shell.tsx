@@ -27,11 +27,6 @@ export const ApplicationShell: FunctionComponent = () => {
             </Shell.Sidebar.Section>
           ))}
         </Shell.Sidebar.Body>
-        <Shell.Sidebar.Footer>
-          <ul className="w-full flex flex-col items-stretch justify-start gap-2">
-            <SectionItem icon="settings" name="Settings" href="/settings" />
-          </ul>
-        </Shell.Sidebar.Footer>
       </Shell.Sidebar>
       <Shell.Content>
         <Outlet />

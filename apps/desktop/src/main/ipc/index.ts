@@ -1,6 +1,7 @@
 import type { BrowserWindow } from 'electron';
 
 import { registerBoardHandlers } from './board';
+import { registerCalendarHandlers } from './calendar';
 import { registerCompanyHandlers } from './company';
 import { registerContactHandlers } from './contact';
 import { registerCoverLetterHandlers } from './cover-letter';
@@ -22,4 +23,5 @@ export const setupIpc = (window: BrowserWindow): void => {
   registerJobHandlers();
   registerInterviewHandlers();
   registerResumeHandlers();
+  registerCalendarHandlers();
 };
