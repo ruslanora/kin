@@ -8,18 +8,21 @@ import { Icon } from '../icon/icon';
 type PropsType = {
   icon: string;
   active?: boolean;
+  size?: 'sm' | 'md';
   onClick: () => void;
 };
 
 export const IconButton: FunctionComponent<PropsType> = ({
   icon,
+  size = 'md',
   active,
   onClick,
 }) => (
   <button
     type="button"
     className={classNames(
-      'h-10 w-10 rounded-md',
+      size === 'sm' && 'h-8 w-8 rounded-lg',
+      size === 'md' && 'h-10 w-10 rounded-xl',
       'flex items-center justify-center shrink-0',
       'transition-all duration-300 ease-in-out',
       'cursor-pointer',

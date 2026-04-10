@@ -1,11 +1,12 @@
 import type { FunctionComponent } from 'react';
 
-import { Job } from '../features';
+import { Job, JobContextProvider, JobPanel } from '../features';
+import { PageContainer } from './container';
 
-export const JobPage: FunctionComponent = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-stretch justify-start">
+export const JobPage: FunctionComponent = () => (
+  <JobContextProvider>
+    <PageContainer canGoBack panel={<JobPanel />}>
       <Job />
-    </div>
-  );
-};
+    </PageContainer>
+  </JobContextProvider>
+);

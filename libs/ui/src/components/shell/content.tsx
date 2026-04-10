@@ -8,7 +8,7 @@ type PropsType = {
 
 export const ShellContent: FunctionComponent<PropsType> = ({ children }) => (
   <main role="main" className="flex-1 overflow-hidden">
-    <div className="w-full h-full overflow-y-auto">{children}</div>
+    <div className="relative w-full h-full overflow-y-auto">{children}</div>
   </main>
 );
 

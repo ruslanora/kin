@@ -1,12 +1,11 @@
-import { classNames, SearchInput } from '@kin/ui';
-import { type FunctionComponent, useMemo, useState } from 'react';
+import { classNames } from '@kin/ui';
+import { type FunctionComponent, useMemo } from 'react';
 
 import { useDatabase } from './context';
 import { groupByLetter } from './utils';
 
 export const People: FunctionComponent = () => {
-  const { contacts, selectedContact, selectContact } = useDatabase();
-  const [search, setSearch] = useState('');
+  const { contacts, selectedContact, selectContact, search } = useDatabase();
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
@@ -28,12 +27,7 @@ export const People: FunctionComponent = () => {
   );
 
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <SearchInput
-        placeholder="Search people"
-        value={search}
-        setValue={setSearch}
-      />
+    <div className="flex flex-col p-4">
       <div className="flex flex-col">
         {groups.map(({ letter, items }) => (
           <div key={`people-${letter}`}>

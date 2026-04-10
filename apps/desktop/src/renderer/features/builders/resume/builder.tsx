@@ -6,7 +6,7 @@ import { ResumeSections } from './sections';
 
 export const ResumeBuilder: FunctionComponent = () => {
   return (
-    <div className="flex flex-row h-full overflow-hidden">
+    <div className="flex flex-row h-full overflow-hidden border-t border-stone-200 dark:border-stone-800">
       <div className="w-120 shrink-0 flex flex-col overflow-y-auto">
         <AboutSection />
         <div className="p-4">

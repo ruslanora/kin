@@ -246,6 +246,14 @@ const api = {
     },
   },
 
+  calendar: {
+    getPermissionStatus: async (): Promise<string> =>
+      (await ipcRenderer.invoke('calendar:get-permission-status')) as string,
+
+    requestPermission: async (): Promise<string> =>
+      (await ipcRenderer.invoke('calendar:request-permission')) as string,
+  },
+
   coverLetter: {
     getMaster: async () =>
       (await ipcRenderer.invoke('coverLetter:getMaster')) as CoverLetterType,

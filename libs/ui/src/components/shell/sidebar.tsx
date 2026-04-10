@@ -30,12 +30,12 @@ const ShellSidebarComponent: FunctionComponent<PropsType> = ({ children }) => {
         collapsed ? 'w-14 cursor-pointer' : 'w-64',
       )}
     >
-      <div className="w-full flex flex-row items-center justify-between shrink-0 p-2 pt-4">
+      <div className="w-full flex flex-row items-center justify-between shrink-0 p-2">
         {collapsed ? (
           <button
             type="button"
             className={classNames(
-              'relative h-10 w-10 rounded-md',
+              'relative h-10 w-10 rounded-xl',
               'text-stone-400 bg-transparent hover:text-stone-500 hover:bg-stone-200 dark:text-stone-500 dark:hover:text-stone-400 dark:hover:bg-stone-800',
               'focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700',
               'flex items-center justify-center shrink-0',

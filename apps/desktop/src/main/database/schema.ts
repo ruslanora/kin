@@ -219,6 +219,8 @@ export const interviews = sqliteTable(
     followUp: integer('follow_up', { mode: 'boolean' })
       .notNull()
       .default(false),
+    calendarEventId: text('calendar_event_id'),
+    calendarFollowUpEventId: text('calendar_follow_up_event_id'),
   },
   (table) => [index('idx_interviews_job_id').on(table.jobId)],
 );

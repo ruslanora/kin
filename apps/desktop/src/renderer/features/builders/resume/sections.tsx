@@ -58,8 +58,8 @@ export const ResumeSections: FunctionComponent = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-row items-center justify-between">
-        <Typography.Heading level="h2" as="h1">
+      <div className="flex flex-row items-center justify-between pl-4">
+        <Typography.Heading level="h2" as="h2">
           Sections
         </Typography.Heading>
         <IconButton

@@ -9,7 +9,7 @@ export const CoverLetterBuilder: FunctionComponent = () => {
   const { coverLetter, patchContent, updateContent } = useCoverLetter();
 
   return (
-    <div className="flex flex-row h-full overflow-hidden">
+    <div className="flex flex-row h-full overflow-hidden border-t border-stone-200 dark:border-stone-800">
       <div className="w-120 shrink-0 flex flex-col overflow-y-auto">
         <AboutSection />
         <div className="p-4 flex flex-col gap-2">

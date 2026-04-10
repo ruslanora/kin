@@ -25,7 +25,7 @@ export const SearchInput: FunctionComponent<PropsType> = ({
         className={classNames(
           'block w-full h-10 pl-8 pr-8',
           'text-sm font-medium text-stone-950 dark:text-stone-50',
-          'border rounded-sm shadow-xs',
+          'border rounded-xl shadow-xs',
           'transition-all duration-300 ease-in-out',
           'bg-stone-50 dark:bg-stone-950',
           'border-stone-200 dark:border-stone-800',

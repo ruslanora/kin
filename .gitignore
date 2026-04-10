@@ -97,3 +97,6 @@ dist/
 
 # temp
 server/
+
+# MAS code signing
+apps/desktop/embedded.provisionprofile
