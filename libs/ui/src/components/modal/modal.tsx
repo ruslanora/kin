@@ -40,6 +40,7 @@ const ModalComponent: FunctionComponent<PropsType> = ({
           <motion.div
             className={classNames(
               'w-full max-w-lg h-fit max-h-125',
+              'flex flex-col overflow-hidden',
               'bg-stone-50 dark:bg-stone-950',
               'border border-stone-200 dark:border-stone-800',
               'rounded-3xl shadow-2xl',
