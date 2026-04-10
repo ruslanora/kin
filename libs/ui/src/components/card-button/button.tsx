@@ -1,7 +1,8 @@
 'use client';
 
-import { classNames } from '@kin/ui/utils';
 import { type FunctionComponent, type ReactNode, useId } from 'react';
+
+import { classNames } from '../../utils';
 
 type PropsType = {
   label?: string;

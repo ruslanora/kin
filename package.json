@@ -25,6 +25,7 @@
     "app:start": "pnpm --filter ./apps/desktop run start",
     "app:package": "pnpm --filter ./apps/desktop run package",
     "app:make": "pnpm --filter ./apps/desktop run make",
+    "app:make:all": "pnpm --filter ./apps/desktop run make:mac",
     "app:rebuild": "pnpm --filter ./apps/desktop run rebuild",
     "app:publish": "pnpm --filter ./apps/desktop run publish",
     "app:generate": "pnpm --filter ./apps/desktop run generate",
