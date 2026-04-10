@@ -127,8 +127,13 @@ export const buildResumePdfHtml = (): string => {
 <head>
 <meta charset="utf-8">
 <style>
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; width: 816px; }
+  h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; padding: 0; }
+  p { margin: 0; padding: 0; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+  li { margin: 0; padding: 0; }
+  hr { border: none; margin: 0; padding: 0; }
   .resume-page { page-break-after: always; }
   .resume-page:last-child { page-break-after: avoid; }
 </style>
@@ -180,8 +185,13 @@ export const buildCoverLetterPdfHtml = (): string => {
 <head>
 <meta charset="utf-8">
 <style>
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; width: 816px; }
+  h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; padding: 0; }
+  p { margin: 0; padding: 0; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+  li { margin: 0; padding: 0; }
+  hr { border: none; margin: 0; padding: 0; }
   .cover-letter-page { page-break-after: always; }
   .cover-letter-page:last-child { page-break-after: avoid; }
 </style>
