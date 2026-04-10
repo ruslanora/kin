@@ -1,4 +1,4 @@
-import { Button, Shell } from '@kin/ui';
+import { Shell } from '@kin/ui';
 import type { FunctionComponent } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -27,11 +27,6 @@ export const ApplicationShell: FunctionComponent = () => {
             </Shell.Sidebar.Section>
           ))}
         </Shell.Sidebar.Body>
-        <Shell.Sidebar.Footer>
-          <Button style="accent" width="full">
-            Support the Project
-          </Button>
-        </Shell.Sidebar.Footer>
       </Shell.Sidebar>
       <Shell.Content>
         <Outlet />

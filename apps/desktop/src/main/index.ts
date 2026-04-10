@@ -54,7 +54,7 @@ app.on('ready', () => {
   setupIpc(window);
   startServer(window);
 
-  if (app.isPackaged) {
+  if (app.isPackaged && process.env.DISTRIBUTION !== 'mas') {
     try {
       updateElectronApp();
     } catch {
